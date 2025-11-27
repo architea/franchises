@@ -9,6 +9,8 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/vercel": "^9.0.2",
+    "@storyblok/astro": "^7.3.6",
     "astro": "^5.16.1"
   }
 }

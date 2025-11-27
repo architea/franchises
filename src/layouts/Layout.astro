@@ -1,0 +1,12 @@
+---
+import Head from "./Head.astro"
+
+const { seo } = Astro.props
+---
+
+<html lang="fr" prefix="og: http://ogp.me/ns#">
+  <Head seo={seo} />
+  <body>
+    <slot />
+  </body>
+</html>
