@@ -3,6 +3,16 @@ import { useStoryblokApi } from "@storyblok/astro"
 import StoryblokComponent from "@storyblok/astro/StoryblokComponent.astro"
 import Layout from "../layouts/Layout.astro"
 import isPreview from "../utils/isPreview"
+import generateStaticPaths from "../utils/generateStaticPaths"
+
+export async function getStaticPaths() {
+  //We have moved all the code to a generateStaticPaths() function.
+  return await generateStaticPaths()
+}
+
+const params = Astro.params
+let props = isPreview() ? params?.slug : Astro.props
+const { slug } = props
 
 const storyblokApi = useStoryblokApi()
 const { data } = await storyblokApi.get("cdn/stories/home", {

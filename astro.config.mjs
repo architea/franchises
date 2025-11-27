@@ -15,7 +15,8 @@ export default defineConfig({
         region: "eu"
       },
       components: {
-        page: "storyblok/Page"
+        page: "storyblok/Page",
+        slider: "storyblok/Slider"
       }
     })
   ],
