@@ -1,27 +1,9 @@
 ---
-import { RichTextSchema, renderRichText } from "@storyblok/astro"
-import cloneDeep from "clone-deep"
+import { renderRichText } from "@storyblok/astro"
 
 const { content } = Astro.props
 
-const mySchema = cloneDeep(RichTextSchema)
-let renderedRichText = renderRichText(content, {
-  schema: mySchema,
-  resolver: (component, blok) => {
-    switch (component) {
-      case "btn":
-        return `<a
-                  href=${blok.href.story.full_slug}
-                  title=${blok.text}
-                  class="button ${blok.color} size-${blok.size}"
-                  aria-label=${blok.text}>
-                  ${blok.text}
-                </a>`
-      default:
-        return `Component ${component} not found`
-    }
-  }
-})
+let renderedRichText = renderRichText(content)
 ---
 
 <div class="prose-lg xl:prose-xl rich-text max-w-prose">
