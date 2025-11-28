@@ -11,9 +11,11 @@
   "dependencies": {
     "@astrojs/vercel": "^9.0.2",
     "@storyblok/astro": "^7.3.6",
+    "@storyblok/richtext": "^3.8.2",
     "@tailwindcss/vite": "^4.1.17",
     "astro": "^5.16.1",
     "clone-deep": "^4.0.1",
+    "storyblok-rich-text-astro-renderer": "^2.8.1",
     "swiper": "^12.0.3",
     "tailwindcss": "^4.1.17"
   }

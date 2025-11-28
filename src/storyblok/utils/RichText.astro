@@ -1,11 +1,16 @@
 ---
-import { renderRichText } from "@storyblok/astro"
+import RichTextRenderer from "storyblok-rich-text-astro-renderer/RichTextRenderer.astro"
+import StoryblokComponent from "@storyblok/astro/StoryblokComponent.astro"
 
 const { content } = Astro.props
-
-let renderedRichText = renderRichText(content)
 ---
 
-<div class="prose-lg xl:prose-xl rich-text max-w-prose">
-  <Fragment set:html={renderedRichText} />
-</div>
+<RichTextRenderer
+  content={content}
+  resolver={(blok) => {
+    return {
+      component: StoryblokComponent,
+      props: { blok }
+    }
+  }}
+/>
