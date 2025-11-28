@@ -1,4 +1,7 @@
 ---
+import InlineSVG from "./utils/InlineSvg.astro"
+import RichText from "./utils/RichText.astro"
+import { Image } from "astro:assets"
 const { blok } = Astro.props
 console.dir(blok, { depth: null })
 ---
@@ -14,41 +17,28 @@ console.dir(blok, { depth: null })
           title={`Voir notre page ${reseau.name} Architéa`}
           target="_blank"
           aria-label={`lien vers ${reseau.name}`}>
-          <Fragment set:html={reseau.icon.filename} />
+          <InlineSVG
+            class={`rs-icon fill-${reseau.color}`}
+            src={reseau.icon.filename}
+          />
         </a>
       ))
     }
   </div>
   <div class="ct">
-    <h1 set:html={node.h1} />
-    <div class="paragraphe">
-      <p set:html={node.accroche} />
-    </div>
-    <div class="flex flex-wrap gap-2 justify-left items-center btn-group">
-      <a
-        href={node.btn1.href}
-        title={node.btn1.name}
-        class="bt-a"
-        aria-label={node.btn1.name}>
-        <span set:html={node.btn1.name} />
-        {node.btn1.icon && <Fragment set:html={node.btn1.icon} />}
-      </a>
-      <a
-        href={node.btn2.href}
-        title={node.btn2.name}
-        class="bt-a"
-        aria-label={node.btn2.name}>
-        <span set:html={node.btn2.name} />
-        {node.btn2.icon && <Fragment set:html={node.btn2.icon} />}
-      </a>
-    </div>
+    <RichText content={blok.text} />
   </div>
   <div data-swiper="slider" class="swiper">
     <div class="swiper-wrapper">
       {
-        node.galerie.map((slide, index) => (
+        blok.slider.map((slide) => (
           <div class="swiper-slide">
-            <Image src={slide.url} alt={slide.alt} loading="eager" />
+            <Image
+              src={slide.filename}
+              alt={slide.alt}
+              layout="full-width"
+              inferSize
+            />
           </div>
         ))
       }
@@ -56,136 +46,33 @@ console.dir(blok, { depth: null })
   </div>
 </div>
 
-<style is:global>
-  #slider .swiper-slide img {
-    height: 100%;
-    width: 100%;
+<style>
+  :global(.rs-icon svg) {
+    width: 48px;
+  }
+  .slider {
+    position: relative;
+  }
+  .swiper-slide :global(img) {
+    max-width: 100%;
+    min-width: 100vw;
+    max-height: 100vh;
+    min-height: max(100vh, 800px);
     object-fit: cover;
   }
-</style>
-
-<style>
-  /* 🎅 BTN Alignement on mobile - same width */
-  .btn-group a {
-    height: 50px;
-    width: 210px;
-  }
-
-  #slider {
-    padding: 0 !important;
-    overflow: hidden;
-    height: 100vh;
-    min-height: 800px;
-    color: #fff;
-    background: #080808;
-  }
-
-  #slider [data-swiper] {
-    height: 100%;
-    width: 100%;
-  }
-
-  #slider .swiper-wrapper {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-  }
-
-  #slider .swiper-slide {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    width: 100%;
-    overflow: hidden;
-  }
-
-  #slider .swiper-slide {
-    transition: opacity 4s;
-  }
-
-  #slider .swiper-slide-active {
-    opacity: 1 !important;
-  }
-
-  #slider .swiper-slide-next [data-bg],
-  #slider .swiper-slide-prev [data-bg] {
-    transform: scale(1);
-  }
-
-  #slider .ct {
-    z-index: 999;
-    padding-right: 23%;
+  .ct {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    z-index: 2;
   }
-
-  @media screen and (max-width: 650px) {
-    #slider .ct {
-      width: 100%;
-      padding-right: 0;
-    }
-  }
-
-  #slider h1 {
-    width: 100%;
-    left: 0;
-    margin: calc(10px + 3%) 0 calc(15px + 4%);
-    line-height: 1;
-    font-size: calc(38px + 26 * (100vw - 320px) / 1080);
-    font-weight: bold;
-  }
-
-  #slider h1:after {
-    content: ".";
-    color: #f15a22;
-  }
-
-  #slider .paragraphe {
-    color: #fff;
-    margin-bottom: calc(10px + 3%);
-    width: 60%;
-    font-size: calc(13px + 4 * (100vw - 320px) / 1080);
-    line-height: 1.6;
-    letter-spacing: 0.5px;
-    font-weight: 300;
-  }
-
-  @media screen and (max-width: 500px) {
-    #slider .paragraphe {
-      width: 100%;
-    }
-  }
-
-  /* #slider .bt-a + .bt-a {
-    margin-left: 5px;
-  } */
-
   .rs {
     position: absolute;
     bottom: 50px;
     left: 50px;
-    font-size: 14px;
     display: flex;
     z-index: 2;
-  }
-
-  .rs a {
-    margin-right: 15px;
-  }
-
-  .rs a:hover {
-    color: #f15a22;
-  }
-
-  @media screen and (max-width: 880px) {
-    .rs {
-      bottom: 35px;
-      left: 35px;
-    }
   }
 </style>
 

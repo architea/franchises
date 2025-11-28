@@ -9,9 +9,15 @@ const { data } = await storyblokApi.get("cdn/datasource_entries/", {
 })
 const colors = data.datasource_entries.map(({ id, ...attr }) => attr)
 let rawCSS = ""
+let colorDefs = "*{"
 colors.forEach((color) => {
-  rawCSS += `.${color.name.toLowerCase()}{background-color:${color.value};color:${color.dimension_value}}`
+  rawCSS += `.${color.name.toLowerCase()}{background-color:${color.value};color:${color.dimension_value}}
+  .fill-${color.name.toLowerCase()}{fill:${color.value};}
+  .stroke-${color.name.toLowerCase()}{stroke:${color.value};}`
+  colorDefs += `--color-${color.name.toLowerCase()}:${color.value};`
 })
+colorDefs += "}"
 ---
 
 <style is:inline set:html={rawCSS}></style>
+<style is:inline set:html={colorDefs}></style>
