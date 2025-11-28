@@ -10,14 +10,11 @@ export async function getStaticPaths() {
   return await generateStaticPaths()
 }
 
-const params = Astro.params
-let props = isPreview() ? params?.slug : Astro.props
-const { slug } = props
-
 const storyblokApi = useStoryblokApi()
 const { data } = await storyblokApi.get("cdn/stories/home", {
   version: isPreview() ? "draft" : "published",
-  resolve_relations: "page.canonical"
+  resolve_relations: "page.canonical",
+  resolve_links: "url"
 })
 
 const { story } = data

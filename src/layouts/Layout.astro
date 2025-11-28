@@ -1,11 +1,14 @@
 ---
 import Head from "./Head.astro"
+import Colors from "../styles/colors.astro"
+import "../styles/fonts.css"
 
 const { seo } = Astro.props
 ---
 
 <html lang="fr" prefix="og: http://ogp.me/ns#">
   <Head seo={seo} />
+  <Colors />
   <body>
     <slot />
   </body>

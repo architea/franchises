@@ -1,0 +1,46 @@
+---
+const { blok } = Astro.props
+console.dir(blok, { depth: null })
+---
+
+<a
+  href={blok.href.story.full_slug}
+  title={blok.text}
+  class={`button ${blok.color} size-${blok.size}`}
+  aria-label={blok.text}>
+  {blok.text}
+</a>
+
+<style>
+  .button {
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    vertical-align: middle;
+    border-radius: 0.5rem;
+    &.size-s {
+      padding-inline: 0.8rem;
+      padding-block: 0.5rem 0.75rem;
+      font-size: 1rem;
+      line-height: 1.2rem;
+    }
+    &.size-m {
+      padding-inline: 1.2rem;
+      padding-block: 0.6rem 0.9rem;
+      font-size: 1.5rem;
+      line-height: 1.5rem;
+    }
+    &.size-l {
+      padding-inline: 1.5rem;
+      padding-block: 1rem 1.2rem;
+      font-size: 2rem;
+      line-height: 1.5rem;
+    }
+    &.size-xl {
+      padding-inline: 2rem;
+      padding-block: 1.2rem 1.6rem;
+      font-size: 2.5rem;
+      line-height: 2rem;
+    }
+  }
+</style>

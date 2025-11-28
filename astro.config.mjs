@@ -16,7 +16,8 @@ export default defineConfig({
       },
       components: {
         page: "storyblok/Page",
-        slider: "storyblok/Slider"
+        slider: "storyblok/Slider",
+        button: "storyblok/Button"
       }
     })
   ],

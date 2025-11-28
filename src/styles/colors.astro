@@ -1,0 +1,17 @@
+---
+import { useStoryblokApi } from "@storyblok/astro"
+
+const storyblokApi = useStoryblokApi()
+
+const { data } = await storyblokApi.get("cdn/datasource_entries/", {
+  datasource: "colors",
+  dimension: "fg"
+})
+const colors = data.datasource_entries.map(({ id, ...attr }) => attr)
+let rawCSS = ""
+colors.forEach((color) => {
+  rawCSS += `.${color.name.toLowerCase()}{background-color:${color.value};color:${color.dimension_value}}`
+})
+---
+
+<style is:inline set:html={rawCSS}></style>
