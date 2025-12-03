@@ -41,7 +41,12 @@ const { blok } = Astro.props
 <style>
   @reference "../styles/global.css";
 
-  .content > :global(div > h1, h2, h3, h4, h5, h6:first-of-type) {
+  .content > :global(div > h1:first-of-type),
+  .content > :global(div > h2:first-of-type),
+  .content > :global(div > h3:first-of-type),
+  .content > :global(div > h4:first-of-type),
+  .content > :global(div > h5:first-of-type),
+  .content > :global(div > h6:first-of-type) {
     column-span: all;
     margin-block-end: var(--space-l);
   }

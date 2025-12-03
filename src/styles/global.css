@@ -78,3 +78,105 @@ p {
 .zigzag:last-of-type {
   margin-block-end: 4rem;
 }
+
+.mark-khaki {
+  display: inline-flex;
+  vertical-align: baseline;
+  border-radius: 5px;
+  margin-block-end: var(--space-2xs);
+  color: var(--color-khaki-content);
+  background-color: var(--color-khaki);
+  padding-inline: 0.5rem;
+  padding-block: 0.2rem 0.6rem;
+}
+
+.mark-noir {
+  display: inline-flex;
+  border-radius: 5px;
+  margin-block-end: var(--space-2xs);
+  color: var(--color-noir-content);
+  background-color: var(--color-noir);
+  padding-inline: 0.5rem;
+  padding-block: 0.1rem 0.5rem;
+  line-height: initial;
+}
+
+.mark-blanc {
+  display: inline-flex;
+  border-radius: 5px;
+  margin-block-end: var(--space-2xs);
+  color: var(--color-blanc-content);
+  background-color: var(--color-blanc);
+  padding-inline: 0.5rem;
+  padding-block: 0.1rem 0.5rem;
+  line-height: initial;
+}
+
+.mark-blancfloral {
+  display: inline-flex;
+  border-radius: 5px;
+  margin-block-end: var(--space-2xs);
+  color: var(--color-blancfloral-content);
+  background-color: var(--color-blancfloral);
+  padding-inline: 0.5rem;
+  padding-block: 0.1rem 0.5rem;
+  line-height: initial;
+}
+
+.mark-orange {
+  display: inline-flex;
+  border-radius: 5px;
+  margin-block-end: var(--space-2xs);
+  color: var(--color-orange-content);
+  background-color: var(--color-orange);
+  padding-inline: 0.5rem;
+  padding-block: 0.1rem 0.5rem;
+  line-height: initial;
+}
+
+.mark-menthe {
+  display: inline-flex;
+  border-radius: 5px;
+  margin-block-end: var(--space-2xs);
+  color: var(--color-menthe-content);
+  background-color: var(--color-menthe);
+  padding-inline: 0.5rem;
+  padding-block: 0.1rem 0.5rem;
+  line-height: initial;
+}
+
+.mark-lavande {
+  display: inline-flex;
+  border-radius: 5px;
+  margin-block-end: var(--space-2xs);
+  color: var(--color-lavande-content);
+  background-color: var(--color-lavande);
+  padding-inline: 0.5rem;
+  padding-block: 0.1rem 0.5rem;
+  line-height: initial;
+}
+
+.mark-olive {
+  display: inline-flex;
+  border-radius: 5px;
+  margin-block-end: var(--space-2xs);
+  color: var(--color-olive-content);
+  background-color: var(--color-olive);
+  padding-inline: 0.5rem;
+  padding-block: 0.1rem 0.5rem;
+  line-height: initial;
+}
+
+.rotation {
+  border-radius: 5px;
+  margin-block-end: var(--space-2xs);
+  margin-block-start: var(--space-3xl);
+  margin-inline-end: calc(-1 * var(--space-xl));
+  color: var(--color-orange-content);
+  background-color: var(--color-orange);
+  padding-inline: 1rem;
+  padding-block: 0% 1%;
+  line-height: initial;
+  display: inline-block;
+  transform: rotate(-35deg) translateY(-50%);
+}

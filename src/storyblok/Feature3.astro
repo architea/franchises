@@ -10,7 +10,6 @@ import Youtube from "./utils/Youtube.astro"
 import Headings from "./utils/Headings.astro"
 
 const { blok } = Astro.props
-console.log(blok)
 
 // Check if the first content is a heading
 const indexFirstHeading = blok.content.content
@@ -30,12 +29,12 @@ if (indexFirstHeading === 0) {
 }
 ---
 
-<section class="zigzag feature2" {...storyblokEditable(blok)}>
+<section class="zigzag feature3" {...storyblokEditable(blok)}>
   <div class="layout">
     <div class="content">
       {
         Object.keys(firstHeading).length > 0 && (
-          <div class="head basis-full flex items-end">
+          <div class="head basis-full flex items-end mb-(--space-l)">
             <RichText content={firstHeading} />
           </div>
         )

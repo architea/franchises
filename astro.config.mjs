@@ -24,7 +24,8 @@ export default defineConfig({
         about: "storyblok/About",
         feature1: "storyblok/Feature1",
         feature2: "storyblok/Feature2",
-        feature3: "storyblok/Feature3"
+        feature3: "storyblok/Feature3",
+        logomarquee: "storyblok/LogoMarquee"
       }
     })
   ],
