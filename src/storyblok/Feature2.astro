@@ -1,0 +1,110 @@
+---
+// 50 / 50 layout
+// text on 2 cols
+
+import { Image } from "astro:assets"
+import RichText from "./utils/RichText.astro"
+import { storyblokEditable } from "@storyblok/astro"
+import Button from "./Button.astro"
+import Youtube from "./utils/Youtube.astro"
+import Headings from "./utils/Headings.astro"
+
+const { blok } = Astro.props
+
+// Check if the first content is a heading
+const indexFirstHeading = blok.content.content
+  .map((bloc) => bloc.type)
+  .indexOf("heading")
+let firstHeading = {},
+  remainingContent = blok.content.content
+if (indexFirstHeading === 0) {
+  firstHeading = {
+    type: "doc",
+    content: blok.content.content.splice(indexFirstHeading, 1)
+  }
+  remainingContent = {
+    type: "doc",
+    content: blok.content.content
+  }
+}
+---
+
+<section class="zigzag feature2" {...storyblokEditable(blok)}>
+  <div class="layout">
+    <div class="content">
+      {
+        Object.keys(firstHeading).length > 0 && (
+          <div class="head basis-full flex items-end">
+            <RichText content={firstHeading} />
+          </div>
+        )
+      }
+      <div
+        class="flex gap-y-(--space-m) gap-x-(--space-xl) flex-wrap justify-center">
+        <div class="text text-justify basis-1/2 grow">
+          <RichText content={remainingContent} />
+          {blok.button.length > 0 && <Button blok={blok.button[0]} />}
+        </div>
+        <div class="icons flex flex-col justify-center items-center">
+          {
+            blok.icons.map((icon) => (
+              <div class="flex flex-col justify-center items-center ">
+                <Image
+                  src={icon.icon.filename}
+                  alt={icon.icon.alt}
+                  layout="full-width"
+                  inferSize
+                  class="w-16 h-auto"
+                />
+                <Headings
+                  lvl={icon.titlelvl}
+                  content={icon.title}
+                  class="text-center"
+                />
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+
+    {
+      blok.asset && (
+        <div class="image">
+          {blok.videolink && (
+            <Youtube id={blok.videolink} poster={blok.asset.filename} />
+          )}
+          {!blok.videolink && (
+            <Image
+              src={blok.asset.filename}
+              alt={blok.asset.alt}
+              layout="full-width"
+              class="w-full h-full object-cover"
+              inferSize
+            />
+          )}
+        </div>
+      )
+    }
+  </div>
+</section>
+
+<style>
+  @reference "../styles/global.css";
+
+  .layout {
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+  }
+  .layout > div {
+    flex-basis: 50%;
+  }
+  .content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    padding: var(--space-xl);
+  }
+</style>

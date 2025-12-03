@@ -1,6 +1,7 @@
 ---
 import Head from "./Head.astro"
 import Colors from "../styles/colors.astro"
+import "../../node_modules/aos/dist/aos.css"
 import "../styles/global.css"
 import "../styles/fonts.css"
 import "swiper/css"
@@ -13,5 +14,8 @@ const { seo } = Astro.props
   <Colors />
   <body>
     <slot />
-  </body>
+  </body><script>
+    import AOS from "aos"
+    AOS.init()
+  </script>
 </html>

@@ -2,10 +2,11 @@
 import InlineSVG from "./utils/InlineSvg.astro"
 import RichText from "./utils/RichText.astro"
 import { Image } from "astro:assets"
+import { storyblokEditable } from "@storyblok/astro"
 const { blok } = Astro.props
 ---
 
-<div id="slider">
+<div id="slider" {...storyblokEditable(blok)}>
   <div class="rs">
     {
       blok.socials.map((reseau) => (
@@ -24,7 +25,7 @@ const { blok } = Astro.props
       ))
     }
   </div>
-  <div class="ct">
+  <div class="ct p-(--space-m) lg:p-(--space-3xl)">
     <RichText content={blok.text} />
   </div>
   <div data-swiper="slider" class="swiper">
@@ -49,8 +50,10 @@ const { blok } = Astro.props
   :global(.rs-icon svg) {
     width: 48px;
   }
-  .slider {
+  #slider {
     position: relative;
+    background-color: var(--color-noir);
+    color: var(--color-blanc);
   }
   .swiper-slide :global(img) {
     max-width: 100%;
@@ -65,6 +68,7 @@ const { blok } = Astro.props
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 2;
+    width: 100%;
   }
   .rs {
     position: absolute;

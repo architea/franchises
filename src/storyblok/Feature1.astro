@@ -1,0 +1,62 @@
+---
+// 50 / 50 layout
+// text on 2 cols
+
+import { Image } from "astro:assets"
+import RichText from "./utils/RichText.astro"
+import { storyblokEditable } from "@storyblok/astro"
+import Button from "./Button.astro"
+import Youtube from "./utils/Youtube.astro"
+
+const { blok } = Astro.props
+---
+
+<section class="zigzag feature1" {...storyblokEditable(blok)}>
+  <div class="layout">
+    <div class="content text-justify">
+      <RichText content={blok.content} />
+      {blok.button.length > 0 && <Button blok={blok.button[0]} />}
+    </div>
+    {
+      blok.asset && (
+        <div class="image w-full max-w-[50%] mx-auto">
+          {blok.videolink && (
+            <Youtube id={blok.videolink} poster={blok.asset.filename} />
+          )}
+          {!blok.videolink && (
+            <Image
+              src={blok.asset.filename}
+              alt={blok.asset.alt}
+              layout="full-width"
+              inferSize
+              class="h-full w-full object-cover"
+            />
+          )}
+        </div>
+      )
+    }
+  </div>
+</section>
+
+<style>
+  @reference "../styles/global.css";
+
+  .content > :global(div > h1, h2, h3, h4, h5, h6:first-of-type) {
+    column-span: all;
+    margin-block-end: var(--space-l);
+  }
+
+  .layout {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .layout > div {
+    flex-basis: 50%;
+  }
+  .content {
+    padding: var(--space-xl);
+    column-gap: var(--space-xl);
+    @apply columns-1 sm:columns-2 lg:columns-1 xl:columns-2;
+  }
+</style>

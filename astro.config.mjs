@@ -3,7 +3,7 @@ import { storyblok } from "@storyblok/astro"
 import { loadEnv } from "vite"
 import vercel from "@astrojs/vercel"
 
-import tailwindcss from "@tailwindcss/vite";
+import tailwindcss from "@tailwindcss/vite"
 
 const env = loadEnv("", process.cwd(), "STORYBLOK")
 const { STORYBLOK_TOKEN } = loadEnv(import.meta.env.MODE, process.cwd(), "")
@@ -20,7 +20,11 @@ export default defineConfig({
       components: {
         page: "storyblok/Page",
         slider: "storyblok/Slider",
-        button: "storyblok/Button"
+        button: "storyblok/Button",
+        about: "storyblok/About",
+        feature1: "storyblok/Feature1",
+        feature2: "storyblok/Feature2",
+        feature3: "storyblok/Feature3"
       }
     })
   ],
