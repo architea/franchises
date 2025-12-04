@@ -51,7 +51,8 @@ body {
 h1 {
   line-height: 1;
   font-size: var(--step-6);
-  font-weight: 700;
+  font-weight: 600;
+  margin-block-end: var(--space-l);
 }
 h2 {
   line-height: 1;
@@ -169,14 +170,23 @@ p {
 
 .rotation {
   border-radius: 5px;
-  margin-block-end: var(--space-2xs);
-  margin-block-start: var(--space-3xl);
-  margin-inline-end: calc(-1 * var(--space-xl));
+  position: absolute;
   color: var(--color-orange-content);
   background-color: var(--color-orange);
   padding-inline: 1rem;
   padding-block: 0% 1%;
-  line-height: initial;
+  margin-block-end: -1%;
   display: inline-block;
-  transform: rotate(-35deg) translateY(-50%);
+  transform-origin: bottom left;
+  transform: rotate(349deg);
+  left: -5rem;
+  top: -3rem;
+}
+
+.hasRotated {
+  padding-inline-start: calc(var(--longueur) * 1%);
+}
+
+.rotatedParent {
+  margin-block-start: 10rem;
 }
