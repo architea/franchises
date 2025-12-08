@@ -1,0 +1,70 @@
+---
+import { Image } from "astro:assets"
+import RichText from "./utils/RichText.astro"
+import { storyblokEditable } from "@storyblok/astro"
+
+const { blok } = Astro.props
+---
+
+<section class="iconGallery" {...storyblokEditable(blok)}>
+  <div class="my-(--space-l)">
+    {blok.intro && <RichText content={blok.intro} />}
+  </div>
+
+  <div class="icons">
+    {
+      blok.icons.map((icon) => (
+        <div class="basis-1/6 icon">
+          <Image
+            src={icon.icon.filename}
+            alt={icon.icon.alt}
+            layout="full-width"
+            inferSize
+            class="max-w-32 mx-auto self-center"
+          />
+          <div class="icon-tagline">
+            <RichText content={icon.text} />
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  @reference "../styles/global.css";
+
+  .iconGallery {
+    padding-block: var(--space-m);
+    @apply px-5 lg:px-10 py-5 mx-auto;
+  }
+
+  .icons {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    justify-content: center;
+    align-items: center;
+    row-gap: var(--space-xs);
+    column-gap: var(--space-m);
+    max-width: 1500px;
+    margin-inline: auto;
+  }
+
+  .icon {
+    display: grid;
+    justify-content: stretch;
+    align-items: flex-start;
+    grid-template-rows: repeat(2, 1fr);
+    height: 100%;
+    row-gap: var(--space-xs);
+  }
+
+  .icon-tagline {
+    text-align: center;
+    max-width: 100%;
+    margin-inline: auto;
+    & * {
+      font-size: var(--step--1);
+    }
+  }
+</style>

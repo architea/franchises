@@ -51,6 +51,8 @@ const { blok } = Astro.props
 </div>
 
 <style>
+  @reference "../styles/global.css";
+
   :global(.rs-icon svg) {
     width: 48px;
   }
@@ -76,10 +78,10 @@ const { blok } = Astro.props
   }
   .rs {
     position: absolute;
-    bottom: 50px;
     left: 50px;
     display: flex;
     z-index: 2;
+    @apply bottom-[15px] md:bottom-[50px];
   }
 </style>
 

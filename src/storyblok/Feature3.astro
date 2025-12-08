@@ -1,71 +1,37 @@
 ---
-// 50 / 50 layout
-// text on 1 col & stats
+// 25 / 75 layout
+// timeline
 
 import { Image } from "astro:assets"
 import RichText from "./utils/RichText.astro"
 import { storyblokEditable } from "@storyblok/astro"
 import Button from "./Button.astro"
+import Timeline from "./Timeline.astro"
 import Youtube from "./utils/Youtube.astro"
-import Headings from "./utils/Headings.astro"
 
 const { blok } = Astro.props
-
-// Check if the first content is a heading
-const indexFirstHeading = blok.content.content
-  .map((bloc) => bloc.type)
-  .indexOf("heading")
-let firstHeading = {},
-  remainingContent = blok.content.content
-if (indexFirstHeading === 0) {
-  firstHeading = {
-    type: "doc",
-    content: blok.content.content.splice(indexFirstHeading, 1)
-  }
-  remainingContent = {
-    type: "doc",
-    content: blok.content.content
-  }
-}
 ---
 
-<section class="zigzag feature3" {...storyblokEditable(blok)}>
+<section class="zigzag feature4" {...storyblokEditable(blok)}>
   <div class="layout">
     <div class="content">
       {
-        Object.keys(firstHeading).length > 0 && (
-          <div class="head basis-full flex items-end my-(--space-l)">
-            <RichText content={firstHeading} />
+        blok.intro && (
+          <div class="my-5">
+            <RichText content={blok.intro} />
           </div>
         )
       }
-      <div
-        class="flex gap-y-(--space-m) gap-x-(--space-xl) flex-wrap justify-center items-center">
-        <div class="text text-justify basis-1/2 grow">
-          <RichText content={remainingContent} />
-          <div class="mt-10 flex gap-2 flex-wrap">
-            {
-              blok.buttons.length > 0 &&
-                blok.buttons.map((button) => <Button blok={button} />)
-            }
-          </div>
-        </div>
-        <div class="stats flex flex-col justify-center items-center">
-          {
-            blok.stats &&
-              blok.stats.map((stat) => (
-                <div class="flex flex-col justify-center items-center ">
-                  <p class="big-number">{stat.stat}</p>
-                  <div class="text-center">
-                    <RichText content={stat.text} />
-                  </div>
-                </div>
-              ))
-          }
-        </div>
+      <div class="my-5 mx-auto">
+        <Timeline data={blok.timeline} />
+      </div>
+      <div class="mb-10 flex gap-2 flex-wrap self-end">
+        {
+          blok.buttons.length > 0 &&
+            blok.buttons.map((button: any) => <Button blok={button} />)
+        }
       </div>
     </div>
-
     {
       blok.asset && (
         <div class="image mt-(--space-m) lg:mt-0">
@@ -96,8 +62,11 @@ if (indexFirstHeading === 0) {
     justify-content: center;
     @apply mt-(--space-3xl) lg:mt-0;
   }
-  .layout > div {
-    flex-basis: 50%;
+  .layout .content {
+    flex-basis: 75%;
+  }
+  .layout .image {
+    flex-basis: 25%;
   }
   .content {
     display: flex;

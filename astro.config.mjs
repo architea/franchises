@@ -26,9 +26,9 @@ export default defineConfig({
         feature2: "storyblok/Feature2",
         feature3: "storyblok/Feature3",
         feature4: "storyblok/Feature4",
-        feature5: "storyblok/Feature5",
         logomarquee: "storyblok/LogoMarquee",
-        ariane: "storyblok/Ariane"
+        ariane: "storyblok/Ariane",
+        iconGallery: "storyblok/IconGallery"
       }
     })
   ],

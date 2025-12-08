@@ -1,34 +1,75 @@
 ---
 // 25 / 75 layout
-// timeline
+// 3 cols
 
 import { Image } from "astro:assets"
 import RichText from "./utils/RichText.astro"
 import { storyblokEditable } from "@storyblok/astro"
 import Button from "./Button.astro"
-import Timeline from "./Timeline.astro"
+import Headings from "./utils/Headings.astro"
 import Youtube from "./utils/Youtube.astro"
 
 const { blok } = Astro.props
 ---
 
-<section class="zigzag feature4" {...storyblokEditable(blok)}>
+<section class="zigzag feature5" {...storyblokEditable(blok)}>
   <div class="layout">
     <div class="content">
       {
         blok.intro && (
-          <div class="my-5">
+          <div class="basis-full shrink-0">
             <RichText content={blok.intro} />
           </div>
         )
       }
-      <div class="my-5 mx-auto">
-        <Timeline data={blok.timeline} />
+      <div
+        class="basis-full shrink-0 flex flex-wrap gap-(--space-m) justify-around items-start">
+        {
+          blok.head.map((item: any) => {
+            if (item.component === "statItem") {
+              return (
+                <div class="min-w-64 basis-1/4">
+                  <div class="flex flex-col justify-center items-center ">
+                    <p class="big-number">{item.stat}</p>
+                    <div class="text-center">
+                      <RichText content={item.text} />
+                    </div>
+                  </div>
+                </div>
+              )
+            }
+            if (item.component === "iconItem") {
+              return (
+                <div class="flex flex-col justify-center items-center">
+                  <Image
+                    src={item.icon.filename}
+                    alt={item.icon.alt}
+                    layout="full-width"
+                    inferSize
+                    class="w-16 h-auto"
+                  />
+                  <Headings
+                    lvl={item.titlelvl}
+                    content={item.title}
+                    class="text-center"
+                  />
+                </div>
+              )
+            }
+          })
+        }
       </div>
-      <div class="mb-10 flex gap-2 flex-wrap self-end">
+      {
+        blok.text && (
+          <div class="text-justify mt-5 cols3">
+            <RichText content={blok.text} />
+          </div>
+        )
+      }
+      <div class="mb-10 flex gap-2 flex-wrap basis-full self-end">
         {
           blok.buttons.length > 0 &&
-            blok.buttons.map((button) => <Button blok={button} />)
+            blok.buttons.map((button: any) => <Button blok={button} />)
         }
       </div>
     </div>
@@ -60,6 +101,7 @@ const { blok } = Astro.props
     display: flex;
     align-items: stretch;
     justify-content: center;
+    max-width: 100%;
     @apply mt-(--space-3xl) lg:mt-0;
   }
   .layout .content {
@@ -70,10 +112,14 @@ const { blok } = Astro.props
   }
   .content {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
     justify-content: center;
-    align-items: start;
-    align-self: center;
-    @apply px-5 lg:px-10;
+    gap: var(--space-m);
+    @apply px-5 lg:px-10 py-5;
+  }
+  .cols3 {
+    column-count: 3;
+    column-gap: var(--space-m);
+    column-width: 27ch;
   }
 </style>

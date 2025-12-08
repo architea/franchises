@@ -1,13 +1,12 @@
 ---
 // 50 / 50 layout
-// text on 1 col & icon list
+// text on 1 col & items
 
 import { Image } from "astro:assets"
 import RichText from "./utils/RichText.astro"
 import { storyblokEditable } from "@storyblok/astro"
 import Button from "./Button.astro"
 import Youtube from "./utils/Youtube.astro"
-import Headings from "./utils/Headings.astro"
 
 const { blok } = Astro.props
 
@@ -27,6 +26,8 @@ if (indexFirstHeading === 0) {
     content: blok.content.content
   }
 }
+
+console.log(blok)
 ---
 
 <section class="zigzag feature2" {...storyblokEditable(blok)}>
@@ -40,7 +41,7 @@ if (indexFirstHeading === 0) {
         )
       }
       <div
-        class="flex gap-y-(--space-m) gap-x-(--space-xl) flex-wrap justify-center mb-10">
+        class="flex gap-y-(--space-m) gap-x-(--space-xl) flex-wrap justify-center items-center mb-10">
         <div class="text text-justify basis-1/2 grow">
           <RichText content={remainingContent} />
           <div class="mt-10 flex gap-2 flex-wrap">
@@ -52,23 +53,34 @@ if (indexFirstHeading === 0) {
         </div>
         <div class="icons flex flex-col justify-center items-center gap-y-10">
           {
-            blok.icons &&
-              blok.icons?.map((icon) => (
-                <div class="flex flex-col justify-center items-center">
-                  <Image
-                    src={icon.icon.filename}
-                    alt={icon.icon.alt}
-                    layout="full-width"
-                    inferSize
-                    class="w-16 h-auto"
-                  />
-                  <Headings
-                    lvl={icon.titlelvl}
-                    content={icon.title}
-                    class="text-center"
-                  />
-                </div>
-              ))
+            blok.items?.map((item) => {
+              if (item.component === "iconItem") {
+                return (
+                  <div class="flex flex-col justify-center items-center">
+                    <Image
+                      src={item.icon.filename}
+                      alt={item.icon.alt}
+                      layout="full-width"
+                      inferSize
+                      class="w-16 h-auto"
+                    />
+                    <RichText content={item.text} />
+                  </div>
+                )
+              }
+              if (item.component === "statItem") {
+                return (
+                  <div class="max-w-xs">
+                    <div class="flex flex-col justify-center items-center ">
+                      <p class="big-number">{item.stat}</p>
+                      <div class="text-center">
+                        <RichText content={item.text} />
+                      </div>
+                    </div>
+                  </div>
+                )
+              }
+            })
           }
         </div>
       </div>
