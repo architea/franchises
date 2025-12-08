@@ -25,12 +25,15 @@ export default defineConfig({
         feature1: "storyblok/Feature1",
         feature2: "storyblok/Feature2",
         feature3: "storyblok/Feature3",
-        logomarquee: "storyblok/LogoMarquee"
+        feature4: "storyblok/Feature4",
+        feature5: "storyblok/Feature5",
+        logomarquee: "storyblok/LogoMarquee",
+        ariane: "storyblok/Ariane"
       }
     })
   ],
 
-  output: "server",
+  output: env.STORYBLOK_IS_PREVIEW === "yes" ? "server" : "static",
   adapter: vercel(),
 
   vite: {

@@ -1,0 +1,55 @@
+---
+import { storyblokEditable } from "@storyblok/astro"
+import Button from "./Button.astro"
+import Breadcrumb from "./Breadcrumb.astro"
+
+const { blok, name, parent, slug } = Astro.props
+---
+
+<section class="ariane" {...storyblokEditable(blok)}>
+  <div class="content">
+    <h1>{blok.h1}</h1>
+    <h2>{blok.title}</h2>
+    <Breadcrumb name={name} parent={parent} slug={slug} />
+    <div class="flex flex-wrap gap-4 justify-center items-stretch buttons">
+      {blok.buttons.map((button) => <Button blok={button} />)}
+    </div>
+  </div>
+</section>
+
+<style>
+  .ariane {
+    background: var(--color-noir);
+    color: var(--color-noir-content);
+    overflow: hidden;
+  }
+
+  .ariane .content {
+    padding: 3% 0 calc(15px + 3%);
+    z-index: 5;
+    text-align: center;
+  }
+
+  .ariane h1 {
+    color: var(--color-orange);
+    font-size: 13px;
+    letter-spacing: 1px;
+    font-weight: 400;
+    margin-block-end: 0;
+  }
+
+  .ariane h2 {
+    color: var(--color-balnc);
+    font-size: calc(24px + 17 * (100vw - 320px) / 1080);
+    margin: calc(10px + 0.5%) 0 0;
+    font-weight: 700;
+  }
+
+  .ariane .buttons {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 60px;
+  }
+</style>

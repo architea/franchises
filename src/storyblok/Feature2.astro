@@ -1,6 +1,6 @@
 ---
 // 50 / 50 layout
-// text on 2 cols
+// text on 1 col & icon list
 
 import { Image } from "astro:assets"
 import RichText from "./utils/RichText.astro"
@@ -16,7 +16,7 @@ const indexFirstHeading = blok.content.content
   .map((bloc) => bloc.type)
   .indexOf("heading")
 let firstHeading = {},
-  remainingContent = blok.content.content
+  remainingContent = blok.content
 if (indexFirstHeading === 0) {
   firstHeading = {
     type: "doc",
@@ -34,35 +34,41 @@ if (indexFirstHeading === 0) {
     <div class="content">
       {
         Object.keys(firstHeading).length > 0 && (
-          <div class="head basis-full flex items-end mb-(--space-l)">
+          <div class="head basis-full flex items-end my-(--space-l)">
             <RichText content={firstHeading} />
           </div>
         )
       }
       <div
-        class="flex gap-y-(--space-m) gap-x-(--space-xl) flex-wrap justify-center">
+        class="flex gap-y-(--space-m) gap-x-(--space-xl) flex-wrap justify-center mb-10">
         <div class="text text-justify basis-1/2 grow">
           <RichText content={remainingContent} />
-          {blok.button.length > 0 && <Button blok={blok.button[0]} />}
+          <div class="mt-10 flex gap-2 flex-wrap">
+            {
+              blok.buttons.length > 0 &&
+                blok.buttons.map((button) => <Button blok={button} />)
+            }
+          </div>
         </div>
-        <div class="icons flex flex-col justify-center items-center">
+        <div class="icons flex flex-col justify-center items-center gap-y-10">
           {
-            blok.icons.map((icon) => (
-              <div class="flex flex-col justify-center items-center ">
-                <Image
-                  src={icon.icon.filename}
-                  alt={icon.icon.alt}
-                  layout="full-width"
-                  inferSize
-                  class="w-16 h-auto"
-                />
-                <Headings
-                  lvl={icon.titlelvl}
-                  content={icon.title}
-                  class="text-center"
-                />
-              </div>
-            ))
+            blok.icons &&
+              blok.icons?.map((icon) => (
+                <div class="flex flex-col justify-center items-center">
+                  <Image
+                    src={icon.icon.filename}
+                    alt={icon.icon.alt}
+                    layout="full-width"
+                    inferSize
+                    class="w-16 h-auto"
+                  />
+                  <Headings
+                    lvl={icon.titlelvl}
+                    content={icon.title}
+                    class="text-center"
+                  />
+                </div>
+              ))
           }
         </div>
       </div>
@@ -70,7 +76,7 @@ if (indexFirstHeading === 0) {
 
     {
       blok.asset && (
-        <div class="image">
+        <div class="image mt-(--space-m) lg:mt-0">
           {blok.videolink && (
             <Youtube id={blok.videolink} poster={blok.asset.filename} />
           )}
@@ -79,7 +85,7 @@ if (indexFirstHeading === 0) {
               src={blok.asset.filename}
               alt={blok.asset.alt}
               layout="full-width"
-              class="w-full h-full object-cover"
+              class="w-full h-full object-cover max-h-[800px] lg:max-h-none"
               inferSize
             />
           )}
@@ -96,6 +102,7 @@ if (indexFirstHeading === 0) {
     display: flex;
     align-items: stretch;
     justify-content: center;
+    @apply mt-(--space-3xl) lg:mt-0;
   }
   .layout > div {
     flex-basis: 50%;
@@ -105,6 +112,7 @@ if (indexFirstHeading === 0) {
     flex-direction: column;
     justify-content: center;
     align-items: start;
-    padding: var(--space-xl);
+    align-self: center;
+    @apply px-5 lg:px-10;
   }
 </style>

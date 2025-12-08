@@ -8,11 +8,9 @@ import { storyblokEditable } from "@storyblok/astro"
 import Button from "./Button.astro"
 
 const { blok } = Astro.props
-
-console.log(blok)
 ---
 
-<section class="logo-marquee mt-(--space-xl)" {...storyblokEditable(blok)}>
+<section class="logo-marquee my-(--space-xl)" {...storyblokEditable(blok)}>
   <RichText content={blok.text} />
   <div class="marquee">
     <ul class="marquee-content">
@@ -31,14 +29,22 @@ console.log(blok)
       }
     </ul>
   </div>
+  <div class="mt-10 flex justify-end gap-10">
+    {
+      blok.buttons.length > 0 &&
+        blok.buttons.map((button) => <Button blok={button} />)
+    }
+  </div>
 </section>
 
 <style>
+  @reference "../styles/global.css";
+
   .logo-marquee {
-    padding: var(--space-xl);
+    @apply px-5 lg:px-10;
   }
   :root {
-    --marquee-width: 100%;
+    --marquee-width: 90vw;
     --marquee-height: 200px;
     /* --marquee-elements: 12; */ /* defined with JavaScript */
     --marquee-elements-displayed: 5;
@@ -57,7 +63,7 @@ console.log(blok)
     margin-inline: auto;
     margin-block-start: var(--space-xl);
   }
-  /* .marquee:before,
+  .marquee:before,
   .marquee:after {
     position: absolute;
     top: 0;
@@ -81,7 +87,7 @@ console.log(blok)
       var(--color-blanc) 0%,
       transparent 100%
     );
-  } */
+  }
   .marquee-content {
     list-style: none;
     height: 100%;
@@ -120,7 +126,7 @@ console.log(blok)
 
   @media (max-width: 600px) {
     :root {
-      --marquee-width: 100vw;
+      --marquee-width: 100%;
       --marquee-height: 200px;
       --marquee-elements-displayed: 2;
     }

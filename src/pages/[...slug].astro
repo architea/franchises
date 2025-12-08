@@ -1,5 +1,5 @@
 ---
-import { useStoryblokApi } from "@storyblok/astro"
+import { storyblokEditable, useStoryblokApi } from "@storyblok/astro"
 import StoryblokComponent from "@storyblok/astro/StoryblokComponent.astro"
 import Layout from "../layouts/Layout.astro"
 import isPreview from "../utils/isPreview"
@@ -7,11 +7,14 @@ import generateStaticPaths from "../utils/generateStaticPaths"
 
 export async function getStaticPaths() {
   //We have moved all the code to a generateStaticPaths() function.
-  return await generateStaticPaths()
+  const paths = await generateStaticPaths()
+  return paths
 }
 
+const { slug } = Astro.params
+
 const storyblokApi = useStoryblokApi()
-const { data } = await storyblokApi.get("cdn/stories/home", {
+const { data } = await storyblokApi.get(`cdn/stories/${slug || "home"}`, {
   version: isPreview() ? "draft" : "published",
   resolve_relations: "page.canonical",
   resolve_links: "url"
@@ -30,5 +33,10 @@ const seo = {
 ---
 
 <Layout seo={seo}>
-  <StoryblokComponent blok={story.content} />
+  <StoryblokComponent
+    blok={story.content}
+    name={story.name}
+    parent={story.parent_id}
+    slug={story.full_slug}
+  />
 </Layout>

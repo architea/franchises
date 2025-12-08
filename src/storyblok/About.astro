@@ -32,7 +32,7 @@ if (blok.filigrane) {
     </div>
     {
       blok.title && (
-        <div class="title">
+        <div class="title pl-0 lg:pl-5">
           <div>
             <h2 set:html={blok.title} />
           </div>
@@ -45,7 +45,12 @@ if (blok.filigrane) {
       <div class="paragraphe pres">
         <RichText content={blok.text} />
       </div>
-      {blok.button.length > 0 && <Button blok={blok.button[0]} />}
+      <div class="mt-10 flex flex-wrap gap-2">
+        {
+          blok.buttons.length > 0 &&
+            blok.buttons.map((button) => <Button blok={button} />)
+        }
+      </div>
     </div>
   </div>
 </section>
@@ -59,6 +64,10 @@ if (blok.filigrane) {
 </style>
 
 <style define:vars={{ decoFontSize }}>
+  @reference "../styles/global.css";
+  #index {
+    @apply px-5 lg:px-10;
+  }
   #index {
     background-color: var(--color-blanc);
     color: var(--color-noir);
@@ -95,7 +104,6 @@ if (blok.filigrane) {
   }
 
   .default .col > div {
-    padding: 0 40px;
     flex: 1;
     width: 33.33%;
     max-width: 33.33%;
@@ -186,21 +194,7 @@ if (blok.filigrane) {
     position: relative;
   }
 
-  @media screen and (max-width: 1400px) {
-    .default .col {
-      max-width: calc(80% + 80px);
-    }
-  }
-
   @media screen and (max-width: 1084px) {
-    .default .col {
-      max-width: calc(80% + 40px);
-    }
-
-    .default .col > div {
-      padding: 0 20px;
-    }
-
     .default .col.head .title > div {
       bottom: 50px;
     }
@@ -242,7 +236,6 @@ if (blok.filigrane) {
     }
 
     #index .head .title > div {
-      left: 20px;
       bottom: 0;
     }
   }

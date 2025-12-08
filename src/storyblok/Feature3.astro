@@ -1,6 +1,6 @@
 ---
 // 50 / 50 layout
-// text on 2 cols
+// text on 1 col & stats
 
 import { Image } from "astro:assets"
 import RichText from "./utils/RichText.astro"
@@ -34,7 +34,7 @@ if (indexFirstHeading === 0) {
     <div class="content">
       {
         Object.keys(firstHeading).length > 0 && (
-          <div class="head basis-full flex items-end mb-(--space-l)">
+          <div class="head basis-full flex items-end my-(--space-l)">
             <RichText content={firstHeading} />
           </div>
         )
@@ -43,18 +43,24 @@ if (indexFirstHeading === 0) {
         class="flex gap-y-(--space-m) gap-x-(--space-xl) flex-wrap justify-center items-center">
         <div class="text text-justify basis-1/2 grow">
           <RichText content={remainingContent} />
-          {blok.button.length > 0 && <Button blok={blok.button[0]} />}
+          <div class="mt-10 flex gap-2 flex-wrap">
+            {
+              blok.buttons.length > 0 &&
+                blok.buttons.map((button) => <Button blok={button} />)
+            }
+          </div>
         </div>
         <div class="stats flex flex-col justify-center items-center">
           {
-            blok.stats.map((stat) => (
-              <div class="flex flex-col justify-center items-center ">
-                <p class="big-number">{stat.stat}</p>
-                <div class="text-center">
-                  <RichText content={stat.text} />
+            blok.stats &&
+              blok.stats.map((stat) => (
+                <div class="flex flex-col justify-center items-center ">
+                  <p class="big-number">{stat.stat}</p>
+                  <div class="text-center">
+                    <RichText content={stat.text} />
+                  </div>
                 </div>
-              </div>
-            ))
+              ))
           }
         </div>
       </div>
@@ -62,7 +68,7 @@ if (indexFirstHeading === 0) {
 
     {
       blok.asset && (
-        <div class="image">
+        <div class="image mt-(--space-m) lg:mt-0">
           {blok.videolink && (
             <Youtube id={blok.videolink} poster={blok.asset.filename} />
           )}
@@ -71,7 +77,7 @@ if (indexFirstHeading === 0) {
               src={blok.asset.filename}
               alt={blok.asset.alt}
               layout="full-width"
-              class="w-full h-full object-cover"
+              class="w-full h-full object-cover max-h-[800px] lg:max-h-none"
               inferSize
             />
           )}
@@ -82,15 +88,13 @@ if (indexFirstHeading === 0) {
 </section>
 
 <style>
-  .big-number {
-    font-size: var(--step-5);
-    font-weight: 700;
-  }
+  @reference "../styles/global.css";
 
   .layout {
     display: flex;
     align-items: stretch;
     justify-content: center;
+    @apply mt-(--space-3xl) lg:mt-0;
   }
   .layout > div {
     flex-basis: 50%;
@@ -100,6 +104,7 @@ if (indexFirstHeading === 0) {
     flex-direction: column;
     justify-content: center;
     align-items: start;
-    padding: var(--space-xl);
+    align-self: center;
+    @apply px-5 lg:px-10;
   }
 </style>

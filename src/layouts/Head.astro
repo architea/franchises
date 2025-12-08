@@ -11,7 +11,7 @@ const titleExtension = data.story.content.titleExtension
 
 const { seo } = Astro.props
 const canonicalURL =
-  seo.canonical.length > 0
+  seo.canonical?.length > 0
     ? new URL(seo.canonical, Astro.site)
     : new URL(Astro.url.pathname, Astro.site)
 ---
@@ -30,6 +30,8 @@ const canonicalURL =
 
   <meta name="robots" content={seo.robots} />
 
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
   {seo.next && <link rel="next" href={seo.next} />}
   {seo.prev && <link rel="prev" href={seo.prev} />}
 
@@ -39,6 +41,6 @@ const canonicalURL =
   <meta property="og:type" content="website" />
   <meta content="Architéa" property="og:site_name" />
   <meta property="og:image" content={seo.ogimage} />
-  <link rel="icon" type="image/png" href="/favicon/favicon.png" />
+
   {seo.schema && <script type="application/ld+json" set:html={seo.schema} />}
 </head>

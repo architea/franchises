@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "daisyui";
 
 /* @link https://utopia.fyi/space/calculator?c=320,18,1.2,1240,20,1.25,5,2,&s=0.75|0.5|0.25,1.5|2|3|4|6,s-l&g=s,l,xl,12 */
 
@@ -37,8 +38,8 @@
   --step-2: clamp(1.62rem, 1.5041rem + 0.5793vw, 1.9531rem);
   --step-3: clamp(1.944rem, 1.771rem + 0.8651vw, 2.4414rem);
   --step-4: clamp(2.3328rem, 2.0827rem + 1.2504vw, 3.0518rem);
-  --step-5: clamp(2.7994rem, 2.4462rem + 1.7658vw, 3.8147rem);
-  --step-6: clamp(3.3592rem, 2.8691rem + 2.4507vw, 4.7684rem);
+  --step-5: clamp(2.5rem, 2.4462rem + 1.7658vw, 3.8147rem);
+  --step-6: clamp(3.3592rem, 2.8691rem + 2vw, 4.7684rem);
 }
 
 body {
@@ -50,19 +51,22 @@ body {
 
 h1 {
   line-height: 1;
-  font-size: var(--step-6);
+  font-size: var(--step-5);
   font-weight: 600;
   margin-block-end: var(--space-l);
+  text-wrap-style: pretty;
 }
 h2 {
   line-height: 1;
   font-size: var(--step-4);
   font-weight: 600;
+  text-wrap-style: pretty;
 }
 h3 {
   line-height: 1;
   font-size: var(--step-1);
   font-weight: 600;
+  text-wrap-style: pretty;
 }
 p {
   line-height: 1.6;
@@ -80,92 +84,19 @@ p {
   margin-block-end: 4rem;
 }
 
-.mark-khaki {
+.mark {
   display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-width: min-content;
   vertical-align: baseline;
   border-radius: 5px;
   margin-block-end: var(--space-2xs);
-  color: var(--color-khaki-content);
-  background-color: var(--color-khaki);
-  padding-inline: 0.5rem;
-  padding-block: 0.2rem 0.6rem;
-}
-
-.mark-noir {
-  display: inline-flex;
-  border-radius: 5px;
-  margin-block-end: var(--space-2xs);
-  color: var(--color-noir-content);
-  background-color: var(--color-noir);
-  padding-inline: 0.5rem;
-  padding-block: 0.1rem 0.5rem;
-  line-height: initial;
-}
-
-.mark-blanc {
-  display: inline-flex;
-  border-radius: 5px;
-  margin-block-end: var(--space-2xs);
-  color: var(--color-blanc-content);
-  background-color: var(--color-blanc);
-  padding-inline: 0.5rem;
-  padding-block: 0.1rem 0.5rem;
-  line-height: initial;
-}
-
-.mark-blancfloral {
-  display: inline-flex;
-  border-radius: 5px;
-  margin-block-end: var(--space-2xs);
-  color: var(--color-blancfloral-content);
-  background-color: var(--color-blancfloral);
-  padding-inline: 0.5rem;
-  padding-block: 0.1rem 0.5rem;
-  line-height: initial;
-}
-
-.mark-orange {
-  display: inline-flex;
-  border-radius: 5px;
-  margin-block-end: var(--space-2xs);
-  color: var(--color-orange-content);
-  background-color: var(--color-orange);
-  padding-inline: 0.5rem;
-  padding-block: 0.1rem 0.5rem;
-  line-height: initial;
-}
-
-.mark-menthe {
-  display: inline-flex;
-  border-radius: 5px;
-  margin-block-end: var(--space-2xs);
-  color: var(--color-menthe-content);
-  background-color: var(--color-menthe);
-  padding-inline: 0.5rem;
-  padding-block: 0.1rem 0.5rem;
-  line-height: initial;
-}
-
-.mark-lavande {
-  display: inline-flex;
-  border-radius: 5px;
-  margin-block-end: var(--space-2xs);
-  color: var(--color-lavande-content);
-  background-color: var(--color-lavande);
-  padding-inline: 0.5rem;
-  padding-block: 0.1rem 0.5rem;
-  line-height: initial;
-}
-
-.mark-olive {
-  display: inline-flex;
-  border-radius: 5px;
-  margin-block-end: var(--space-2xs);
-  color: var(--color-olive-content);
-  background-color: var(--color-olive);
-  padding-inline: 0.5rem;
-  padding-block: 0.1rem 0.5rem;
-  line-height: initial;
+  padding-inline: 1rem;
+  padding-block: 0.5rem;
+  text-box-trim: trim-both;
+  text-box-edge: cap alphabetic;
+  line-height: 1.2;
 }
 
 .rotation {
@@ -179,14 +110,19 @@ p {
   display: inline-block;
   transform-origin: bottom left;
   transform: rotate(349deg);
-  left: -5rem;
+  left: calc(-1 * var(--longueur) * 1%);
   top: -3rem;
 }
 
 .hasRotated {
-  padding-inline-start: calc(var(--longueur) * 1%);
+  padding-inline-start: calc(var(--longueur) * 1vw);
 }
 
 .rotatedParent {
   margin-block-start: 10rem;
+}
+
+.big-number {
+  font-size: var(--step-5);
+  font-weight: 700;
 }

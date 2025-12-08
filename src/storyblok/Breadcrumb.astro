@@ -1,0 +1,106 @@
+---
+import { useStoryblokApi } from "@storyblok/astro"
+import isPreview from "../utils/isPreview"
+const storyblokApi = useStoryblokApi()
+
+const { data } = await storyblokApi.get(`cdn/links`, {
+  version: isPreview() ? "draft" : "published"
+})
+
+const links = Object.values(data.links)
+
+const { name, slug } = Astro.props
+let { parent } = Astro.props
+// console.log({ name, parent, slug })
+
+let path = []
+if (name != "Homepage") {
+  path.push({
+    slug: slug,
+    titre: name
+  })
+  if (parent) {
+    let hasParent = true
+    while (hasParent) {
+      const parentLink = links.find((link) => link.id == parent)
+      path.push({
+        slug: parentLink?.slug,
+        titre: parentLink?.name
+      })
+      if (!parentLink?.parent_id) {
+        hasParent = false
+      } else {
+        parent = parentLink?.parent_id
+      }
+    }
+  }
+}
+console.log(path.reverse())
+---
+
+<nav id="bc" aria-label="breadcrumb">
+  <ol>
+    <li>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="32"
+        height="32"
+        viewBox="0 0 256 256">
+        <path
+          fill="currentColor"
+          d="m216.13 106.72l-80.06-75.59a12 12 0 0 0-16.2.05l-79.94 75.49a12 12 0 0 0-3.93 8.87V208a12 12 0 0 0 12 12h48a12 12 0 0 0 12-12v-48a4 4 0 0 1 4-4h32a4 4 0 0 1 4 4v48a12 12 0 0 0 12 12h48a12 12 0 0 0 12-12v-92.46a12 12 0 0 0-3.87-8.82ZM212 208a4 4 0 0 1-4 4h-48a4 4 0 0 1-4-4v-48a12 12 0 0 0-12-12h-32a12 12 0 0 0-12 12v48a4 4 0 0 1-4 4H48a4 4 0 0 1-4-4v-92.46a4.09 4.09 0 0 1 1.36-3l79.94-75.49a4 4 0 0 1 5.33 0l80.06 75.58a4 4 0 0 1 1.31 3Z">
+        </path>
+      </svg>
+      <a href="/" title="Retour à l'accueil">Accueil</a>
+    </li>
+    {
+      path.map((item) => (
+        <li>
+          <a href={`/${item.slug}`} title={`Retour à ${item.titre}`}>
+            {item.titre}
+          </a>
+        </li>
+      ))
+    }
+  </ol>
+</nav>
+
+<style>
+  #bc {
+    margin-top: calc(10px + 0.5%);
+  }
+
+  #bc ol {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  #bc li {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  #bc li:after {
+    content: "/";
+    font-size: 15px;
+    margin: 0 6px 0 6px;
+    top: -3px;
+  }
+
+  #bc li:last-child:after {
+    display: none;
+  }
+
+  #bc li svg {
+    width: 14px;
+  }
+
+  #bc li a:hover {
+    color: var(--color-orange);
+  }
+</style>

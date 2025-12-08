@@ -1,12 +1,19 @@
 ---
 import StoryblokComponent from "@storyblok/astro/StoryblokComponent.astro"
-const { blok } = Astro.props
+const { blok, name, parent, slug } = Astro.props
 ---
 
 <main>
   {
-    blok.body?.map((blok) => {
-      return <StoryblokComponent blok={blok} />
+    blok.body?.map((bloc) => {
+      return (
+        <StoryblokComponent
+          blok={bloc}
+          name={name}
+          parent={parent}
+          slug={slug}
+        />
+      )
     })
   }
 </main>

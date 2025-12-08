@@ -1,21 +1,31 @@
 ---
-// 50 / 50 layout
-// text on 2 cols
+// 25 / 75 layout
+// timeline
 
 import { Image } from "astro:assets"
 import RichText from "./utils/RichText.astro"
 import { storyblokEditable } from "@storyblok/astro"
 import Button from "./Button.astro"
+import Timeline from "./Timeline.astro"
 import Youtube from "./utils/Youtube.astro"
 
 const { blok } = Astro.props
 ---
 
-<section class="zigzag feature1" {...storyblokEditable(blok)}>
+<section class="zigzag feature4" {...storyblokEditable(blok)}>
   <div class="layout">
-    <div class="content text-justify mb-10">
-      <RichText content={blok.content} />
-      <div class="mt-10 flex gap-2 flex-wrap">
+    <div class="content">
+      {
+        blok.intro && (
+          <div class="my-5">
+            <RichText content={blok.intro} />
+          </div>
+        )
+      }
+      <div class="my-5 mx-auto">
+        <Timeline data={blok.timeline} />
+      </div>
+      <div class="mb-10 flex gap-2 flex-wrap self-end">
         {
           blok.buttons.length > 0 &&
             blok.buttons.map((button) => <Button blok={button} />)
@@ -24,7 +34,7 @@ const { blok } = Astro.props
     </div>
     {
       blok.asset && (
-        <div class="image w-full max-w-[50%] mx-auto mt-(--space-m) lg:mt-0">
+        <div class="image mt-(--space-m) lg:mt-0">
           {blok.videolink && (
             <Youtube id={blok.videolink} poster={blok.asset.filename} />
           )}
@@ -33,8 +43,8 @@ const { blok } = Astro.props
               src={blok.asset.filename}
               alt={blok.asset.alt}
               layout="full-width"
+              class="w-full h-full object-cover max-h-[800px] lg:max-h-none"
               inferSize
-              class="h-full w-full object-cover max-h-[800px] lg:max-h-none"
             />
           )}
         </div>
@@ -46,27 +56,24 @@ const { blok } = Astro.props
 <style>
   @reference "../styles/global.css";
 
-  .content > :global(div > h1:first-of-type),
-  .content > :global(div > h2:first-of-type),
-  .content > :global(div > h3:first-of-type),
-  .content > :global(div > h4:first-of-type),
-  .content > :global(div > h5:first-of-type),
-  .content > :global(div > h6:first-of-type) {
-    column-span: all;
-    margin-block-end: var(--space-l);
-  }
-
   .layout {
     display: flex;
-    align-items: center;
+    align-items: stretch;
     justify-content: center;
     @apply mt-(--space-3xl) lg:mt-0;
   }
-  .layout > div {
-    flex-basis: 50%;
+  .layout .content {
+    flex-basis: 75%;
+  }
+  .layout .image {
+    flex-basis: 25%;
   }
   .content {
-    column-gap: var(--space-xl);
-    @apply px-5 lg:px-10 columns-1 sm:columns-2 lg:columns-1 xl:columns-2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    align-self: center;
+    @apply px-5 lg:px-10;
   }
 </style>

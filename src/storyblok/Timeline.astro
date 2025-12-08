@@ -1,0 +1,66 @@
+---
+import RichText from "./utils/RichText.astro"
+
+const { data } = Astro.props
+
+const maxW3xl = 105 + (10 - data.length) * 20 + "px"
+const maxW2xl = 95 + (10 - data.length) * 16 + "px"
+const maxWxl = 80 + (10 - data.length) * 20 + "px"
+const maxWlg = 58.75 + (10 - data.length) * 16.25 + "px"
+---
+
+<ul class="timeline timeline-vertical lg:timeline-horizontal">
+  {
+    data.map((item, index) => (
+      <li>
+        <hr />
+        {index % 2 == 1 && (
+          <div class="timeline-start text-center mb-5 self-start">
+            <RichText content={item.text} />
+          </div>
+        )}
+        <div class="timeline-middle">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            class="h-5 w-5">
+            <circle cx="10" cy="10" r="10" />
+          </svg>
+        </div>
+        {index % 2 == 0 && (
+          <div class="timeline-end text-center mt-5">
+            <RichText content={item.text} />
+          </div>
+        )}
+        <hr />
+      </li>
+    ))
+  }
+</ul>
+
+<style define:vars={{ maxWlg, maxWxl, maxW2xl, maxW3xl }}>
+  li {
+    max-width: 18rem;
+  }
+  @media (min-width: 1024px) {
+    li {
+      max-width: var(--maxWlg);
+    }
+  }
+  @media (min-width: 1280px) {
+    li {
+      max-width: var(--maxWxl);
+    }
+  }
+  @media (min-width: 1440px) {
+    li {
+      max-width: var(--maxW2xl);
+    }
+  }
+  @media (min-width: 1600px) {
+    li {
+      max-width: var(--maxW3xl);
+    }
+  }
+</style>
