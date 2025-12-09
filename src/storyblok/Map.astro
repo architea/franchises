@@ -1,0 +1,203 @@
+---
+import { Image } from "astro:assets"
+import RichText from "./utils/RichText.astro"
+import { storyblokEditable } from "@storyblok/astro"
+
+const { blok } = Astro.props
+console.log(blok)
+---
+
+<section class="map" {...storyblokEditable(blok)}>
+  <div class="layout">
+    <div class="map-image grow">
+      <figure class="relative z-1 w-fit mx-auto">
+        {
+          blok.image && (
+            <div class="image">
+              <Image
+                src={blok.image.filename}
+                alt={blok.image.alt}
+                layout="full-width"
+                inferSize
+                class={`object-contain max-h-screen`}
+              />
+            </div>
+          )
+        }
+        <ul class="poi js-poi">
+          {
+            blok.dots?.map((poi) => (
+              <li
+                style={`top: ${poi.xaxis}%; left: ${poi.yaxis}%;`}
+                class="poi__item js-poi__item">
+                <button
+                  class="poi__btn"
+                  aria-label="Point 1. Click for more info."
+                  aria-controls="poi-modal-1">
+                  <svg
+                    class="icon h-3 w-3 inline-block text-inherit fill-current leading-none shrink-0"
+                    viewBox="0 0 12 12"
+                    aria-hidden="true">
+                    <path d="M11,5H7V1A1,1,0,0,0,5,1V5H1A1,1,0,0,0,1,7H5v4a1,1,0,0,0,2,0V7h4a1,1,0,0,0,0-2Z" />
+                  </svg>
+                </button>
+              </li>
+            ))
+          }
+
+          <!-- <li style="top: 56%; left: 35%;" class="poi__item js-poi__item">
+            <button
+              class="poi__btn"
+              aria-label="Point 2. Click for more info."
+              aria-controls="poi-modal-2">
+              <svg
+                class="icon h-3 w-3 inline-block text-inherit fill-current leading-none shrink-0"
+                viewBox="0 0 12 12"
+                aria-hidden="true"
+                ><path
+                  d="M11,5H7V1A1,1,0,0,0,5,1V5H1A1,1,0,0,0,1,7H5v4a1,1,0,0,0,2,0V7h4a1,1,0,0,0,0-2Z"
+                ></path></svg
+              >
+            </button>
+          </li> -->
+        </ul>
+      </figure>
+    </div>
+    <div class="items flex flex-wrap gap-5 grow justify-center mt-(--space-m)">
+      {
+        blok.items?.map((item: any) => {
+          if (item.component === "iconItem") {
+            return (
+              <div class="flex flex-col justify-center items-center min-w-64">
+                <Image
+                  src={item.icon.filename}
+                  alt={item.icon.alt}
+                  layout="full-width"
+                  inferSize
+                  class="w-16 h-auto"
+                />
+                <RichText content={item.text} />
+              </div>
+            )
+          }
+          if (item.component === "statItem") {
+            return (
+              <div class="max-w-xs">
+                <div class="flex flex-col justify-center items-center min-w-64">
+                  <p class="big-number">{item.stat}</p>
+                  <div class="text-center">
+                    <RichText content={item.text} />
+                  </div>
+                </div>
+              </div>
+            )
+          }
+        })
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  @reference "../styles/global.css";
+
+  .map {
+    margin-block: var(--space-m);
+  }
+
+  .layout {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    @apply mt-(--space-3xl) lg:mt-0;
+  }
+  .layout > .map-image {
+    flex-basis: 75%;
+  }
+  .layout > .items {
+    flex-basis: 25%;
+  }
+
+  /* --------------------------------
+
+File#: _2_image-interest-points
+Title: Points Of Interest
+Descr: Highlight the points of interest of an image and provide additional details for each one.
+Usage: codyhouse.co/license
+
+-------------------------------- */
+  .poi {
+    pointer-events: none;
+  }
+
+  .poi__item {
+    position: absolute;
+    pointer-events: auto;
+  }
+
+  .poi__btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    --size: 32px;
+    height: var(--size);
+    width: var(--size);
+    border-radius: 50%;
+    @apply bg-rose-600;
+    @apply shadow-md;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+  .poi__btn::after {
+    /* pulse ring */
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    box-shadow: inset 0 0 1px 1px #e11d48;
+    -webkit-animation: poi-pulse 2s infinite;
+    animation: poi-pulse 2s infinite;
+  }
+  .poi__btn .icon {
+    @apply text-white;
+    /* icon color */
+    --size: 12px;
+    transition: -webkit-transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition:
+      transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+      -webkit-transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .poi__btn:hover .icon {
+    transform: scale(1.1);
+  }
+
+  .poi__item--visited button {
+    /* style of clicked button */
+    @apply bg-gray-900/95;
+    backdrop-filter: blur(10px);
+  }
+  .poi__item--visited button::after {
+    display: none;
+  }
+
+  @keyframes poi-pulse {
+    0% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      -webkit-transform: scale(1.6);
+      transform: scale(1.6);
+      opacity: 0;
+    }
+  }
+</style>

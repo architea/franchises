@@ -28,7 +28,8 @@ export default defineConfig({
         feature4: "storyblok/Feature4",
         logomarquee: "storyblok/LogoMarquee",
         ariane: "storyblok/Ariane",
-        iconGallery: "storyblok/IconGallery"
+        iconGallery: "storyblok/IconGallery",
+        map: "storyblok/Map"
       }
     })
   ],
