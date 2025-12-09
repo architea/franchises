@@ -34,7 +34,7 @@ const { blok } = Astro.props
               alt={blok.asset.alt}
               layout="full-width"
               inferSize
-              class="h-full w-full object-cover max-h-[800px] lg:max-h-none"
+              class={`h-full w-full object-${blok.contain ? "contain" : "cover"} max-h-[800px] lg:max-h-none`}
             />
           )}
         </div>

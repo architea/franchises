@@ -61,6 +61,7 @@ h2 {
   font-size: var(--step-4);
   font-weight: 600;
   text-wrap-style: pretty;
+  margin-block-end: var(--space-m);
 }
 h3 {
   line-height: 1;
