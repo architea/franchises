@@ -74,6 +74,9 @@ body {
   font-size: var(--step-0);
   font-weight: 400;
 }
+p + p {
+  margin-block-start: var(--space-s);
+}
 
 .zigzag:nth-child(odd) .layout {
   @apply flex-col lg:flex-row;
@@ -92,7 +95,7 @@ body {
   min-width: min-content;
   vertical-align: baseline;
   border-radius: 5px;
-  margin-block-end: var(--space-2xs);
+  margin-block: var(--space-2xs);
   padding-inline: 1rem;
   padding-block: 0.5rem;
   text-box-trim: trim-both;

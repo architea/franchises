@@ -29,7 +29,8 @@ export default defineConfig({
         logomarquee: "storyblok/LogoMarquee",
         ariane: "storyblok/Ariane",
         iconGallery: "storyblok/IconGallery",
-        map: "storyblok/Map"
+        map: "storyblok/Map",
+        contact: "storyblok/Contact"
       }
     })
   ],
