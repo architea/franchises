@@ -78,6 +78,10 @@ p + p {
   margin-block-start: var(--space-s);
 }
 
+.timeline p + p {
+  margin-block-start: 0;
+}
+
 .zigzag:nth-child(odd) .layout {
   @apply flex-col lg:flex-row;
 }
