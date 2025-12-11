@@ -55,7 +55,7 @@ const { blok } = Astro.props
                 <div class="flex flex-col justify-center items-center">
                   <Image
                     src={item.icon.filename}
-                    alt={item.icon.alt}
+                    alt={item.icon.alt || " "}
                     layout="full-width"
                     inferSize
                     class={`"w-16 h-auto object-${blok.contain ? "contain" : "cover"}`}
@@ -94,7 +94,7 @@ const { blok } = Astro.props
           {!blok.videolink && (
             <Image
               src={blok.asset.filename}
-              alt={blok.asset.alt}
+              alt={blok.asset.alt || " "}
               layout="full-width"
               class="w-full h-full object-cover max-h-[800px] lg:max-h-none"
               inferSize

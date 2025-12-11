@@ -17,7 +17,7 @@ const { blok } = Astro.props
         <div class="basis-1/6 icon">
           <Image
             src={icon.icon.filename}
-            alt={icon.icon.alt}
+            alt={icon.icon.alt || " "}
             layout="full-width"
             inferSize
             class="max-w-32 mx-auto self-center"

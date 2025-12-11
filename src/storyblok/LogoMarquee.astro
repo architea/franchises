@@ -19,7 +19,7 @@ const { blok } = Astro.props
           <li class="mr-(--space-m)">
             <Image
               src={img.filename}
-              alt={img.alt}
+              alt={img.alt || " "}
               class="max-w-32"
               layout="full-width"
               inferSize

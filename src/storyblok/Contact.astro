@@ -20,7 +20,7 @@ let { blok } = Astro.props
             {!blok.videolink && (
               <Image
                 src={blok.image.filename}
-                alt={blok.image.alt}
+                alt={blok.image.alt || " "}
                 layout="full-width"
                 inferSize
                 class={`w-full h-auto`}

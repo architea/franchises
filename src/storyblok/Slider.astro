@@ -50,7 +50,7 @@ const { blok } = Astro.props
           <div class="swiper-slide">
             <Image
               src={slide.filename}
-              alt={slide.alt}
+              alt={slide.alt || " "}
               layout="full-width"
               inferSize
             />

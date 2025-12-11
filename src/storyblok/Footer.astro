@@ -35,14 +35,18 @@ if (datanav) {
 
 <footer>
   <div class="infos">
-    <RichText content={footerdata.infosfooter} />
-    <Image
-      src={footerdata.logofooter.filename}
-      alt={footerdata.logofooter.alt}
-      layout="full-width"
-      inferSize
-      class="mt-(--space-m)"
-    />
+    {footerdata.infosfooter && <RichText content={footerdata.infosfooter} />}
+    {
+      footerdata.logofooter?.filename && (
+        <Image
+          src={footerdata.logofooter.filename}
+          alt={footerdata.logofooter.alt || " "}
+          layout="full-width"
+          inferSize
+          class="mt-(--space-m)"
+        />
+      )
+    }
   </div>
   <div class="nav">
     <ul>
@@ -81,13 +85,17 @@ if (datanav) {
     </ul>
   </div>
   <div class="image">
-    <Image
-      src={footerdata.image.filename}
-      alt={footerdata.image.alt}
-      layout="full-width"
-      inferSize
-      class="mx-auto max-h-80 w-auto"
-    />
+    {
+      footerdata.image?.filename && (
+        <Image
+          src={footerdata.image.filename}
+          alt={footerdata.image.alt || " "}
+          layout="full-width"
+          inferSize
+          class="mx-auto max-h-80 w-auto"
+        />
+      )
+    }
   </div>
   <div class="slogan flex flex-col gap-(--space-xl)">
     <div class="self-start">

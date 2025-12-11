@@ -37,7 +37,7 @@ if (datanav) {
       aria-label=`Retour à l'accueil`>
       <Image
         src={data.story.content.logonav.filename}
-        alt={data.story.content.logonav.alt}
+        alt={data.story.content.logonav.alt || " "}
         layout="full-width"
         inferSize
         class={`object-contain max-h-screen`}
