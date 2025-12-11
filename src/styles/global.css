@@ -125,12 +125,12 @@ p + p {
 .hasRotated {
   padding-inline-start: calc(var(--longueur) * 0.5vw);
   @media (min-width: 450px) {
-    padding-inline-start: calc(var(--longueur) * 1vw);
+    padding-inline-start: calc(var(--longueur) * 6px);
   }
 }
 
 .rotatedParent {
-  margin-block-start: 10rem;
+  margin-block-start: 5rem;
 }
 
 .big-number {

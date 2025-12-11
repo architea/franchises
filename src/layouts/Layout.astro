@@ -2,6 +2,7 @@
 import Head from "./Head.astro"
 import Colors from "../styles/colors.astro"
 import Nav from "../storyblok/Nav.astro"
+import Footer from "../storyblok/Footer.astro"
 import "../../node_modules/aos/dist/aos.css"
 import "../styles/global.css"
 import "../styles/fonts.css"
@@ -19,6 +20,7 @@ const { seo } = Astro.props
         <div id="scroll" data-scroll-target></div>
         <Nav />
         <slot />
+        <Footer />
       </div>
     </div>
   </body><script>

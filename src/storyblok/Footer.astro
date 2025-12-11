@@ -1,0 +1,162 @@
+---
+import { useStoryblokApi } from "@storyblok/astro"
+import isPreview from "../utils/isPreview"
+import { Image } from "astro:assets"
+import RichText from "./utils/RichText.astro"
+import InlineSVG from "./utils/InlineSvg.astro"
+import Button from "./Button.astro"
+
+const storyblokApi = useStoryblokApi()
+const { data } = await storyblokApi.get(`cdn/stories/global`, {
+  version: isPreview() ? "draft" : "published",
+  resolve_links: "url",
+  resolve_links_level: 2
+})
+
+const footerdata = data.story.content
+
+const datanav = data.story.content.navitems
+let nav
+if (datanav) {
+  nav = datanav.map((item: any) => {
+    return {
+      name: item.name,
+      url: item.page.story?.full_slug,
+      subpages: item.subpages.map((subpage: any) => {
+        return {
+          name: subpage.name,
+          url: subpage.page.story?.full_slug
+        }
+      })
+    }
+  })
+}
+---
+
+<footer>
+  <div class="infos">
+    <RichText content={footerdata.infosfooter} />
+    <Image
+      src={footerdata.logofooter.filename}
+      alt={footerdata.logofooter.alt}
+      layout="full-width"
+      inferSize
+      class="mt-(--space-m)"
+    />
+  </div>
+  <div class="nav">
+    <ul>
+      {
+        nav &&
+          nav.map((item: any) => (
+            <li class="relative">
+              {item.url && (
+                <a
+                  href={`/${item.url}`}
+                  title={item.name}
+                  aria-label={item.name}
+                  class="relative page">
+                  {item.name}
+                </a>
+              )}
+              {!item.url && <span class="page">{item.name}</span>}
+              {item.subpages && (
+                <ul>
+                  {item.subpages.map((subitem: any) => (
+                    <li>
+                      <a
+                        href={`/${subitem.url}`}
+                        title={subitem.name}
+                        aria-label={subitem.name}
+                        class="subpage">
+                        {subitem.name}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </li>
+          ))
+      }
+    </ul>
+  </div>
+  <div class="image">
+    <Image
+      src={footerdata.image.filename}
+      alt={footerdata.image.alt}
+      layout="full-width"
+      inferSize
+      class="mx-auto max-h-80 w-auto"
+    />
+  </div>
+  <div class="slogan flex flex-col gap-(--space-xl)">
+    <div class="self-start">
+      <RichText content={footerdata.slogan} />
+    </div>
+    <div
+      class="w-full flex flex-wrap gap-(--space-m) items-center justify-between">
+      <div class="rs flex flex-wrap">
+        {
+          footerdata.rs.map((reseau: any) => (
+            <a
+              href={reseau.url.url}
+              class={`icones-social-12 ${reseau.name}`}
+              rel="external noopener noreferrer"
+              title={`Voir notre page ${reseau.name} Architéa`}
+              target="_blank"
+              aria-label={`lien vers ${reseau.name}`}>
+              <InlineSVG
+                class={`rs-icon fill-${reseau.color}`}
+                src={reseau.icon.filename}
+              />
+            </a>
+          ))
+        }
+      </div>
+      {footerdata.button.length != 0 && <Button blok={footerdata.button[0]} />}
+    </div>
+  </div>
+</footer>
+
+<style>
+  @reference "../styles/global.css";
+
+  footer {
+    background-color: var(--color-noir);
+    color: var(--color-blanc);
+    @apply px-5 lg:px-10 py-(--space-xl);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: flex-start;
+    gap: var(--space-m);
+  }
+  .infos {
+    flex-basis: 15%;
+  }
+  .infos :global(p + p) {
+    margin-block-start: 0;
+  }
+  .infos :global(p:first-child) {
+    font-size: var(--step-1);
+    margin-block-end: var(--space-xs);
+  }
+  .nav {
+    flex-basis: 10%;
+  }
+  .nav .page {
+    font-size: var(--step-1);
+    font-weight: 700;
+  }
+  .nav .subpage {
+    padding-inline-start: var(--space-xs);
+  }
+  .image {
+    flex-basis: 15%;
+    @apply order-4 basis-full xl:basis-[15%] xl:order-3;
+  }
+  .slogan {
+    flex-basis: 40%;
+    font-size: var(--step-1);
+  }
+</style>

@@ -2,15 +2,26 @@
 import InlineSVG from "./utils/InlineSvg.astro"
 import RichText from "./utils/RichText.astro"
 import { Image } from "astro:assets"
-import { storyblokEditable } from "@storyblok/astro"
+import { storyblokEditable, useStoryblokApi } from "@storyblok/astro"
 import Button from "./Button.astro"
+import isPreview from "../utils/isPreview"
+
+const storyblokApi = useStoryblokApi()
+const { data } = await storyblokApi.get(`cdn/stories/global`, {
+  version: isPreview() ? "draft" : "published",
+  resolve_links: "url",
+  resolve_links_level: 2
+})
+
+let socials = data.story.content.rs
+
 const { blok } = Astro.props
 ---
 
 <div id="slider" {...storyblokEditable(blok)}>
   <div class="rs">
     {
-      blok.socials.map((reseau: any) => (
+      socials.map((reseau: any) => (
         <a
           href={reseau.url.url}
           class={`icones-social-12 ${reseau.name}`}
