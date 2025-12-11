@@ -3,10 +3,8 @@ import { Image } from "astro:assets"
 import RichText from "./utils/RichText.astro"
 import { storyblokEditable } from "@storyblok/astro"
 import Youtube from "./utils/Youtube.astro"
-import Button from "./Button.astro"
 
 let { blok } = Astro.props
-console.log(blok)
 ---
 
 <section class="contact py-(--space-xl)" {...storyblokEditable(blok)}>

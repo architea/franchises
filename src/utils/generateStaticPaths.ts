@@ -4,7 +4,9 @@ import isPreview from "./isPreview"
 export default async function generateStaticPaths() {
   const storyblokApi = useStoryblokApi()
   const links = await storyblokApi.getAll("cdn/links", {
-    version: isPreview() ? "draft" : "published"
+    version: isPreview() ? "draft" : "published",
+    resolve_relations: "page.canonical",
+    resolve_links: "url"
   })
   // @ts-ignore
   let paths = []

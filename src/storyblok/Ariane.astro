@@ -12,7 +12,7 @@ const { blok, name, parent, slug } = Astro.props
     <h2>{blok.title}</h2>
     <Breadcrumb name={name} parent={parent} slug={slug} />
     <div class="flex flex-wrap gap-4 justify-center items-stretch buttons">
-      {blok.buttons.map((button) => <Button blok={button} />)}
+      {blok.buttons.map((button: any) => <Button blok={button} />)}
     </div>
   </div>
 </section>

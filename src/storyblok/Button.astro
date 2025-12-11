@@ -5,7 +5,7 @@ const { blok } = Astro.props
 {
   blok.href.id && (
     <a
-      href={blok.href.story.full_slug}
+      href={blok.href.story?.full_slug || blok.href.cached_url}
       title={blok.text}
       class={`button ${blok.color} size-${blok.size}`}
       aria-label={blok.text}>

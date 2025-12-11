@@ -10,7 +10,7 @@ const { blok } = Astro.props
 <div id="slider" {...storyblokEditable(blok)}>
   <div class="rs">
     {
-      blok.socials.map((reseau) => (
+      blok.socials.map((reseau: any) => (
         <a
           href={reseau.url.url}
           class={`icones-social-12 ${reseau.name}`}
@@ -29,13 +29,13 @@ const { blok } = Astro.props
   <div class="ct p-(--space-m) lg:p-(--space-3xl)">
     <RichText content={blok.text} />
     <div class="flex flex-wrap gap-4 justify-center items-stretch buttons">
-      {blok.buttons.map((button) => <Button blok={button} />)}
+      {blok.buttons.map((button: any) => <Button blok={button} />)}
     </div>
   </div>
   <div data-swiper="slider" class="swiper">
     <div class="swiper-wrapper">
       {
-        blok.slider.map((slide) => (
+        blok.slider.map((slide: any) => (
           <div class="swiper-slide">
             <Image
               src={slide.filename}

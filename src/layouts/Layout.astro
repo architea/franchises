@@ -1,6 +1,7 @@
 ---
 import Head from "./Head.astro"
 import Colors from "../styles/colors.astro"
+import Nav from "../storyblok/Nav.astro"
 import "../../node_modules/aos/dist/aos.css"
 import "../styles/global.css"
 import "../styles/fonts.css"
@@ -13,7 +14,13 @@ const { seo } = Astro.props
   <Head seo={seo} />
   <Colors />
   <body>
-    <slot />
+    <div id="app">
+      <div class="app-content" data-scroll-root>
+        <div id="scroll" data-scroll-target></div>
+        <Nav />
+        <slot />
+      </div>
+    </div>
   </body><script>
     import AOS from "aos"
     import "../utils/rotationSizing"

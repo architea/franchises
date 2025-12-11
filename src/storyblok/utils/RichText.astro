@@ -5,12 +5,16 @@ import StoryblokComponent from "@storyblok/astro/StoryblokComponent.astro"
 const { content } = Astro.props
 ---
 
-<RichTextRenderer
-  content={content}
-  resolver={(blok) => {
-    return {
-      component: StoryblokComponent,
-      props: { blok }
-    }
-  }}
-/>
+{
+  content && (
+    <RichTextRenderer
+      content={content}
+      resolver={(blok) => {
+        return {
+          component: StoryblokComponent,
+          props: { blok }
+        }
+      }}
+    />
+  )
+}
