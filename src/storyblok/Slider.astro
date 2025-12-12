@@ -29,13 +29,15 @@ const { blok } = Astro.props
           title={`Voir notre page ${reseau.name} Architéa`}
           target="_blank"
           aria-label={`lien vers ${reseau.name}`}>
-          <Image
-            src={reseau.icon.filename}
-            alt={reseau.icon.alt || " "}
-            layout="full-width"
-            inferSize
-            class="max-w-16"
-          />
+          {reseau.icon.filename && (
+            <Image
+              src={reseau.icon.filename}
+              alt={reseau.icon.alt || " "}
+              layout="full-width"
+              inferSize
+              class="max-w-16"
+            />
+          )}
         </a>
       ))
     }

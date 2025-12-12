@@ -13,7 +13,7 @@ const { blok } = Astro.props
 
 <section class="zigzag feature1" {...storyblokEditable(blok)}>
   <div class="layout">
-    <div class="content text-justify mb-10">
+    <div class="content text-justify mb-10 pt-10">
       <RichText content={blok.content} />
       <div class="mt-10 flex gap-2 flex-wrap">
         {
@@ -24,7 +24,7 @@ const { blok } = Astro.props
     </div>
     {
       blok.asset && (
-        <div class="image w-full max-w-[50%] mx-auto mt-(--space-m) lg:mt-0">
+        <div class="image w-full min-h-full mx-auto mt-(--space-m) lg:mt-0">
           {blok.videolink && (
             <Youtube id={blok.videolink} poster={blok.asset.filename} />
           )}
@@ -34,7 +34,7 @@ const { blok } = Astro.props
               alt={blok.asset.alt}
               layout="full-width"
               inferSize
-              class={`h-full w-full object-${blok.contain ? "contain" : "cover"} max-h-[800px] lg:max-h-none`}
+              class={`h-full w-full object-${blok.contain ? "contain" : "cover"} max-h-[400px] lg:max-h-none`}
             />
           )}
         </div>
@@ -59,7 +59,7 @@ const { blok } = Astro.props
 
   .layout {
     display: flex;
-    align-items: center;
+    align-items: stretch;
     justify-content: center;
     @apply mt-(--space-3xl) lg:mt-0;
   }
