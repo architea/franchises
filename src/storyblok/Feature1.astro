@@ -9,12 +9,32 @@ import Button from "./Button.astro"
 import Youtube from "./utils/Youtube.astro"
 
 const { blok } = Astro.props
+
+// Check if the first content is a heading
+const indexFirstHeading = blok.content.content
+  .map((bloc: any) => bloc.type)
+  .indexOf("heading")
+let firstHeading = {},
+  remainingContent = blok.content
+if (indexFirstHeading === 0) {
+  firstHeading = {
+    type: "doc",
+    content: blok.content.content.splice(indexFirstHeading, 1)
+  }
+  remainingContent = {
+    type: "doc",
+    content: blok.content.content
+  }
+}
 ---
 
 <section class="feature1" {...storyblokEditable(blok)}>
   <div
     class={`layout flex-col ${blok.first ? "lg:flex-row-reverse" : "lg:flex-row"}`}>
-    <div class="content text-justify mb-10 pt-10">
+    <div class="content text-justify py-5">
+      <div class="title">
+        <RichText content={firstHeading} />
+      </div>
       <div class="texte"><RichText content={blok.content} /></div>
       <div class="mt-10 flex gap-2 flex-wrap">
         {
@@ -47,14 +67,8 @@ const { blok } = Astro.props
 <style>
   @reference "../styles/global.css";
 
-  .content > :global(div > h1:first-of-type),
-  .content > :global(div > h2:first-of-type),
-  .content > :global(div > h3:first-of-type),
-  .content > :global(div > h4:first-of-type),
-  .content > :global(div > h5:first-of-type),
-  .content > :global(div > h6:first-of-type) {
+  .title {
     column-span: all;
-    margin-block-end: var(--space-l);
     text-align: left;
   }
 

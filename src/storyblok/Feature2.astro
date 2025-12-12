@@ -12,7 +12,7 @@ const { blok } = Astro.props
 
 // Check if the first content is a heading
 const indexFirstHeading = blok.content.content
-  .map((bloc) => bloc.type)
+  .map((bloc: any) => bloc.type)
   .indexOf("heading")
 let firstHeading = {},
   remainingContent = blok.content
