@@ -18,11 +18,11 @@ const { blok } = Astro.props
     <ul class="marquee-content">
       {
         blok.images.map((img) => (
-          <li class="mr-(--space-m)">
+          <li class="mr-(--space-xl)">
             <Image
               src={img.filename}
               alt={img.alt || " "}
-              class="max-w-32"
+              class="max-w-64"
               layout="full-width"
               inferSize
             />
