@@ -18,7 +18,7 @@ let socials = data.story.content.rs
 const { blok } = Astro.props
 ---
 
-<div id="slider" {...storyblokEditable(blok)}>
+<div class="slider" {...storyblokEditable(blok)}>
   <div class="rs gap-5">
     {
       socials.map((reseau: any) => (
@@ -79,7 +79,7 @@ const { blok } = Astro.props
   :global(.rs-icon svg) {
     width: 48px;
   }
-  #slider {
+  .slider {
     position: relative;
     background-color: var(--color-noir);
     color: var(--color-blanc);
