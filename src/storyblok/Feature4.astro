@@ -88,7 +88,7 @@ const { blok } = Astro.props
     </div>
     {
       blok.asset && (
-        <div class="image mt-(--space-m) lg:mt-0">
+        <div class="image relative w-full full mx-auto mt-(--space-m) lg:mt-0 min-h-[400px] lg:min-h-0">
           {blok.videolink && (
             <Youtube id={blok.videolink} poster={blok.asset.filename} />
           )}
@@ -97,7 +97,7 @@ const { blok } = Astro.props
               src={blok.asset.filename}
               alt={blok.asset.alt || " "}
               layout="full-width"
-              class="w-full h-full object-cover max-h-[800px] lg:max-h-none"
+              class={`absolute top-0 left-0 object-${blok.contain ? "contain" : "cover"} max-h-[400px] lg:max-h-full min-h-full`}
               inferSize
             />
           )}
