@@ -10,7 +10,9 @@ let { blok } = Astro.props
 <section class="contact py-(--space-xl)" {...storyblokEditable(blok)}>
   <div class="layout">
     <div class="text text-justify">
-      <RichText content={blok.text} />
+      <div class="texte">
+        <RichText content={blok.text} />
+      </div>
       {
         blok.image && (
           <div class="image w-full mt-(--space-m)">

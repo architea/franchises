@@ -18,7 +18,7 @@ const { blok } = Astro.props
     <div class="content">
       {
         blok.intro && (
-          <div class="basis-full shrink-0">
+          <div class="basis-full shrink-0 texte">
             <RichText content={blok.intro} />
           </div>
         )
@@ -74,7 +74,7 @@ const { blok } = Astro.props
       </div>
       {
         blok.text && (
-          <div class="text-justify mt-5 cols3">
+          <div class="text-justify mt-5 cols3 texte">
             <RichText content={blok.text} />
           </div>
         )

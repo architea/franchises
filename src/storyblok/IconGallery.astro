@@ -7,29 +7,33 @@ const { blok } = Astro.props
 ---
 
 <section class="iconGallery" {...storyblokEditable(blok)}>
-  <div class="my-(--space-l)">
-    {blok.intro && <RichText content={blok.intro} />}
-  </div>
-
-  <div class="icons">
-    {
-      blok.icons.map((icon) => (
-        <div class="basis-1/6 icon">
-          <Image
-            src={icon.icon.filename}
-            alt={icon.icon.alt || " "}
-            layout="full-width"
-            inferSize
-            class="max-w-32 mx-auto self-center"
-          />
-          <div class="icon-tagline">
-            <RichText content={icon.text} />
-          </div>
-        </div>
-      ))
-    }
-  </div>
+  {
+    blok.intro && (
+      <div class="my-(--space-l) texte">
+        <RichText content={blok.intro} />
+      </div>
+    )
+  }
 </section>
+
+<div class="icons">
+  {
+    blok.icons.map((icon) => (
+      <div class="basis-1/6 icon">
+        <Image
+          src={icon.icon.filename}
+          alt={icon.icon.alt || " "}
+          layout="full-width"
+          inferSize
+          class="max-w-32 mx-auto self-center"
+        />
+        <div class="icon-tagline">
+          <RichText content={icon.text} />
+        </div>
+      </div>
+    ))
+  }
+</div>
 
 <style>
   @reference "../styles/global.css";

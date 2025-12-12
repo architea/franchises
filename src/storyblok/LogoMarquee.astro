@@ -11,7 +11,9 @@ const { blok } = Astro.props
 ---
 
 <section class="logo-marquee my-(--space-xl)" {...storyblokEditable(blok)}>
-  <RichText content={blok.text} />
+  <div class="texte">
+    <RichText content={blok.text} />
+  </div>
   <div class="marquee">
     <ul class="marquee-content">
       {

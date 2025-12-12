@@ -15,7 +15,7 @@ const { blok } = Astro.props
   <div
     class={`layout flex-col ${blok.first ? "lg:flex-row-reverse" : "lg:flex-row"}`}>
     <div class="content text-justify mb-10 pt-10">
-      <RichText content={blok.content} />
+      <div class="texte"><RichText content={blok.content} /></div>
       <div class="mt-10 flex gap-2 flex-wrap">
         {
           blok.buttons.length > 0 &&

@@ -44,7 +44,7 @@ const { blok } = Astro.props
   </div>
   <div class="ct p-(--space-m) lg:p-(--space-3xl) max-w-[80ch]">
     <RichText content={blok.text} />
-    <div class="flex flex-wrap gap-4 justify-center items-stretch buttons">
+    <div class="flex flex-wrap gap-4 justify-start items-stretch buttons">
       {blok.buttons.map((button: any) => <Button blok={button} />)}
     </div>
   </div>
@@ -68,6 +68,13 @@ const { blok } = Astro.props
 
 <style>
   @reference "../styles/global.css";
+
+  :global(.hasRotated) + .buttons {
+    padding-inline-start: calc(var(--longueur) * 0.5vw);
+    @media (min-width: 450px) {
+      padding-inline-start: calc(var(--longueur) * 6px);
+    }
+  }
 
   :global(.rs-icon svg) {
     width: 48px;

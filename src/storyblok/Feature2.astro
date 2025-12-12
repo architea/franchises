@@ -42,7 +42,9 @@ if (indexFirstHeading === 0) {
       <div
         class="flex gap-y-(--space-m) gap-x-(--space-xl) flex-wrap justify-center items-center mb-10">
         <div class="text text-justify basis-1/2 grow">
-          <RichText content={remainingContent} />
+          <div class="texte">
+            <RichText content={remainingContent} />
+          </div>
           <div class="mt-10 flex gap-2 flex-wrap">
             {
               blok.buttons.length > 0 &&

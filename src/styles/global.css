@@ -75,6 +75,10 @@ body {
   font-weight: 400;
 }
 
+.texte p + p {
+  margin-block-start: var(--space-m);
+}
+
 .zigzag:nth-child(odd) .layout {
   @apply flex-col lg:flex-row;
 }

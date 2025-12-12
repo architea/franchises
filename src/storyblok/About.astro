@@ -35,7 +35,9 @@ if (blok.filigrane) {
     }
     <div class="content text-justify mb-10 pt-(--space-m) z-10">
       <h2>{blok.title}</h2>
-      <RichText content={blok.text} />
+      <div class="texte">
+        <RichText content={blok.text} />
+      </div>
       <div class="mt-10 flex gap-2 flex-wrap">
         {
           blok.buttons.length > 0 &&
