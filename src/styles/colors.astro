@@ -11,9 +11,10 @@ const colors = data.datasource_entries.map(({ id, ...attr }) => attr)
 let rawCSS = ""
 let colorDefs = "*{"
 colors.forEach((color) => {
-  rawCSS += `.${color.name.toLowerCase()}{background-color:${color.value};color:${color.dimension_value}}
+  rawCSS += `.${color.name.toLowerCase()}{background-color:${color.value};color:${color.dimension_value};}
   .fill-${color.name.toLowerCase()}{fill:${color.value};}
-  .stroke-${color.name.toLowerCase()}{stroke:${color.value};}`
+  .stroke-${color.name.toLowerCase()}{stroke:${color.value};}
+  a.${color.name.toLowerCase()}:hover{background-color:color-mix(in oklab, ${color.value}, #000 7%);}`
   colorDefs += `--color-${color.name.toLowerCase()}:${color.value};--color-${color.name.toLowerCase()}-content:${color.dimension_value};`
 })
 colorDefs += "}"

@@ -24,4 +24,4 @@ function shrinkMark() {
   }
 }
 
-window.onresize = shrinkMark()
+// window.addEventListener("resize", shrinkMark)

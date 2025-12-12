@@ -10,6 +10,8 @@ import Headings from "./utils/Headings.astro"
 import Youtube from "./utils/Youtube.astro"
 
 const { blok } = Astro.props
+
+console.log(blok.text)
 ---
 
 <section class="feature5" {...storyblokEditable(blok)}>
@@ -23,68 +25,81 @@ const { blok } = Astro.props
           </div>
         )
       }
-      <div
-        class="basis-full shrink-0 flex flex-wrap gap-(--space-m) justify-around items-start">
-        {
-          blok.items?.map((item: any) => {
-            if (item.component === "metierItem") {
-              return (
-                <div class="basis-full sm:basis-1/3">
-                  <div class="flex flex-col justify-start items-start ">
-                    <p class="big-number">{item.stat}</p>
-                    <div class="text-left">
-                      <RichText content={item.text} />
-                    </div>
-                  </div>
-                </div>
-              )
-            }
-            if (item.component === "statItem") {
-              return (
-                <div class="min-w-64 basis-1/4">
-                  <div class="flex flex-col justify-center items-center ">
-                    <p class="big-number">{item.stat}</p>
-                    <div class="text-center">
-                      <RichText content={item.text} />
-                    </div>
-                  </div>
-                </div>
-              )
-            }
-            if (item.component === "iconItem") {
-              return (
-                <div class="flex flex-col justify-center items-center">
-                  <Image
-                    src={item.icon.filename}
-                    alt={item.icon.alt || " "}
-                    layout="full-width"
-                    inferSize
-                    class={`"w-16 h-auto object-${blok.contain ? "contain" : "cover"}`}
-                  />
-                  <Headings
-                    lvl={item.titlelvl}
-                    content={item.title}
-                    class="text-center"
-                  />
-                </div>
-              )
-            }
-          })
-        }
-      </div>
       {
-        blok.text && (
+        blok.items[0]?.component === "metierItem" && (
+          <div class="basis-full shrink-0 grid gap-y-(--space-xs) grid-cols-1 md:grid-cols-2 items-center max-w-5xl mx-auto">
+            {blok.items?.map((item: any) => {
+              if (item.component === "metierItem") {
+                return (
+                  <div class="sm:min-w-max">
+                    <div class="flex flex-col justify-start items-start ">
+                      <div class="text-left w-full">
+                        <RichText content={item.text} />
+                      </div>
+                    </div>
+                  </div>
+                )
+              }
+            })}
+          </div>
+        )
+      }
+      {
+        blok.items[0]?.component === "statItem" && (
+          <div class="basis-full shrink-0 flex flex-wrap gap-(--space-m) justify-around items-start">
+            {blok.items?.map((item: any) => (
+              <div class="min-w-max basis-1/4">
+                <div class="flex flex-col justify-center items-center ">
+                  <p class="big-number">{item.stat}</p>
+                  <div class="text-center">
+                    <RichText content={item.text} />
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )
+      }
+      {
+        blok.items[0]?.component === "iconItem" && (
+          <div class="basis-full shrink-0 flex flex-wrap gap-(--space-m) justify-around items-start">
+            {blok.items?.map((item: any) => (
+              <div class="flex flex-col justify-center items-center">
+                <Image
+                  src={item.icon.filename}
+                  alt={item.icon.alt || " "}
+                  layout="full-width"
+                  inferSize
+                  class={`"w-16 h-auto object-${blok.contain ? "contain" : "cover"}`}
+                />
+                <Headings
+                  lvl={item.titlelvl}
+                  content={item.title}
+                  class="text-center"
+                />
+              </div>
+            ))}
+          </div>
+        )
+      }
+
+      {
+        blok.text.content.length > 1 && (
           <div class="text-justify mt-5 cols3 texte">
             <RichText content={blok.text} />
           </div>
         )
       }
-      <div class="mb-10 flex gap-2 flex-wrap basis-full self-end">
-        {
-          blok.buttons.length > 0 &&
-            blok.buttons.map((button: any) => <Button blok={button} />)
-        }
-      </div>
+
+      {
+        blok.buttons.length > 0 && (
+          <div class="mb-10 flex gap-2 flex-wrap basis-full self-end">
+            {blok.buttons.map((button: any) => (
+              <Button blok={button} />
+            ))}
+          </div>
+        )
+      }
     </div>
     {
       blok.asset && (
@@ -105,34 +120,34 @@ const { blok } = Astro.props
       )
     }
   </div>
+
+  <style>
+    @reference "../styles/global.css";
+
+    .layout {
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+      max-width: 100%;
+      @apply mt-(--space-3xl) lg:mt-0;
+    }
+    .layout .content {
+      flex-basis: 75%;
+    }
+    .layout .image {
+      flex-basis: 25%;
+    }
+    .content {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: var(--space-m);
+      @apply px-5 lg:px-10 py-5;
+    }
+    .cols3 {
+      column-count: 3;
+      column-gap: var(--space-m);
+      column-width: 27ch;
+    }
+  </style>
 </section>
-
-<style>
-  @reference "../styles/global.css";
-
-  .layout {
-    display: flex;
-    align-items: stretch;
-    justify-content: center;
-    max-width: 100%;
-    @apply mt-(--space-3xl) lg:mt-0;
-  }
-  .layout .content {
-    flex-basis: 75%;
-  }
-  .layout .image {
-    flex-basis: 25%;
-  }
-  .content {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: var(--space-m);
-    @apply px-5 lg:px-10 py-5;
-  }
-  .cols3 {
-    column-count: 3;
-    column-gap: var(--space-m);
-    column-width: 27ch;
-  }
-</style>

@@ -74,12 +74,21 @@ body {
   font-size: var(--step-0);
   font-weight: 400;
 }
+p {
+  margin: 0;
+}
 
 .texte p + p {
   margin-block-start: var(--space-m);
 }
+.texte ul {
+  list-style: disc inside;
+}
+.texte ol {
+  list-style: decimal inside;
+}
 
-.zigzag:nth-child(odd) .layout {
+/* .zigzag:nth-child(odd) .layout {
   @apply flex-col lg:flex-row;
 }
 .zigzag:nth-child(even) .layout {
@@ -87,7 +96,7 @@ body {
 }
 .zigzag:last-of-type {
   margin-block-end: 4rem;
-}
+} */
 
 .mark {
   display: inline-flex;
@@ -96,7 +105,7 @@ body {
   min-width: min-content;
   vertical-align: baseline;
   border-radius: 5px;
-  margin-block: var(--space-2xs);
+  /* margin-block: var(--space-2xs); */
   padding-inline: 1rem;
   padding-block: 0.5rem;
   text-box-trim: trim-both;
