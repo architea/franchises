@@ -113,9 +113,12 @@ if (datanav) {
               title={`Voir notre page ${reseau.name} Architéa`}
               target="_blank"
               aria-label={`lien vers ${reseau.name}`}>
-              <InlineSVG
-                class={`rs-icon fill-${reseau.color}`}
+              <Image
                 src={reseau.icon.filename}
+                alt={reseau.icon.alt || " "}
+                layout="full-width"
+                inferSize
+                class="mx-auto max-h-80 w-auto"
               />
             </a>
           ))

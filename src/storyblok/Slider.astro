@@ -19,7 +19,7 @@ const { blok } = Astro.props
 ---
 
 <div id="slider" {...storyblokEditable(blok)}>
-  <div class="rs">
+  <div class="rs gap-5">
     {
       socials.map((reseau: any) => (
         <a
@@ -29,9 +29,12 @@ const { blok } = Astro.props
           title={`Voir notre page ${reseau.name} Architéa`}
           target="_blank"
           aria-label={`lien vers ${reseau.name}`}>
-          <InlineSVG
-            class={`rs-icon fill-${reseau.color}`}
+          <Image
             src={reseau.icon.filename}
+            alt={reseau.icon.alt || " "}
+            layout="full-width"
+            inferSize
+            class="max-w-16"
           />
         </a>
       ))
