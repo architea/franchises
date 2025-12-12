@@ -110,8 +110,8 @@ form *:not(.button span) {
   vertical-align: baseline;
   border-radius: 5px;
   /* margin-block: var(--space-2xs); */
-  padding-inline: 1rem;
-  padding-block: 0.5rem;
+  padding-inline: 0.7rem;
+  padding-block: 0.5rem 0.7rem;
   text-box-trim: trim-both;
   text-box-edge: cap alphabetic;
   line-height: 1.2;

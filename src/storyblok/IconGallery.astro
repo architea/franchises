@@ -14,26 +14,25 @@ const { blok } = Astro.props
       </div>
     )
   }
-</section>
-
-<div class="icons">
-  {
-    blok.icons.map((icon) => (
-      <div class="basis-1/6 icon">
-        <Image
-          src={icon.icon.filename}
-          alt={icon.icon.alt || " "}
-          layout="full-width"
-          inferSize
-          class="max-w-32 mx-auto self-center"
-        />
-        <div class="icon-tagline">
-          <RichText content={icon.text} />
+  <div class="icons">
+    {
+      blok.icons.map((icon) => (
+        <div class="basis-1/6 icon">
+          <Image
+            src={icon.icon.filename}
+            alt={icon.icon.alt || " "}
+            layout="full-width"
+            inferSize
+            class="max-w-32 mx-auto self-center"
+          />
+          <div class="icon-tagline">
+            <RichText content={icon.text} />
+          </div>
         </div>
-      </div>
-    ))
-  }
-</div>
+      ))
+    }
+  </div>
+</section>
 
 <style>
   @reference "../styles/global.css";

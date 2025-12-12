@@ -2,6 +2,7 @@
 import { useStoryblokApi } from "@storyblok/astro"
 import isPreview from "../utils/isPreview"
 import { Image } from "astro:assets"
+import Button from "./Button.astro"
 
 const storyblokApi = useStoryblokApi()
 const { data } = await storyblokApi.get(`cdn/stories/global`, {
@@ -45,6 +46,15 @@ if (datanav) {
     </a>
   </div>
   <div class="right">
+    {
+      data.story.content.buttonnav.length > 0 && (
+        <div class="mr-(--space-m) always-visible">
+          {data.story.content.buttonnav.map((button: any) => (
+            <Button blok={button} />
+          ))}
+        </div>
+      )
+    }
     <div data-nav>
       <div class="relative"></div>
       <svg viewBox="0 0 100 100">
@@ -88,11 +98,20 @@ if (datanav) {
         }
       </ul>
     </nav>
-  </div>
-  <div class="bg-nav">
-    <div></div>
+    {
+      data.story.content.buttonnav.length > 0 && (
+        <div class="ml-(--space-m)">
+          {data.story.content.buttonnav.map((button: any) => (
+            <Button blok={button} />
+          ))}
+        </div>
+      )
+    }
   </div>
 </header>
+<div class="bg-nav">
+  <div></div>
+</div>
 
 <style is:global>
   #header {
@@ -271,7 +290,8 @@ if (datanav) {
   }
 
   @media screen and (min-width: 1200px) {
-    [data-nav] {
+    [data-nav],
+    .always-visible {
       display: none;
     }
 
@@ -502,6 +522,9 @@ if (datanav) {
   @media screen and (max-width: 625px) {
     #header .left .line,
     #header .left .titre {
+      display: none;
+    }
+    .always-visible {
       display: none;
     }
   }
