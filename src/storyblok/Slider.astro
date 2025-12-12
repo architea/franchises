@@ -5,6 +5,7 @@ import { Image } from "astro:assets"
 import { storyblokEditable, useStoryblokApi } from "@storyblok/astro"
 import Button from "./Button.astro"
 import isPreview from "../utils/isPreview"
+import InlineSvg from "./utils/InlineSvg.astro"
 
 const storyblokApi = useStoryblokApi()
 const { data } = await storyblokApi.get(`cdn/stories/global`, {
@@ -30,12 +31,9 @@ const { blok } = Astro.props
           target="_blank"
           aria-label={`lien vers ${reseau.name}`}>
           {reseau.icon.filename && (
-            <Image
+            <InlineSvg
               src={reseau.icon.filename}
-              alt={reseau.icon.alt || " "}
-              layout="full-width"
-              inferSize
-              class="max-w-16"
+              class={`rs-icon fill-${reseau.color}`}
             />
           )}
         </a>

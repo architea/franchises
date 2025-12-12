@@ -3,6 +3,13 @@ const { src, class: classList } = Astro.props
 let innerHTML = await fetch(src).then((res) => res.text())
 ---
 
-<div class=`${classList ? classList : ''}`>
+<div class=`svg ${classList ? classList : ''}`>
   <Fragment set:html={innerHTML} />
 </div>
+
+<style>
+  .svg :global(svg) {
+    max-width: 100%;
+    height: auto;
+  }
+</style>

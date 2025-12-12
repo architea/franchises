@@ -16,9 +16,9 @@ console.log(secteurs)
 let { blok } = Astro.props
 ---
 
-<section class="contact" {...storyblokEditable(blok)}>
+<section class="contact my-(--space-m)" {...storyblokEditable(blok)}>
   <div class="layout">
-    <div class="text text-justify order-2">
+    <div class="text text-justify">
       <div class="texte">
         <RichText content={blok.text} />
       </div>
@@ -228,11 +228,9 @@ let { blok } = Astro.props
 
   .layout {
     display: flex;
-    align-items: stretch;
     justify-content: center;
-    flex-wrap: wrap;
     gap: var(--space-m);
-    @apply mt-(--space-3xl) lg:mt-0;
+    @apply mt-(--space-3xl) lg:mt-0 items-center flex-col-reverse lg:flex-row lg:items-stretch;
   }
   .layout > div {
     flex-grow: 1;

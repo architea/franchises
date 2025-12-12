@@ -3,7 +3,7 @@ import { useStoryblokApi } from "@storyblok/astro"
 import isPreview from "../utils/isPreview"
 import { Image } from "astro:assets"
 import RichText from "./utils/RichText.astro"
-import InlineSVG from "./utils/InlineSvg.astro"
+import InlineSvg from "./utils/InlineSvg.astro"
 import Button from "./Button.astro"
 
 const storyblokApi = useStoryblokApi()
@@ -113,12 +113,9 @@ if (datanav) {
               title={`Voir notre page ${reseau.name} Architéa`}
               target="_blank"
               aria-label={`lien vers ${reseau.name}`}>
-              <Image
+              <InlineSvg
                 src={reseau.icon.filename}
-                alt={reseau.icon.alt || " "}
-                layout="full-width"
-                inferSize
-                class="mx-auto max-h-80 w-auto"
+                class={`rs-icon fill-${reseau.color}`}
               />
             </a>
           ))
