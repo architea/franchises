@@ -3,13 +3,22 @@ import { Image } from "astro:assets"
 import RichText from "./utils/RichText.astro"
 import { storyblokEditable } from "@storyblok/astro"
 import Youtube from "./utils/Youtube.astro"
+import { useStoryblokApi } from "@storyblok/astro"
 
+const storyblokApi = useStoryblokApi()
+const { data } = await storyblokApi.get("cdn/datasource_entries/", {
+  datasource: "secteurs-geographiques",
+  dimension: ""
+})
+
+const secteurs = data.datasource_entries
+console.log(secteurs)
 let { blok } = Astro.props
 ---
 
-<section class="contact py-(--space-xl)" {...storyblokEditable(blok)}>
+<section class="contact" {...storyblokEditable(blok)}>
   <div class="layout">
-    <div class="text text-justify">
+    <div class="text text-justify order-2">
       <div class="texte">
         <RichText content={blok.text} />
       </div>
@@ -38,7 +47,8 @@ let { blok } = Astro.props
         name={Astro.url.pathname}
         method="POST"
         data-success={blok.success}
-        class="flex flex-col justify-evenly">
+        class="flex flex-col justify-evenly text-(--color-noir)"
+        autocomplete="off">
         <p class="form-title">{blok.title}</p>
         <div class="">
           <input
@@ -127,11 +137,11 @@ let { blok } = Astro.props
             <select
               name="secteur"
               id="secteur"
-              class="select bg-(--color-blanc) py-2.5 sm:py-3 px-4 block w-full sm:text-sm focus:border-(--color-orange) focus:ring-(--color-orange) disabled:opacity-50 disabled:pointer-events-none">
+              class="select text-(--color-noir) bg-(--color-blanc) py-2.5 sm:py-3 px-4 block w-full sm:text-sm focus:border-(--color-orange) focus:ring-(--color-orange) disabled:opacity-50 disabled:pointer-events-none">
               <option disabled selected
                 >{blok.secteur || "Secteur géographique souhaité"}</option
               >
-              {blok.secteurs.map((secteur: any) => <option>{secteur}</option>)}
+              {secteurs.map((secteur: any) => <option>{secteur.name}</option>)}
             </select>
 
             <textarea
@@ -156,7 +166,9 @@ let { blok } = Astro.props
               title={blok.envoyer || "Envoyer"}
               class={`button noir size-xl`}
               aria-label={blok.envoyer || "Envoyer"}
-              ><span>{blok.envoyer || "Envoyer"}</span></button
+              ><span class="text-(--color-blanc)"
+                >{blok.envoyer || "Envoyer"}</span
+              ></button
             >
           </div>
         </div>
@@ -213,20 +225,22 @@ let { blok } = Astro.props
 
 <style>
   @reference "../styles/global.css";
+
   .layout {
     display: flex;
     align-items: stretch;
     justify-content: center;
     flex-wrap: wrap;
+    gap: var(--space-m);
     @apply mt-(--space-3xl) lg:mt-0;
   }
   .layout > div {
     flex-grow: 1;
     flex-shrink: 1;
-    @apply basis-full xl:basis-[40%];
+    @apply basis-full lg:basis-[40%];
   }
   .text {
-    @apply px-5 lg:px-10 min-w-0 xl:min-w-xl max-w-none xl:max-w-3xl;
+    @apply px-5 lg:px-10 min-w-0 xl:min-w-xl max-w-3xl;
   }
   .form {
     @apply px-5 lg:px-10 min-h-full max-w-3xl min-w-0 xl:min-w-xl pt-5;

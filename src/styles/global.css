@@ -88,6 +88,10 @@ p {
   list-style: decimal inside;
 }
 
+form *:not(.button span) {
+  color: var(--color-noir);
+}
+
 /* .zigzag:nth-child(odd) .layout {
   @apply flex-col lg:flex-row;
 }
