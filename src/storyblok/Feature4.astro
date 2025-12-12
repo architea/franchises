@@ -12,8 +12,9 @@ import Youtube from "./utils/Youtube.astro"
 const { blok } = Astro.props
 ---
 
-<section class="zigzag feature5" {...storyblokEditable(blok)}>
-  <div class="layout">
+<section class="feature5" {...storyblokEditable(blok)}>
+  <div
+    class={`layout flex-col ${blok.first ? "lg:flex-row-reverse" : "lg:flex-row"}`}>
     <div class="content">
       {
         blok.intro && (

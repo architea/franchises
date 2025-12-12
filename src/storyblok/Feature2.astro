@@ -28,8 +28,9 @@ if (indexFirstHeading === 0) {
 }
 ---
 
-<section class="zigzag feature2" {...storyblokEditable(blok)}>
-  <div class="layout">
+<section class="feature2" {...storyblokEditable(blok)}>
+  <div
+    class={`layout flex-col ${blok.first ? "lg:flex-row-reverse" : "lg:flex-row"}`}>
     <div class="content">
       {
         Object.keys(firstHeading).length > 0 && (
@@ -45,13 +46,13 @@ if (indexFirstHeading === 0) {
           <div class="mt-10 flex gap-2 flex-wrap">
             {
               blok.buttons.length > 0 &&
-                blok.buttons.map((button) => <Button blok={button} />)
+                blok.buttons.map((button: any) => <Button blok={button} />)
             }
           </div>
         </div>
         <div class="icons flex flex-col justify-center items-center gap-y-10">
           {
-            blok.items?.map((item) => {
+            blok.items?.map((item: any) => {
               if (item.component === "iconItem") {
                 return (
                   <div class="flex flex-col justify-center items-center">
@@ -86,7 +87,7 @@ if (indexFirstHeading === 0) {
 
     {
       blok.asset && (
-        <div class="image mt-(--space-m) lg:mt-0">
+        <div class="image relative w-full full mx-auto mt-(--space-m) lg:mt-0 min-h-[400px] lg:min-h-0">
           {blok.videolink && (
             <Youtube id={blok.videolink} poster={blok.asset.filename} />
           )}
@@ -95,7 +96,7 @@ if (indexFirstHeading === 0) {
               src={blok.asset.filename}
               alt={blok.asset.alt || " "}
               layout="full-width"
-              class={`w-full h-full object-${blok.contain ? "contain" : "cover"} max-h-[800px] lg:max-h-none`}
+              class={`absolute top-0 left-0 object-${blok.contain ? "contain" : "cover"} max-h-[400px] lg:max-h-full min-h-full`}
               inferSize
             />
           )}
