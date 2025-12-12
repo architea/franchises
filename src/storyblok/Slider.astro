@@ -19,7 +19,7 @@ let socials = data.story.content.rs
 const { blok } = Astro.props
 ---
 
-<div class="slider" {...storyblokEditable(blok)}>
+<section class="slider" {...storyblokEditable(blok)}>
   <div class="rs gap-5">
     {
       socials.map((reseau: any) => (
@@ -62,7 +62,7 @@ const { blok } = Astro.props
       }
     </div>
   </div>
-</div>
+</section>
 
 <style>
   @reference "../styles/global.css";
