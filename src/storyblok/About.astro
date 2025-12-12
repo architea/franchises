@@ -16,249 +16,78 @@ if (blok.filigrane) {
 ---
 
 <section
-  id="index"
-  class="default"
-  data-before={blok.filigrane}
-  {...storyblokEditable(blok)}>
-  <div class="col head animate__animated" data-anim="fadeInUp">
-    <div class="couv">
-      <Image
-        src={blok.image.filename}
-        alt={blok.image.alt || " "}
-        layout="full-width"
-        inferSize
-        class="h-full w-full object-cover"
-      />
-    </div>
+  class="filigrane relative"
+  {...storyblokEditable(blok)}
+  data-before={blok.filigrane}>
+  <div class="layout">
     {
-      blok.title && (
-        <div class="title pl-0 lg:pl-5">
-          <div>
-            <h2 set:html={blok.title} />
-          </div>
+      blok.image && (
+        <div class="image max-w-[25%] z-10">
+          <Image
+            src={blok.image.filename}
+            alt={blok.image.alt}
+            layout="full-width"
+            inferSize
+            class={`max-h-[400px] object-${blok.contain ? "contain" : "cover"}`}
+          />
         </div>
       )
     }
-  </div>
-  <div class="col para animate__animated" data-anim="fadeInUp">
-    <div>
-      <div class="paragraphe pres">
-        <RichText content={blok.text} />
-      </div>
-      <div class="mt-10 flex flex-wrap gap-2">
+    <div class="content text-justify mb-10 pt-(--space-m) z-10">
+      <h2>{blok.title}</h2>
+      <RichText content={blok.text} />
+      <div class="mt-10 flex gap-2 flex-wrap">
         {
           blok.buttons.length > 0 &&
-            blok.buttons.map((button) => <Button blok={button} />)
+            blok.buttons.map((button: any) => <Button blok={button} />)
         }
       </div>
     </div>
   </div>
 </section>
 
-<style is:global>
-  #index .couv > img {
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
-  }
-</style>
-
 <style define:vars={{ decoFontSize }}>
   @reference "../styles/global.css";
-  #index {
-    @apply px-5 lg:px-10;
-  }
-  #index {
-    background-color: var(--color-blanc);
-    color: var(--color-noir);
-    position: relative;
-  }
-  .pres {
-    columns: 2;
-    column-gap: calc(25px + 2%);
+
+  .content > h2 {
+    column-span: all;
+    margin-block-end: var(--space-l);
+    text-align: left;
   }
 
-  @media screen and (max-width: 1100px) {
-    .pres {
-      columns: 1;
-    }
+  .content > :global(div h3) {
+    margin-block: var(--space-m);
   }
 
-  @media screen and (max-width: 980px) {
-    .pres {
-      columns: 2;
-    }
-  }
-
-  @media screen and (max-width: 500px) {
-    .pres {
-      columns: 1;
-    }
-  }
-  .default .col {
+  .layout {
     display: flex;
-    flex-wrap: wrap;
-    max-width: calc(75% + 80px);
-    width: 1480px;
-    margin: auto;
+    align-items: start;
+    justify-content: center;
+    @apply mt-(--space-3xl) lg:mt-0 flex-col lg:flex-row;
   }
-
-  .default .col > div {
-    flex: 1;
-    width: 33.33%;
-    max-width: 33.33%;
-    flex-basis: 33.33%;
+  .image {
+    @apply hidden sm:block sm:self-end translate-y-32 lg:self-start lg:translate-y-0;
   }
-
-  .default .paragraphe {
-    text-align: justify;
+  .layout > div {
+    flex-basis: 50%;
   }
-
-  .default .col.head .title {
-    display: flex;
-    align-items: flex-end;
+  .content {
+    column-gap: var(--space-xl);
+    @apply px-5 lg:px-10 columns-1 sm:columns-2 lg:columns-1 xl:columns-2 sm:min-w-[500px];
   }
-
-  .default .col.head .title > div {
-    width: 800px;
-    max-width: 50vw;
-    position: absolute;
-    bottom: 70px;
-  }
-
-  .default .col.head .title h1,
-  .default .col.head .title h2 {
-    margin: 0;
-    clear: both;
-    font-size: calc(20px + 20 * (100vw - 320px) / 1080);
-  }
-
-  .default .col.head .couv {
-    height: calc(200px + 150 * (100vw - 320px) / 1080);
-  }
-
-  .default .col.head .couv > div {
-    height: 100%;
-    width: 100%;
-  }
-
-  #index {
-    padding-bottom: calc(25px + 6%);
-  }
-
-  #index:before,
-  .db:before {
+  .filigrane::before {
     content: attr(data-before);
     position: absolute;
-    line-height: 1;
-    bottom: 0px;
+    bottom: 0;
     color: #fbfdff;
     text-shadow: 0 20px 30px rgba(0, 0, 0, 0.1);
     /* 🎅 Better alignement than right: 40% with font-size: 400px*/
     right: 0;
     font-size: var(--decoFontSize);
     font-weight: 700;
-    /* line-height: 0.6; */
+    line-height: 0.6;
     z-index: 0;
     white-space: nowrap;
     font-family: "Sanchez";
-  }
-
-  #index .head {
-    z-index: 10;
-  }
-
-  #index .para {
-    z-index: 5;
-  }
-
-  #index .btn {
-    margin-top: calc(25px + 10%);
-  }
-
-  #index .para > div:first-child {
-    margin-left: 33.33%;
-    width: 66.66%;
-    max-width: 66.66%;
-    flex-basis: 66.66%;
-  }
-
-  .intro {
-    font-weight: 400;
-    color: #000;
-    font-size: calc(14px + 2 * (100vw - 320px) / 1080);
-    line-height: 1.5;
-  }
-
-  .default .col {
-    position: relative;
-  }
-
-  @media screen and (max-width: 1084px) {
-    .default .col.head .title > div {
-      bottom: 50px;
-    }
-  }
-
-  @media screen and (max-width: 980px) {
-    #index .head > .couv {
-      order: 2;
-      z-index: 0;
-    }
-    #index .col > div {
-      width: 50%;
-      max-width: 50%;
-      flex-basis: 50%;
-    }
-    #index .para {
-      margin-top: calc(25px + 3%);
-    }
-
-    #index .col > div {
-      width: 50%;
-      max-width: 50%;
-      flex-basis: 50%;
-    }
-
-    #index .para > div:first-child {
-      margin-left: 0;
-      width: 100%;
-      max-width: 100%;
-      flex-basis: 100%;
-    }
-    #index .head > .title {
-      order: 1;
-      text-align: left;
-    }
-
-    #index .head .title {
-      z-index: 5;
-    }
-
-    #index .head .title > div {
-      bottom: 0;
-    }
-  }
-
-  @media screen and (max-width: 550px) {
-    #index .head > .couv {
-      display: none;
-    }
-    #index .head {
-      padding-top: calc(25px + 2%);
-    }
-    #index .head .title {
-      flex: 1;
-      width: 100%;
-      max-width: 100%;
-      flex-basis: 100%;
-    }
-
-    #index .head .title > div {
-      position: relative;
-      left: 0;
-      bottom: 0;
-      max-width: 100%;
-    }
   }
 </style>

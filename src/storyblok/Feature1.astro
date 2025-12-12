@@ -18,7 +18,7 @@ const { blok } = Astro.props
       <div class="mt-10 flex gap-2 flex-wrap">
         {
           blok.buttons.length > 0 &&
-            blok.buttons.map((button) => <Button blok={button} />)
+            blok.buttons.map((button: any) => <Button blok={button} />)
         }
       </div>
     </div>
