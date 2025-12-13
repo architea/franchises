@@ -97,13 +97,13 @@ if (datanav) {
       )
     }
   </div>
-  <div class="slogan flex flex-col gap-(--space-xl)">
-    <div class="self-start">
+  <div class="slogan flex flex-col gap-5 self-center">
+    <div class="self-start max-w-[40ch]">
       <RichText content={footerdata.slogan} />
     </div>
     <div
       class="w-full flex flex-wrap gap-(--space-m) items-center justify-between">
-      <div class="rs flex flex-wrap">
+      <div class="rs flex flex-wrap gap-5">
         {
           footerdata.rs.map((reseau: any) => (
             <a
@@ -140,7 +140,8 @@ if (datanav) {
     gap: var(--space-m);
   }
   .infos {
-    flex-basis: 15%;
+    align-self: self-start;
+    @apply basis-full sm:basis-[20%] xl:basis-[15%];
   }
   .infos :global(p + p) {
     margin-block-start: 0;
@@ -150,7 +151,7 @@ if (datanav) {
     margin-block-end: var(--space-xs);
   }
   .nav {
-    flex-basis: 10%;
+    @apply basis-full sm:basis-[15%];
   }
   .nav .page {
     font-size: var(--step-1);
@@ -160,11 +161,11 @@ if (datanav) {
     padding-inline-start: var(--space-xs);
   }
   .image {
-    flex-basis: 15%;
-    @apply order-4 basis-full xl:basis-[15%] xl:order-3;
+    align-self: center;
+    @apply order-4 lg:order-3 block basis-full sm:basis-1/2 lg:basis-[20%] md:hidden xl:block;
   }
   .slogan {
-    flex-basis: 40%;
     font-size: var(--step-1);
+    @apply basis-full sm:basis-1/2 md:basis-[40%] order-3 lg:order-4 lg:basis-full xl:basis-[40%];
   }
 </style>

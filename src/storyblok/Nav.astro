@@ -63,7 +63,7 @@ if (datanav) {
     </div>
   </div>
   <div id="nav">
-    <nav>
+    <nav class="">
       <ul>
         {
           nav &&
@@ -97,16 +97,16 @@ if (datanav) {
             ))
         }
       </ul>
+      {
+        data.story.content.buttonnav.length > 0 && (
+          <div class="ml-(--space-m)">
+            {data.story.content.buttonnav.map((button: any) => (
+              <Button blok={button} />
+            ))}
+          </div>
+        )
+      }
     </nav>
-    {
-      data.story.content.buttonnav.length > 0 && (
-        <div class="ml-(--space-m)">
-          {data.story.content.buttonnav.map((button: any) => (
-            <Button blok={button} />
-          ))}
-        </div>
-      )
-    }
   </div>
 </header>
 <div class="bg-nav">
@@ -293,6 +293,10 @@ if (datanav) {
     [data-nav],
     .always-visible {
       display: none;
+    }
+
+    nav {
+      @apply flex items-baseline justify-center;
     }
 
     #nav nav > ul {
@@ -490,9 +494,9 @@ if (datanav) {
       height: 115px;
     }
 
-    #header + * {
+    /* #header + * {
       padding-top: 115px;
-    }
+    } */
 
     .fix #header {
       height: 90px;
