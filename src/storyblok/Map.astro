@@ -41,15 +41,17 @@ const { blok } = Astro.props
                   class="popover js-popover js-tab-focus"
                   role="dialog">
                   <div class="flex justify-center items-center gap-2">
-                    <div class="basis-1/3 w-24 h-24 overflow-hidden rounded-full avatar m-2">
-                      <Image
-                        src={poi.portrait.filename}
-                        alt={poi.portrait.alt || " "}
-                        layout="full-width"
-                        inferSize
-                        class={`object-cover`}
-                      />
-                    </div>
+                    {poi.portrait?.filename && (
+                      <div class="basis-1/3 w-24 h-24 overflow-hidden rounded-full avatar m-2">
+                        <Image
+                          src={poi.portrait.filename}
+                          alt={poi.portrait.alt || " "}
+                          layout="full-width"
+                          inferSize
+                          class={`object-cover`}
+                        />
+                      </div>
+                    )}
                     <div class="basis-2/3 infos overflow-hidden poi-infos">
                       <RichText content={poi.text} />
                     </div>
