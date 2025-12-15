@@ -82,7 +82,7 @@ const { blok } = Astro.props
       }
 
       {
-        blok.text.content.length > 1 && (
+        blok.text.content.length > 0 && (
           <div class="text-justify mt-5 cols3 texte">
             <RichText content={blok.text} />
           </div>
