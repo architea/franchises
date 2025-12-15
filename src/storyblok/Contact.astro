@@ -8,7 +8,8 @@ import { useStoryblokApi } from "@storyblok/astro"
 const storyblokApi = useStoryblokApi()
 const { data } = await storyblokApi.get("cdn/datasource_entries/", {
   datasource: "secteurs-geographiques",
-  dimension: ""
+  dimension: "",
+  per_page: 1000
 })
 
 const secteurs = data.datasource_entries
