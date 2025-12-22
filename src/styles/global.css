@@ -102,6 +102,11 @@ form *:not(.button span) {
   margin-block-end: 4rem;
 } */
 
+p a {
+  text-decoration: underline;
+  color: var(--color-orange);
+}
+
 .mark {
   display: inline-flex;
   justify-content: center;
@@ -147,3 +152,4 @@ form *:not(.button span) {
   font-size: var(--step-5);
   font-weight: 700;
 }
+
