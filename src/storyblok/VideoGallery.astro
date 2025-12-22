@@ -1,0 +1,93 @@
+---
+import { Image } from "astro:assets"
+import RichText from "./utils/RichText.astro"
+import { storyblokEditable } from "@storyblok/astro"
+import Button from "./Button.astro"
+import Youtube from "./utils/Youtube.astro"
+
+let { blok } = Astro.props
+console.log(blok)
+---
+
+<section
+  class="video-gallery relative"
+  {...storyblokEditable(blok)}
+  data-before={blok.filigrane}>
+  {
+    blok.text && (
+      <div class="my-(--space-l) texte">
+        <RichText content={blok.text} />
+      </div>
+    )
+  }
+  <div class="swiper swiper-gallery">
+    <div class="swiper-wrapper">
+      {
+        blok.videos.map((slide: any) => (
+          <div class="swiper-slide">
+            <div class="flex flex-col">
+              {slide.videolink && (
+                <Youtube
+                  id={slide.videolink}
+                  poster={slide.image.filename}
+                  class="h-92 w-72 object-contain bg-no-repeat max-h-fit"
+                />
+              )}
+              {!slide.videolink && (
+                <Image
+                  src={slide.image.filename}
+                  alt={slide.image.alt || " "}
+                  layout="full-width"
+                  class={`w-98 h-72 object-contain`}
+                  inferSize
+                />
+              )}
+              <p class="font-semibold">{slide.title}</p>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  @reference '../styles/global.css';
+  section {
+    padding-block: var(--space-m);
+    @apply px-5 lg:px-10 py-5 mx-auto;
+  }
+  .swiper-slide {
+    display: flex;
+    justify-content: center;
+    object-fit: contain;
+    @apply max-w-[300px] lg:max-w-[400px] xl:max-w-[500px];
+  }
+  .swiper-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+</style>
+
+<script>
+  import Swiper from "swiper"
+
+  window.addEventListener("load", function () {
+    const windowWidth = window.innerWidth
+    let maxNbSlidesPerView = (windowWidth / 410).toFixed(0)
+    let nbSlides = document.querySelectorAll(
+      ".swiper-gallery .swiper-slide"
+    ).length
+    let nbSlidesPerView = Math.min(nbSlides, maxNbSlidesPerView)
+    let loop = nbSlidesPerView <= nbSlides ? false : true
+    console.log(loop)
+    console.log(nbSlidesPerView)
+    const swiperGallery = new Swiper(".swiper-gallery", {
+      // Optional parameters
+      slidesPerView: nbSlidesPerView,
+      spaceBetween: 10,
+      loop: loop
+    })
+  })
+</script>

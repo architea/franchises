@@ -1,12 +1,12 @@
 ---
 import { YouTube } from "astro-embed"
 
-let { id, poster } = Astro.props
+let { id, poster, class: classlist } = Astro.props
 
 // 🎅 meilleure gestion des vidéos Youtube
 ---
 
-<YouTube id={id} poster={poster ? poster : undefined} />
+<YouTube id={id} poster={poster ? poster : undefined} class={classlist} />
 
 <style is:global>
   /* lite-youtube.lyt-activated {
@@ -17,7 +17,8 @@ let { id, poster } = Astro.props
   }
 
   lite-youtube {
-    aspect-ratio: 1;
+    /* aspect-ratio: 1; */
+    background-size: contain;
     max-width: none;
     & .lyt-playbtn {
       margin-inline: auto;

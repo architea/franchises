@@ -46,7 +46,7 @@ const { blok } = Astro.props
       {blok.buttons.map((button: any) => <Button blok={button} />)}
     </div>
   </div>
-  <div data-swiper="slider" class="swiper">
+  <div class="swiper swiper-full">
     <div class="swiper-wrapper">
       {
         blok.slider.map((slide: any) => (
@@ -111,7 +111,7 @@ const { blok } = Astro.props
   import { Autoplay } from "swiper/modules"
 
   window.addEventListener("load", function () {
-    const swiper = new Swiper(".swiper", {
+    const swiper = new Swiper(".swiper-full", {
       // Install modules
       modules: [Autoplay],
       // Optional parameters

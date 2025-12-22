@@ -30,7 +30,8 @@ export default defineConfig({
         ariane: "storyblok/Ariane",
         iconGallery: "storyblok/IconGallery",
         map: "storyblok/Map",
-        contact: "storyblok/Contact"
+        contact: "storyblok/Contact",
+        videoGallery: "storyblok/VideoGallery"
       }
     })
   ],
