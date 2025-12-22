@@ -104,7 +104,7 @@ form *:not(.button span) {
 
 p a {
   text-decoration: underline;
-  color: var(--color-orange);
+  color: var(--color-noir);
 }
 
 .mark {
