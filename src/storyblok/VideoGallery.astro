@@ -61,12 +61,12 @@ console.log(blok)
     display: flex;
     justify-content: center;
     object-fit: contain;
-    @apply max-w-[300px] lg:max-w-[400px] xl:max-w-[500px];
+    /* @apply max-w-[300px] lg:max-w-[400px] xl:max-w-[500px]; */
   }
   .swiper-wrapper {
-    display: flex;
+    /* display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: center; */
   }
 </style>
 
@@ -75,19 +75,32 @@ console.log(blok)
 
   window.addEventListener("load", function () {
     const windowWidth = window.innerWidth
-    let maxNbSlidesPerView = (windowWidth / 410).toFixed(0)
+    let maxNbSlidesPerView = windowWidth / 410
     let nbSlides = document.querySelectorAll(
       ".swiper-gallery .swiper-slide"
     ).length
     let nbSlidesPerView = Math.min(nbSlides, maxNbSlidesPerView)
-    let loop = nbSlidesPerView <= nbSlides ? false : true
-    console.log(loop)
-    console.log(nbSlidesPerView)
-    const swiperGallery = new Swiper(".swiper-gallery", {
+    let loop = nbSlides > nbSlidesPerView ? true : false
+    let swiperGallery = new Swiper(".swiper-gallery", {
       // Optional parameters
       slidesPerView: nbSlidesPerView,
+      centerInsufficientSlides: true,
+      centeredSlides: true,
+      centeredSlidesBounds: true,
       spaceBetween: 10,
       loop: loop
+    })
+    window.addEventListener("resize", function () {
+      const windowWidth = window.innerWidth
+      let maxNbSlidesPerView = windowWidth / 410
+      let nbSlides = document.querySelectorAll(
+        ".swiper-gallery .swiper-slide"
+      ).length
+      let nbSlidesPerView = Math.min(nbSlides, maxNbSlidesPerView)
+      let loop = nbSlides > nbSlidesPerView ? true : false
+      swiperGallery.params.slidesPerView = nbSlidesPerView
+      // swiperGallery.params.loop = loop
+      swiperGallery.update()
     })
   })
 </script>
