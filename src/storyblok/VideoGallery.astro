@@ -170,9 +170,6 @@ console.log(blok)
       ).length
 
       let nbSlidesPerView = Math.floor(Math.min(nbSlides, maxNbSlidesPerView))
-      console.log({ nbSlides: nbSlides })
-      console.log({ maxNbSlidesPerView: maxNbSlidesPerView })
-      console.log(nbSlidesPerView)
       let loop = nbSlides > nbSlidesPerView ? true : false
       if (!loop) {
         document.querySelectorAll(".swiper-button").forEach((button) => {
