@@ -135,7 +135,7 @@ console.log(blok)
     let nbSlides = document.querySelectorAll(
       ".swiper-gallery .swiper-slide"
     ).length
-    let nbSlidesPerView = Math.min(nbSlides, maxNbSlidesPerView)
+    let nbSlidesPerView = Math.floor(Math.min(nbSlides, maxNbSlidesPerView))
     let loop = nbSlides > nbSlidesPerView ? true : false
     if (!loop) {
       document.querySelectorAll(".swiper-button").forEach((button) => {
@@ -146,14 +146,16 @@ console.log(blok)
         button.style.display = "flex"
       })
     }
+    console.log(nbSlidesPerView)
     let swiperGallery = new Swiper(".swiper-gallery", {
       modules: [Navigation],
-      // Optional parameters
       slidesPerView: nbSlidesPerView,
-      centerInsufficientSlides: true,
-      centeredSlides: true,
+      // centerInsufficientSlides: true,
+      // centeredSlides: true,
+      // centeredSlidesBounds: true,
+      edgeSwipeDetection: "prevent",
       spaceBetween: 10,
-      loop: false,
+      loop: true,
       navigation: {
         addIcons: false,
         nextEl: ".swiper-button-next",
@@ -166,7 +168,11 @@ console.log(blok)
       let nbSlides = document.querySelectorAll(
         ".swiper-gallery .swiper-slide"
       ).length
-      let nbSlidesPerView = Math.min(nbSlides, maxNbSlidesPerView)
+
+      let nbSlidesPerView = Math.floor(Math.min(nbSlides, maxNbSlidesPerView))
+      console.log({ nbSlides: nbSlides })
+      console.log({ maxNbSlidesPerView: maxNbSlidesPerView })
+      console.log(nbSlidesPerView)
       let loop = nbSlides > nbSlidesPerView ? true : false
       if (!loop) {
         document.querySelectorAll(".swiper-button").forEach((button) => {
@@ -178,8 +184,6 @@ console.log(blok)
         })
       }
       swiperGallery.params.slidesPerView = nbSlidesPerView
-      // swiperGallery.params.loop = loop
-      // swiperGallery.params.navigation = navigation
       swiperGallery.update()
     })
   })
