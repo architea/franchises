@@ -136,6 +136,9 @@ console.log(blok)
       ".swiper-gallery .swiper-slide"
     ).length
     let nbSlidesPerView = Math.floor(Math.min(nbSlides, maxNbSlidesPerView))
+    if (nbSlidesPerView < 1) {
+      nbSlidesPerView = 1
+    }
     let loop = nbSlides > nbSlidesPerView ? true : false
     if (!loop) {
       document.querySelectorAll(".swiper-button").forEach((button) => {
@@ -153,7 +156,7 @@ console.log(blok)
       // centerInsufficientSlides: true,
       // centeredSlides: true,
       // centeredSlidesBounds: true,
-      // edgeSwipeDetection: "prevent",
+      edgeSwipeDetection: "prevent",
       spaceBetween: 10,
       loop: true,
       navigation: {
