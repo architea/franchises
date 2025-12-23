@@ -20,12 +20,12 @@ console.log(blok)
       </div>
     )
   }
-  <div class="swiper swiper-gallery">
+  <div class="swiper swiper-gallery relative">
     <div class="swiper-wrapper">
       {
         blok.videos.map((slide: any) => (
           <div class="swiper-slide">
-            <div class="flex flex-col">
+            <div class="flex flex-col items-center">
               {slide.videolink && (
                 <Youtube
                   id={slide.videolink}
@@ -43,11 +43,43 @@ console.log(blok)
                   inferSize
                 />
               )}
-              <p class="font-semibold">{slide.title}</p>
+              <p class="font-semibold text-center">{slide.title}</p>
             </div>
           </div>
         ))
       }
+    </div>
+    <div class="swiper-button-next swiper-button">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="32"
+        height="32"
+        viewBox="0 0 24 24">
+        <g
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="1.5"
+          ><path d="m11 19l6-7l-6-7"></path><path d="m7 19l6-7l-6-7"></path></g
+        ></svg
+      >
+    </div>
+    <div class="swiper-button-prev swiper-button">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="32"
+        height="32"
+        viewBox="0 0 24 24">
+        <g
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="1.5"
+          ><path d="m13 19l-6-7l6-7"></path><path d="m17 19l-6-7l6-7"></path></g
+        ></svg
+      >
     </div>
   </div>
 </section>
@@ -69,10 +101,33 @@ console.log(blok)
     justify-content: center;
     align-items: center; */
   }
+  .swiper-button {
+    position: absolute;
+    top: -10%;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    background: color-mix(in oklab, var(--color-blanc), transparent 50%);
+    width: min(15vw, 70px);
+    & svg {
+      width: 64px;
+      height: 64px;
+      opacity: 0.8;
+    }
+  }
+  .swiper-button-next {
+    right: 0;
+  }
+  .swiper-button-prev {
+    left: 0;
+  }
 </style>
 
 <script>
   import Swiper from "swiper"
+  import { Navigation } from "swiper/modules"
 
   window.addEventListener("load", function () {
     const windowWidth = window.innerWidth
@@ -83,13 +138,19 @@ console.log(blok)
     let nbSlidesPerView = Math.min(nbSlides, maxNbSlidesPerView)
     let loop = nbSlides > nbSlidesPerView ? true : false
     let swiperGallery = new Swiper(".swiper-gallery", {
+      modules: [Navigation],
       // Optional parameters
       slidesPerView: nbSlidesPerView,
       centerInsufficientSlides: true,
       centeredSlides: true,
       centeredSlidesBounds: true,
       spaceBetween: 10,
-      loop: loop
+      loop: loop,
+      navigation: {
+        addIcons: false,
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev"
+      }
     })
     window.addEventListener("resize", function () {
       const windowWidth = window.innerWidth
