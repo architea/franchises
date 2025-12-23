@@ -15,7 +15,7 @@ const { blok } = Astro.props
 <section class="feature4" {...storyblokEditable(blok)}>
   <div
     class={`layout flex-col ${blok.first ? "lg:flex-row-reverse" : "lg:flex-row"}`}>
-    <div class="content">
+    <div class="content py-5 lg:py-10">
       {
         blok.intro && (
           <div class="my-5 texte">

@@ -40,7 +40,7 @@ const { blok } = Astro.props
       ))
     }
   </div>
-  <div class="ct p-(--space-m) lg:p-(--space-3xl) max-w-[80ch]">
+  <div class="ct p-(--space-m) lg:p-(--space-3xl) max-w-[100ch]">
     <RichText content={blok.text} />
     <div class="flex flex-wrap gap-4 justify-start items-stretch buttons">
       {blok.buttons.map((button: any) => <Button blok={button} />)}
