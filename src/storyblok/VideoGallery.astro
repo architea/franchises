@@ -137,15 +137,23 @@ console.log(blok)
     ).length
     let nbSlidesPerView = Math.min(nbSlides, maxNbSlidesPerView)
     let loop = nbSlides > nbSlidesPerView ? true : false
+    if (!loop) {
+      document.querySelectorAll(".swiper-button").forEach((button) => {
+        button.style.display = "none"
+      })
+    } else {
+      document.querySelectorAll(".swiper-button").forEach((button) => {
+        button.style.display = "flex"
+      })
+    }
     let swiperGallery = new Swiper(".swiper-gallery", {
       modules: [Navigation],
       // Optional parameters
       slidesPerView: nbSlidesPerView,
       centerInsufficientSlides: true,
       centeredSlides: true,
-      centeredSlidesBounds: true,
       spaceBetween: 10,
-      loop: loop,
+      loop: false,
       navigation: {
         addIcons: false,
         nextEl: ".swiper-button-next",
@@ -160,8 +168,18 @@ console.log(blok)
       ).length
       let nbSlidesPerView = Math.min(nbSlides, maxNbSlidesPerView)
       let loop = nbSlides > nbSlidesPerView ? true : false
+      if (!loop) {
+        document.querySelectorAll(".swiper-button").forEach((button) => {
+          button.style.display = "none"
+        })
+      } else {
+        document.querySelectorAll(".swiper-button").forEach((button) => {
+          button.style.display = "flex"
+        })
+      }
       swiperGallery.params.slidesPerView = nbSlidesPerView
       // swiperGallery.params.loop = loop
+      // swiperGallery.params.navigation = navigation
       swiperGallery.update()
     })
   })

@@ -114,9 +114,9 @@ p a {
   min-width: min-content;
   vertical-align: baseline;
   border-radius: 5px;
-  /* margin-block: var(--space-2xs); */
+  margin-block: var(--space-3xs);
   padding-inline: 0.7rem;
-  padding-block: 0.5rem 0.7rem;
+  padding-block: 0.4rem 0.7rem;
   text-box-trim: trim-both;
   text-box-edge: cap alphabetic;
   line-height: 1.2;
