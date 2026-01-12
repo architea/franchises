@@ -1,35 +1,36 @@
-import { useStoryblokApi } from "@storyblok/astro"
-import isPreview from "./isPreview"
+import { storyblokFetch } from "../lib/storyblok.js"
+import isPreview from "./isPreview.js"
 
 export default async function generateStaticPaths() {
-  const storyblokApi = useStoryblokApi()
-  const links = await storyblokApi.getAll("cdn/links", {
-    version: isPreview() ? "draft" : "published",
-    resolve_relations: "page.canonical",
-    resolve_links: "url"
+  const response = await storyblokFetch("cdn/links", {
+    version: isPreview() ? "draft" : "published"
   })
-  // @ts-ignore
-  let paths = []
-  links
-    //Don't generate paths for folders
-    .filter((link) => !link.is_folder)
-    //Don't generate paths for global links except in preview mode
-    .filter((link) => {
-      return link.slug.split("/")[0] !== "global" || isPreview() === true
+  
+  // cdn/links returns { data: { links: { uuid: {...}, ... } } }
+  const linksObj = response.data?.links
+  if (!linksObj) {
+    console.error('No links found:', response)
+    return []
+  }
+  
+  // Convert object to array
+  const links = Object.values(linksObj) as any[]
+  console.log(`Found ${links.length} links`)
+  
+  const paths = links
+    .filter((link: any) => !link.is_folder)
+    .filter((link: any) => {
+      const firstFolder = link.slug.split("/")[0]
+      return firstFolder !== "global" || isPreview()
     })
-    .forEach((link: { slug: string }) => {
-      let slug = link.slug === "home" ? undefined : link.slug
-      //This will be used for generating all the urls for astro
-
-      paths.push({
-        props: { slug },
-        params: {
-          slug: slug,
-          name: link.name
-        }
-      })
+    .map((link: any) => {
+      const slug = link.slug === "home" ? undefined : link.slug  // undefined for home!
+      return {
+        params: { path: slug },
+        props: { path: slug, name: link.name }
+      }
     })
-
-  // @ts-ignore
+  
+  console.log(`Generated ${paths.length} paths`)
   return paths
 }

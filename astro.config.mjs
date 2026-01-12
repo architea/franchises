@@ -2,23 +2,26 @@ import { defineConfig } from "astro/config"
 import { storyblok } from "@storyblok/astro"
 import { loadEnv } from "vite"
 import vercel from "@astrojs/vercel"
-
 import tailwindcss from "@tailwindcss/vite"
+import sitemap from "@astrojs/sitemap"
+
+import favicons from "astro-favicons"
 
 const env = loadEnv("", process.cwd(), "STORYBLOK")
-const { STORYBLOK_TOKEN } = loadEnv(import.meta.env.MODE, process.cwd(), "")
 
 export default defineConfig({
-  site: "https://architea-franchises.fr/",
+  site: "https://franchise-architea.fr/",
 
   integrations: [
     storyblok({
       accessToken: env.STORYBLOK_TOKEN,
+      bridge: import.meta.env.STORYBLOK_IS_PREVIEW !== "yes",
       apiOptions: {
         region: "eu"
       },
       components: {
         page: "storyblok/Page",
+        actu: "storyblok/Page",
         slider: "storyblok/Slider",
         button: "storyblok/Button",
         about: "storyblok/About",
@@ -31,15 +34,21 @@ export default defineConfig({
         iconGallery: "storyblok/IconGallery",
         map: "storyblok/Map",
         contact: "storyblok/Contact",
-        videoGallery: "storyblok/VideoGallery"
+        videoGallery: "storyblok/VideoGallery",
+        allActus: "storyblok/AllActus"
       }
-    })
+    }),
+    sitemap(),
+    favicons()
   ],
 
   output: env.STORYBLOK_IS_PREVIEW === "yes" ? "server" : "static",
   adapter: vercel(),
 
   vite: {
-    plugins: [tailwindcss()]
+    plugins: [tailwindcss()],
+    ssr: {
+      noExternal: ["@storyblok/astro", "storyblok-js-client"]
+    }
   }
 })

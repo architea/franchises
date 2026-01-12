@@ -1,6 +1,6 @@
 ---
 import RichTextRenderer from "storyblok-rich-text-astro-renderer/RichTextRenderer.astro"
-import StoryblokComponent from "@storyblok/astro/StoryblokComponent.astro"
+import Button from "../Button.astro"
 
 const { content } = Astro.props
 ---
@@ -10,9 +10,8 @@ const { content } = Astro.props
     <RichTextRenderer
       content={content}
       resolver={(blok) => {
-        return {
-          component: StoryblokComponent,
-          props: { blok }
+        if (blok.component === "button") {
+          return { component: Button, props: { blok } }
         }
       }}
     />

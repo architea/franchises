@@ -4,11 +4,14 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "npm run favicon && npm run redirect && astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "favicon": "node --experimental-modules favicons.mjs",
+    "redirect": "node --experimental-modules redirects.mjs"
   },
   "dependencies": {
+    "@astrojs/sitemap": "^3.6.1",
     "@astrojs/vercel": "^9.0.2",
     "@storyblok/astro": "^7.3.6",
     "@storyblok/richtext": "^3.8.2",
@@ -16,6 +19,7 @@
     "aos": "^2.3.4",
     "astro": "^5.16.1",
     "astro-embed": "^0.9.2",
+    "astro-favicons": "^3.1.5",
     "clone-deep": "^4.0.1",
     "daisyui": "^5.5.8",
     "storyblok-rich-text-astro-renderer": "^2.8.1",

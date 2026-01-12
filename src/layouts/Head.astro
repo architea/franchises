@@ -1,5 +1,7 @@
 ---
 import isPreview from "../utils/isPreview.js"
+import { localizedHTML as favicons } from "astro-favicons/middleware"
+
 //Fetch global info for head
 import { useStoryblokApi } from "@storyblok/astro"
 const storyblokApi = useStoryblokApi()
@@ -14,6 +16,8 @@ const canonicalURL =
   seo.canonical?.length > 0
     ? new URL(seo.canonical, Astro.site)
     : new URL(Astro.url.pathname, Astro.site)
+
+console.log(Astro.currentLocale)
 ---
 
 <head>
@@ -30,7 +34,7 @@ const canonicalURL =
 
   <meta name="robots" content={seo.robots} />
 
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <Fragment set:html={favicons(Astro.currentLocale)} />
 
   {seo.next && <link rel="next" href={seo.next} />}
   {seo.prev && <link rel="prev" href={seo.prev} />}

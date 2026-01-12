@@ -8,8 +8,8 @@ const { blok, name, parent, slug } = Astro.props
 
 <section class="ariane" {...storyblokEditable(blok)}>
   <div class="content">
-    <h1>{blok.h1}</h1>
-    <h2>{blok.title}</h2>
+    {blok.h1 && <h1>{blok.h1}</h1>}
+    {blok.title && <h2>{blok.title}</h2>}
     <Breadcrumb name={name} parent={parent} slug={slug} />
     <div class="flex flex-wrap gap-4 justify-center items-stretch buttons">
       {blok.buttons.map((button: any) => <Button blok={button} />)}

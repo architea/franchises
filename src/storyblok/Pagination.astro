@@ -1,0 +1,187 @@
+---
+let { currentPage, lastPage } = Astro.props
+let pages = []
+if (lastPage < 5) {
+  pages = Array.from({ length: lastPage }, (_, i) => i + 1)
+} else {
+  pages.push(1)
+  if (currentPage <= 2) {
+    pages.push(2)
+    pages.push(null)
+    pages.push(lastPage)
+  } else if (currentPage >= lastPage - 1) {
+    pages.push(null)
+    pages.push(lastPage - 1)
+    pages.push(lastPage)
+  } else {
+    pages.push(null)
+    pages.push(currentPage)
+    pages.push(null)
+    pages.push(lastPage)
+  }
+}
+---
+
+{
+  lastPage > 1 && (
+    <nav class="pagination mb-(--space-m)" aria-label="Pagination">
+      <ol class="pagination__list flex flex-wrap gap-1 lg:gap-1.5 justify-center">
+        <li>
+          <a
+            href={`/actualites/${currentPage <= 2 ? "" : currentPage - 1}`}
+            class={`pagination__item ${currentPage == 1 ? "pagination__item--disabled" : undefined}`}
+            aria-label="Page précédente">
+            <svg
+              class="icon inline-block text-inherit fill-current leading-none shrink-0 w-4 h-4 mr-1 lg:mr-1.5 -scale-x-100"
+              viewBox="0 0 16 16">
+              <polyline
+                points="6 2 12 8 6 14"
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+              />
+            </svg>
+            <span>Précédent</span>
+          </a>
+        </li>
+
+        {lastPage < 5 &&
+          pages.map((index) => (
+            <li class="hidden md:inline-flex">
+              <a
+                href={`/actualites/${index < 2 ? "" : index}`}
+                class={`pagination__item ${index == currentPage ? "pagination__item--selected" : undefined}`}
+                aria-label={
+                  index == currentPage
+                    ? `Page actuelle, page ${index}`
+                    : `Aller à la page ${index}`
+                }
+                aria-current={index == currentPage ? "page" : undefined}>
+                {index}
+              </a>
+            </li>
+          ))}
+
+        {lastPage >= 5 &&
+          pages.map((index) => (
+            <li
+              class="hidden md:inline-flex"
+              aria-hidden={index === null ? "true" : undefined}>
+              {index === null && (
+                <span class="pagination__item pagination__item--ellipsis">
+                  ...
+                </span>
+              )}
+              {index !== null && (
+                <a
+                  href={`/actualites/${index < 2 ? "" : index}`}
+                  class={`pagination__item ${index == currentPage ? "pagination__item--selected" : undefined}`}
+                  aria-label={
+                    index == currentPage
+                      ? `Page actuelle, page ${index}`
+                      : `Aller à la page ${index}`
+                  }
+                  aria-current={index == currentPage ? "page" : undefined}>
+                  {index}
+                </a>
+              )}
+            </li>
+          ))}
+
+        <li>
+          <a
+            href={`/actualites/${currentPage + 1}`}
+            class={`pagination__item ${currentPage == lastPage ? "pagination__item--disabled" : undefined}`}
+            aria-label="Page suivante">
+            <span>Suivant</span>
+            <svg
+              class="icon inline-block text-inherit fill-current leading-none shrink-0 w-4 h-4 ml-1 lg:ml-1.5"
+              viewBox="0 0 16 16">
+              <polyline
+                points="6 2 12 8 6 14"
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+              />
+            </svg>
+          </a>
+        </li>
+      </ol>
+    </nav>
+  )
+}
+
+<style>
+  @reference "../styles/global.css";
+  /* --------------------------------
+
+File#: _1_pagination
+Title: Pagination 
+Descr: Component used to navigate through pages of related content
+Usage: codyhouse.co/license
+
+-------------------------------- */
+  .pagination--split .pagination__list {
+    width: 100%;
+  }
+  .pagination--split .pagination__list > *:first-child {
+    margin-right: auto;
+  }
+  .pagination--split .pagination__list > *:last-child {
+    margin-left: auto;
+  }
+
+  .pagination__item {
+    display: inline-block;
+    display: inline-flex;
+    height: 100%;
+    align-items: center;
+    padding: 0.5rem 0.6775rem;
+    white-space: nowrap;
+    line-height: 1;
+    @apply rounded;
+    text-decoration: none;
+    @apply text-gray-700;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    will-change: transform;
+    transition: 0.2s;
+  }
+  @media (min-width: 64rem) {
+    .pagination__item {
+      padding: 0.75rem 1.016rem;
+    }
+  }
+  .pagination__item:hover:not(.pagination__item--selected):not(
+      .pagination__item--ellipsis
+    ) {
+    @apply bg-gray-900/10;
+  }
+  .pagination__item:active {
+    transform: translateY(2px);
+  }
+
+  .pagination__item--selected {
+    @apply bg-gray-900;
+    @apply text-white;
+    @apply shadow;
+  }
+
+  .pagination__item--disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  .pagination__jumper .form-control {
+    width: 3em;
+    @apply mr-2 lg:mr-3;
+  }
+  .pagination__jumper em {
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+</style>

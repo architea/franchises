@@ -1,0 +1,93 @@
+---
+import Layout from "../../layouts/Layout.astro"
+import isPreview from "../../utils/isPreview"
+import Ariane from "../../storyblok/Ariane.astro"
+import AllActus from "../../storyblok/AllActus.astro"
+import Pagination from "../../storyblok/Pagination.astro"
+import { storyblokFetch } from "../../lib/storyblok"
+
+export const getStaticPaths = async ({ paginate }: { paginate: any }) => {
+  const response = await storyblokFetch("cdn/stories", {
+    starts_with: "actualites/",
+    // version: "published",  // Static paths = published only
+    resolve_relations: "page.canonical",
+    resolve_links: "url",
+    is_startpage: false,
+    sort_by: "first_published_at:desc",
+    per_page: 100
+  })
+  return paginate(response.data.stories, { pageSize: 9 })
+}
+
+let posts = [],
+  currentPage = 1,
+  lastPage = 1
+
+if (isPreview()) {
+  const page = Astro.props.page
+  const { data } = await storyblokFetch("cdn/stories", {
+    version: isPreview() ? "draft" : "published",
+    starts_with: "actualites/",
+    resolve_relations: "page.canonical",
+    resolve_links: "url",
+    is_startpage: false,
+    sort_by: "first_published_at:desc",
+    per_page: 100
+  })
+  currentPage = Astro.params.page - 1 || 0
+  lastPage = Math.ceil(data.stories.length / 9)
+  posts = data.stories.slice(9 * currentPage, 9 * currentPage + 9)
+  currentPage += 1
+} else {
+  const pageObj = Astro.props.page
+  posts = pageObj?.data ?? []
+  currentPage = pageObj?.currentPage ?? 1
+  lastPage = pageObj?.lastPage ?? 1
+}
+
+const globalResponse = await storyblokFetch("cdn/stories/global", {
+  version: isPreview() ? "draft" : "published"
+})
+const globalContent = globalResponse?.data?.story?.content
+
+const seo = globalContent
+  ? {
+      title: globalContent.actuTitle,
+      description: globalContent.actuDescription,
+      robots: globalContent.actuRobots || "all",
+      schema: globalContent.actuSchema,
+      ogImageUrl: globalContent.actuOgImage.filename,
+      ogImageAlt: globalContent.actuOgImage.alt,
+      canonical: "/actualites"
+    }
+  : {
+      title: "Actualités",
+      description: ""
+    }
+
+let arianeBlok = {
+  h1: null,
+  title: "Actualités",
+  buttons: [
+    {
+      href: {
+        story: {
+          full_slug:
+            "https://www.franchise-architea.fr/devenir-franchise-architea"
+        }
+      },
+      text: "Devenir franchisé",
+      color: "khaki",
+      size: "m"
+    }
+  ]
+}
+---
+
+<Layout seo={seo}>
+  <main>
+    <Ariane blok={arianeBlok} name="Actualités" parent={0} slug="actualites" />
+    <AllActus data={posts} />
+    <Pagination currentPage={currentPage} lastPage={lastPage} />
+  </main>
+</Layout>

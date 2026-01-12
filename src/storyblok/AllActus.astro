@@ -1,0 +1,305 @@
+---
+import Image from "astro/components/Image.astro"
+
+const mois = [
+  "Janvier",
+  "Février",
+  "Mars",
+  "Avril",
+  "Mai",
+  "Juin",
+  "Juillet",
+  "Août",
+  "Septembre",
+  "Octobre",
+  "Novembre",
+  "Décembre"
+]
+
+let { data } = Astro.props
+---
+
+<section class="actus relative my-(--space-m)">
+  <div id="actu">
+    <div>
+      <ul class="content">
+        {
+          data.map((actu: any) => (
+            <li>
+              <a class="titre" href={"/" + actu.full_slug}>
+                <div class="last relative">
+                  <time
+                    datetime={actu.first_published_at}
+                    title={`Publié le ${new Date(actu.first_published_at).getDate()}.${new Date(actu.first_published_at).getMonth() + 1}.${new Date(actu.first_published_at).getFullYear()}`}>
+                    <span>{new Date(actu.first_published_at).getDate()}</span>
+                    <span>
+                      {mois[new Date(actu.first_published_at).getMonth()]}&nbsp;
+                      {new Date(actu.first_published_at).getFullYear()}
+                    </span>
+                  </time>
+                  <div class="bg relative">
+                    <div class="bg-img">
+                      <Image
+                        src={actu.content.thumbnail.filename}
+                        alt={actu.content.thumbnail.alt || " "}
+                        sizes="(min-width: 850px) 33vw, (min-width: 650px) 50vw, 100vw"
+                        layout="full-width"
+                        inferSize
+                        class="w-full h-full object-cover"
+                      />
+                    </div>
+                  </div>
+                  <div class="titre">{actu.title}</div>
+                </div>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  @reference '../styles/global.css';
+
+  #actu .date svg {
+    width: 1em;
+    margin-inline-end: 1em;
+  }
+  #actu .date {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+  }
+  #actu .sub,
+  #avis .sub {
+    color: #f15a22;
+    letter-spacing: 5px;
+    margin-bottom: -1%;
+    font-size: 19px;
+    font-weight: 700;
+  }
+
+  #actu {
+    padding: calc(20px + 2%) calc(25px + 4%);
+  }
+
+  .article #actu {
+    padding: 0 calc(20px + 3%);
+    margin-bottom: -40px;
+    padding-left: 0;
+  }
+
+  #actu .content {
+    display: flex;
+    padding-top: 25px;
+    flex-wrap: wrap;
+    margin: -10px;
+    row-gap: 2rem;
+  }
+
+  #actu .content > * {
+    width: 33.33%;
+    max-width: 33.33%;
+    flex-basis: 33.33%;
+    padding: 10px;
+  }
+
+  .article #actu .content > * {
+    width: 50%;
+    max-width: 50%;
+    flex-basis: 50%;
+    margin-bottom: calc(20px + 3%);
+  }
+
+  #actu.page-act .content {
+    flex-wrap: wrap;
+  }
+
+  #actu.page-act .content > * {
+    margin-top: calc(30px + 4%);
+    width: 33.33%;
+    max-width: 33.33%;
+    flex-basis: 33.33%;
+  }
+
+  #actu .tit {
+    width: 18%;
+    max-width: 18%;
+    flex-basis: 18%;
+  }
+
+  #actu .tit > * {
+    margin: auto;
+  }
+
+  #actu .last {
+    margin-left: -1px;
+  }
+
+  #actu .bg {
+    overflow: hidden;
+    z-index: 0;
+    top: 0;
+    left: 0;
+    height: calc(150px + 100 * (100vw - 320px) / 1080);
+    width: 100%;
+  }
+
+  #actu .bg-img {
+    z-index: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+  }
+
+  #actu .bg-img:before {
+    transition: 0.5s;
+    content: "";
+    background: #080808;
+    opacity: 0.2;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+  }
+
+  #actu .last:hover .bg-img:before {
+    opacity: 0;
+  }
+
+  #actu .last:hover .titre {
+    color: #f15a22;
+  }
+
+  #actu .last > time {
+    position: absolute;
+    z-index: 5;
+    color: #f15a22;
+  }
+
+  #actu .last > time span:first-child {
+    font-weight: 700;
+    font-size: 60px;
+    line-height: 0;
+  }
+
+  #actu .last > time span:last-child {
+    top: 0;
+    top: -32px;
+    margin-left: 8px;
+    text-transform: uppercase;
+    font-size: 19px;
+    font-weight: 700;
+  }
+
+  #actu .last .titre {
+    display: inline-block;
+    padding: 9px 15px 15px 0;
+    line-height: 1.2;
+    font-size: calc(14px + 4 * (100vw - 320px) / 1080);
+    font-weight: 700;
+  }
+
+  #actu .last a:first-letter {
+    text-transform: uppercase;
+  }
+
+  #actu .last .date {
+    font-size: calc(11px + 1 * (100vw - 320px) / 1080);
+    color: #999;
+    margin-top: 17px;
+    font-weight: 400;
+  }
+
+  #actu .last .tag {
+    margin: -1px;
+    margin-top: 10px;
+    overflow: hidden;
+  }
+
+  #actu .last .tag {
+    margin: -1px;
+    margin-top: 10px;
+    overflow: hidden;
+  }
+
+  #actu .last .tag a {
+    font-size: 10px;
+    display: inline-block;
+    text-transform: uppercase;
+    background: #999;
+    color: #fff;
+    display: inline-block;
+    margin: 1px;
+    font-weight: 700;
+    padding: 3px 7px;
+  }
+
+  #actu .last .tag a:hover {
+    background: #f15a22;
+  }
+
+  #actu .ct {
+    padding: 0;
+    text-align: center;
+    margin-bottom: calc(15px + 1%);
+  }
+
+  @media screen and (max-width: 850px) {
+    #actu {
+      padding: calc(20px + 3%) calc(25px + 4%);
+    }
+    /* 🎅 Wrong breakpoint @1100px -  corrected flex behavior */
+    #actu .content > :last-child {
+      display: none;
+    }
+
+    #actu .content > * {
+      width: 50%;
+      max-width: 50%;
+      flex-basis: 50%;
+    }
+
+    #actu .last > time {
+      left: 15px;
+    }
+
+    #actu .last > time:after {
+      left: 65px;
+    }
+
+    #actu .last > time span:first-child {
+      font-size: 50px;
+    }
+
+    #actu .last > time span:last-child {
+      font-size: 15px;
+      top: -25px;
+      margin-left: 8px;
+      letter-spacing: 2px;
+    }
+  }
+  @media screen and (max-width: 650px) {
+    #actu .content > * {
+      width: 100%;
+      max-width: 100%;
+      flex-basis: 100%;
+    }
+
+    #actu .content > .last + .last {
+      margin-top: calc(25px + 3%);
+    }
+
+    #actu .content > :last-child {
+      display: block;
+    }
+    #actu .bg {
+      height: calc(200px + 150 * (100vw - 320px) / 1080);
+    }
+  }
+</style>

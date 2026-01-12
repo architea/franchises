@@ -1,17 +1,15 @@
 ---
-import { useStoryblokApi } from "@storyblok/astro"
+import { storyblokFetch } from "../lib/storyblok"
 import isPreview from "../utils/isPreview"
+
 import { Image } from "astro:assets"
 import Button from "./Button.astro"
 
-const storyblokApi = useStoryblokApi()
-const { data } = await storyblokApi.get(`cdn/stories/global`, {
-  version: isPreview() ? "draft" : "published",
-  resolve_links: "url",
-  resolve_links_level: 2
+const globalResponse = await storyblokFetch("cdn/stories/global", {
+  version: isPreview() ? "draft" : "published"
 })
-
-const datanav = data.story.content.navitems
+const globalContent = globalResponse?.data?.story?.content
+const datanav = globalContent?.navitems
 let nav
 if (datanav) {
   nav = datanav.map((item: any) => {
@@ -36,20 +34,24 @@ if (datanav) {
       href="/"
       title="Retour à l'accueil"
       aria-label=`Retour à l'accueil`>
-      <Image
-        src={data.story.content.logonav.filename}
-        alt={data.story.content.logonav.alt || " "}
-        layout="full-width"
-        inferSize
-        class={`object-contain max-h-screen`}
-      />
+      {
+        globalContent?.logonav && (
+          <Image
+            src={globalContent.logonav.filename}
+            alt={globalContent.logonav.alt || " "}
+            layout="full-width"
+            inferSize
+            class={`object-contain max-h-screen`}
+          />
+        )
+      }
     </a>
   </div>
   <div class="right">
     {
-      data.story.content.buttonnav.length > 0 && (
+      globalContent?.buttonnav?.length > 0 && (
         <div class="mr-(--space-m) always-visible">
-          {data.story.content.buttonnav.map((button: any) => (
+          {globalContent.buttonnav.map((button: any) => (
             <Button blok={button} />
           ))}
         </div>
@@ -98,9 +100,9 @@ if (datanav) {
         }
       </ul>
       {
-        data.story.content.buttonnav.length > 0 && (
+        globalContent?.buttonnav?.length > 0 && (
           <div class="ml-(--space-m)">
-            {data.story.content.buttonnav.map((button: any) => (
+            {globalContent.buttonnav.map((button: any) => (
               <Button blok={button} />
             ))}
           </div>

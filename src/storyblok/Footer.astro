@@ -1,21 +1,12 @@
 ---
-import { useStoryblokApi } from "@storyblok/astro"
-import isPreview from "../utils/isPreview"
 import { Image } from "astro:assets"
 import RichText from "./utils/RichText.astro"
 import InlineSvg from "./utils/InlineSvg.astro"
 import Button from "./Button.astro"
 
-const storyblokApi = useStoryblokApi()
-const { data } = await storyblokApi.get(`cdn/stories/global`, {
-  version: isPreview() ? "draft" : "published",
-  resolve_links: "url",
-  resolve_links_level: 2
-})
+const { data } = Astro.props
 
-const footerdata = data.story.content
-
-const datanav = data.story.content.navitems
+const datanav = data.navitems
 let nav
 if (datanav) {
   nav = datanav.map((item: any) => {
@@ -35,12 +26,12 @@ if (datanav) {
 
 <footer>
   <div class="infos">
-    {footerdata.infosfooter && <RichText content={footerdata.infosfooter} />}
+    {data.infosfooter && <RichText content={data.infosfooter} />}
     {
-      footerdata.logofooter?.filename && (
+      data.logofooter?.filename && (
         <Image
-          src={footerdata.logofooter.filename}
-          alt={footerdata.logofooter.alt || " "}
+          src={data.logofooter.filename}
+          alt={data.logofooter.alt || " "}
           layout="full-width"
           inferSize
           class="mt-(--space-m)"
@@ -86,10 +77,10 @@ if (datanav) {
   </div>
   <div class="image">
     {
-      footerdata.image?.filename && (
+      data.image?.filename && (
         <Image
-          src={footerdata.image.filename}
-          alt={footerdata.image.alt || " "}
+          src={data.image.filename}
+          alt={data.image.alt || " "}
           layout="full-width"
           inferSize
           class="mx-auto max-h-80 w-auto"
@@ -99,13 +90,13 @@ if (datanav) {
   </div>
   <div class="slogan flex flex-col gap-5 self-center">
     <div class="self-start max-w-[40ch]">
-      <RichText content={footerdata.slogan} />
+      <RichText content={data.slogan} />
     </div>
     <div
       class="w-full flex flex-wrap gap-(--space-m) items-center justify-between">
       <div class="rs flex flex-wrap gap-5">
         {
-          footerdata.rs.map((reseau: any) => (
+          data.rs.map((reseau: any) => (
             <a
               href={reseau.url.url}
               class={`icones-social-12 ${reseau.name}`}
@@ -121,7 +112,7 @@ if (datanav) {
           ))
         }
       </div>
-      {footerdata.button.length != 0 && <Button blok={footerdata.button[0]} />}
+      {data.button.length != 0 && <Button blok={data.button[0]} />}
     </div>
   </div>
 </footer>
