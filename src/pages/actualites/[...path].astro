@@ -1,0 +1,44 @@
+---
+import { storyblokFetch } from "../../lib/storyblok.js"
+import StoryblokComponent from "@storyblok/astro/StoryblokComponent.astro"
+import Layout from "../../layouts/Layout.astro"
+import isPreview from "../../utils/isPreview"
+import generateStaticPaths from "../../utils/generateStaticPaths"
+
+export async function getStaticPaths() {
+  //We have moved all the code to a generateStaticPaths() function.
+  const paths = await generateStaticPaths()
+  return paths
+}
+
+const { path } = Astro.params
+const storyPath = path || "home"
+
+const response = await storyblokFetch(`cdn/stories/actualites/${storyPath}`, {
+  version: isPreview() ? "draft" : "published",
+  resolve_relations: "page.canonical",
+  resolve_links: "url"
+})
+
+const story = response.data.story
+if (!story) return Astro.redirect("/404")
+
+const seo = {
+  title: story.content.title ?? story.name ?? "Page",
+  description: story.content.description ?? "",
+  robots: story.content.robots ?? "all",
+  schema: story.content.schema ?? "",
+  ogImageUrl: story.content.ogimage?.filename ?? "",
+  ogImageAlt: story.content.ogimage?.alt ?? "",
+  canonical: story.content.canonical ?? story.full_slug ?? ""
+}
+---
+
+<Layout seo={seo}>
+  <StoryblokComponent
+    blok={story.content}
+    name={story.name}
+    parent={story.parent_id}
+    slug={story.full_slug}
+  />
+</Layout>

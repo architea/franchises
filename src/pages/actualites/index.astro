@@ -23,27 +23,21 @@ let posts = [],
   currentPage = 1,
   lastPage = 1
 
-if (isPreview()) {
-  const page = Astro.props.page
-  const { data } = await storyblokFetch("cdn/stories", {
-    version: isPreview() ? "draft" : "published",
-    starts_with: "actualites/",
-    resolve_relations: "page.canonical",
-    resolve_links: "url",
-    is_startpage: false,
-    sort_by: "first_published_at:desc",
-    per_page: 100
-  })
-  currentPage = Astro.params.page - 1 || 0
-  lastPage = Math.ceil(data.stories.length / 9)
-  posts = data.stories.slice(9 * currentPage, 9 * currentPage + 9)
-  currentPage += 1
-} else {
-  const pageObj = Astro.props.page
-  posts = pageObj?.data ?? []
-  currentPage = pageObj?.currentPage ?? 1
-  lastPage = pageObj?.lastPage ?? 1
-}
+const page = Astro.props.page
+const { data } = await storyblokFetch("cdn/stories", {
+  version: isPreview() ? "draft" : "published",
+  starts_with: "actualites/",
+  resolve_relations: "page.canonical",
+  resolve_links: "url",
+  is_startpage: false,
+  sort_by: "first_published_at:desc",
+  per_page: 100,
+  content_type: "actu"
+})
+currentPage = Astro.params.page - 1 || 0
+lastPage = Math.ceil(data.stories.length / 9)
+posts = data.stories.slice(9 * currentPage, 9 * currentPage + 9)
+currentPage += 1
 
 const globalResponse = await storyblokFetch("cdn/stories/global", {
   version: isPreview() ? "draft" : "published"

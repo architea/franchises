@@ -16,8 +16,6 @@ const canonicalURL =
   seo.canonical?.length > 0
     ? new URL(seo.canonical, Astro.site)
     : new URL(Astro.url.pathname, Astro.site)
-
-console.log(Astro.currentLocale)
 ---
 
 <head>

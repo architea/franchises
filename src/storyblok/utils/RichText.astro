@@ -2,7 +2,17 @@
 import RichTextRenderer from "storyblok-rich-text-astro-renderer/RichTextRenderer.astro"
 import Button from "../Button.astro"
 
-const { content } = Astro.props
+function isEmpty(obj) {
+  return Object.keys(obj).length === 0
+}
+
+let { content } = Astro.props
+if (isEmpty(content)) {
+  content = {
+    type: "doc",
+    content: []
+  }
+}
 ---
 
 {
