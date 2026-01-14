@@ -3,17 +3,17 @@
 import Button from "../Button.astro"
 import { richTextResolver } from "@storyblok/richtext"
 
-function isEmpty(obj) {
-  return Object.keys(obj).length === 0
-}
+// function isEmpty(obj) {
+//   return Object.keys(obj).length === 0
+// }
 
 let { content } = Astro.props
-if (isEmpty(content)) {
-  content = {
-    type: "doc",
-    content: []
-  }
-}
+// if (isEmpty(content)) {
+//   content = {
+//     type: "doc",
+//     content: []
+//   }
+// }
 
 const { render } = richTextResolver()
 const html = render(content)

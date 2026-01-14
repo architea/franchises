@@ -46,9 +46,6 @@ export default defineConfig({
   adapter: vercel(),
 
   vite: {
-    plugins: [tailwindcss()],
-    ssr: {
-      noExternal: ["@storyblok/astro", "storyblok-js-client"]
-    }
+    plugins: [tailwindcss()]
   }
 })

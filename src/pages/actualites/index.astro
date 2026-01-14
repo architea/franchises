@@ -16,6 +16,8 @@ export const getStaticPaths = async ({ paginate }: { paginate: any }) => {
     sort_by: "first_published_at:desc",
     per_page: 100
   })
+  console.log("actualite - index")
+
   return paginate(response.data.stories, { pageSize: 9 })
 }
 

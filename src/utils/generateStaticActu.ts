@@ -7,7 +7,7 @@ export default async function generateStaticPaths() {
   })
   
   const paths = response.data.stories
-    .filter((link: any) => !link.full_slug.startsWith("actualites"))
+    .filter((link: any) => link.full_slug.startsWith("actualites"))
     .filter((link: any) => link.full_slug !== "global")
     .map((link: any) => {
       const slug = link.full_slug === "home" ? undefined : link.full_slug  // undefined for home!

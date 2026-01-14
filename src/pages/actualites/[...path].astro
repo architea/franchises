@@ -3,11 +3,13 @@ import { storyblokFetch } from "../../lib/storyblok.js"
 import StoryblokComponent from "@storyblok/astro/StoryblokComponent.astro"
 import Layout from "../../layouts/Layout.astro"
 import isPreview from "../../utils/isPreview"
-import generateStaticPaths from "../../utils/generateStaticPaths"
+import generateStaticPaths from "../../utils/generateStaticActu"
 
 export async function getStaticPaths() {
   //We have moved all the code to a generateStaticPaths() function.
   const paths = await generateStaticPaths()
+  console.log("actualite - path")
+
   return paths
 }
 
