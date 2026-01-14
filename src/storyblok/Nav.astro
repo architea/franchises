@@ -6,13 +6,15 @@ import { Image } from "astro:assets"
 import Button from "./Button.astro"
 
 const globalResponse = await storyblokFetch("cdn/stories/global", {
-  version: isPreview() ? "draft" : "published"
+  version: isPreview() ? "draft" : "published",
+  resolve_links: "url"
 })
 const globalContent = globalResponse?.data?.story?.content
 const datanav = globalContent?.navitems
 let nav
 if (datanav) {
   nav = datanav.map((item: any) => {
+    console.log(item)
     return {
       name: item.name,
       url: item.page.story?.full_slug,
@@ -25,6 +27,7 @@ if (datanav) {
     }
   })
 }
+console.log(nav)
 ---
 
 <header id="header">
