@@ -14,7 +14,11 @@ export async function getStaticPaths() {
 const { path } = Astro.params
 const storyPath = path || "home"
 
-const response = await storyblokFetch(`cdn/stories/actualites/${storyPath}`, {
+const query = isPreview()
+  ? `cdn/stories/actualites/${storyPath}`
+  : `cdn/stories/${storyPath}`
+
+const response = await storyblokFetch(query, {
   version: isPreview() ? "draft" : "published",
   resolve_relations: "page.canonical",
   resolve_links: "url"

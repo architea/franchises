@@ -14,7 +14,6 @@ const datanav = globalContent?.navitems
 let nav
 if (datanav) {
   nav = datanav.map((item: any) => {
-    console.log(item)
     return {
       name: item.name,
       url: item.page.story?.full_slug,
@@ -27,7 +26,6 @@ if (datanav) {
     }
   })
 }
-console.log(nav)
 ---
 
 <header id="header">
