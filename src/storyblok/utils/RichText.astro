@@ -1,6 +1,7 @@
 ---
-import RichTextRenderer from "storyblok-rich-text-astro-renderer/RichTextRenderer.astro"
+// import RichTextRenderer from "storyblok-rich-text-astro-renderer/RichTextRenderer.astro"
 import Button from "../Button.astro"
+import { richTextResolver } from "@storyblok/richtext"
 
 function isEmpty(obj) {
   return Object.keys(obj).length === 0
@@ -13,17 +14,20 @@ if (isEmpty(content)) {
     content: []
   }
 }
+
+const { render } = richTextResolver()
+const html = render(content)
 ---
 
 {
-  content && (
-    <RichTextRenderer
-      content={content}
-      resolver={(blok) => {
-        if (blok.component === "button") {
-          return { component: Button, props: { blok } }
-        }
-      }}
-    />
+  html && (
+    <Fragment set:html={html} />
+    // <RichTextRenderer content={content} />
+    // resolver={(blok) => {
+    //   return {
+    //     component: Button,
+    //     props: { blok }
+    //   }
+    // }}
   )
 }
