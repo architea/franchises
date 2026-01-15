@@ -1,0 +1,19 @@
+---
+import AllActus from "./AllActus.astro"
+import isPreview from "../utils/isPreview"
+import { storyblokFetch } from "../lib/storyblok"
+
+const { data } = await storyblokFetch("cdn/stories", {
+  version: isPreview() ? "draft" : "published",
+  starts_with: "actualites/",
+  resolve_relations: "page.canonical",
+  resolve_links: "url",
+  is_startpage: false,
+  sort_by: "first_published_at:desc",
+  per_page: 3,
+  content_type: "actu"
+})
+let posts = data.stories
+---
+
+<AllActus data={posts} />

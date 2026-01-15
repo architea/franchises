@@ -35,7 +35,8 @@ export default defineConfig({
         map: "storyblok/Map",
         contact: "storyblok/Contact",
         videoGallery: "storyblok/VideoGallery",
-        allActus: "storyblok/AllActus"
+        allActus: "storyblok/AllActus",
+        actupreview: "storyblok/ActuPreview"
       }
     }),
     sitemap(),
