@@ -8,7 +8,6 @@ import generateStaticPaths from "../utils/generateStaticPaths"
 export async function getStaticPaths() {
   //We have moved all the code to a generateStaticPaths() function.
   const paths = await generateStaticPaths()
-  console.log("normal path")
   return paths
 }
 
