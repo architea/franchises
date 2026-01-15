@@ -3,18 +3,12 @@ import Head from "./Head.astro"
 import Colors from "../styles/colors.astro"
 import Nav from "../storyblok/Nav.astro"
 import Footer from "../storyblok/Footer.astro"
-import { storyblokFetch } from "../lib/storyblok"
-import isPreview from "../utils/isPreview"
 import "../../node_modules/aos/dist/aos.css"
 import "../styles/global.css"
 import "../styles/fonts.css"
 import "swiper/css"
 import Analytics from "@vercel/analytics/astro"
 
-const globalResponse = await storyblokFetch("cdn/stories/global", {
-  version: isPreview() ? "draft" : "published"
-})
-const globalContent = globalResponse?.data?.story?.content
 const { seo } = Astro.props
 ---
 
@@ -28,7 +22,7 @@ const { seo } = Astro.props
         <div id="scroll" data-scroll-target></div>
         <Nav />
         <slot />
-        <Footer data={globalContent} />
+        <Footer />
       </div>
     </div>
   </body><script>
