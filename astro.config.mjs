@@ -1,4 +1,4 @@
-import { defineConfig } from "astro/config"
+import { defineConfig, passthroughImageService } from "astro/config"
 import { storyblok } from "@storyblok/astro"
 import { loadEnv } from "vite"
 import vercel from "@astrojs/vercel"
@@ -44,9 +44,33 @@ export default defineConfig({
   ],
 
   output: env.STORYBLOK_IS_PREVIEW === "yes" ? "server" : "static",
-  adapter: vercel(),
+  adapter: vercel({
+    imageService: true,
+    imagesConfig: {
+      minimumCacheTTL: 86400,
+      sizes: [300, 720, 1080, 1560, 1920, 2560],
+      remotePatterns: [
+        {
+          protocol: "https",
+          hostname: "a.storyblok.com",
+          pathname: `/f/${env.STORYBLOK_SPACEID}/**`
+        }
+      ]
+    }
+  }),
 
   vite: {
     plugins: [tailwindcss()]
+  },
+
+  image: {
+    service: passthroughImageService(),
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "a.storyblok.com",
+        pathname: `/f/${env.STORYBLOK_SPACEID}/**`
+      }
+    ]
   }
 })
