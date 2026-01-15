@@ -21,8 +21,6 @@ const response = await storyblokFetch(`cdn/stories/${storyPath}`, {
   resolve_links: "url"
 })
 
-response.data.story.content.body.map((blok) => console.log(blok?.content))
-
 const story = response.data.story
 if (!story) return Astro.redirect("/404")
 
