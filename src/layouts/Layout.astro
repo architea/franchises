@@ -8,6 +8,7 @@ import "../styles/global.css"
 import "../styles/fonts.css"
 import "swiper/css"
 import Analytics from "@vercel/analytics/astro"
+import SpeedInsights from "@vercel/speed-insights/astro"
 
 const { seo } = Astro.props
 ---
@@ -16,6 +17,7 @@ const { seo } = Astro.props
   <Analytics />
   <Head seo={seo} />
   <Colors />
+  <SpeedInsights />
   <body>
     <div id="app">
       <div class="app-content" data-scroll-root>
