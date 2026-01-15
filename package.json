@@ -16,6 +16,7 @@
     "@storyblok/astro": "^7.3.6",
     "@storyblok/richtext": "^3.8.2",
     "@tailwindcss/vite": "^4.1.17",
+    "@vercel/analytics": "^1.6.1",
     "aos": "^2.3.4",
     "astro": "^5.16.1",
     "astro-embed": "^0.9.2",
