@@ -21,6 +21,7 @@ export default defineConfig({
       },
       components: {
         page: "storyblok/Page",
+        landing: "storyblok/Page",
         actu: "storyblok/Page",
         slider: "storyblok/Slider",
         button: "storyblok/Button",
@@ -36,7 +37,8 @@ export default defineConfig({
         contact: "storyblok/Contact",
         videoGallery: "storyblok/VideoGallery",
         allActus: "storyblok/AllActus",
-        actupreview: "storyblok/ActuPreview"
+        actupreview: "storyblok/ActuPreview",
+        projets: "storyblok/Projects"
       }
     }),
     sitemap(),

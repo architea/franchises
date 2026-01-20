@@ -1,0 +1,48 @@
+---
+import { storyblokFetch } from "../lib/storyblok"
+import isPreview from "../utils/isPreview"
+import { Image } from "astro:assets"
+import InlineSvg from "./utils/InlineSvg.astro"
+
+const globalResponse = await storyblokFetch("cdn/stories/global", {
+  version: isPreview() ? "draft" : "published",
+  resolve_links: "url"
+})
+const globalContent = globalResponse?.data?.story?.content
+---
+
+<footer>
+  <div class="logo">
+    {
+      globalContent.logofooter?.filename && (
+        <Image
+          src={globalContent.logofooter.filename}
+          alt={globalContent.logofooter.alt || " "}
+          layout="full-width"
+          inferSize
+        />
+      )
+    }
+  </div>
+  <div class="texte self-end text-right">
+    <a class="font-bold" href={globalContent.legal.story.full_slug}>Mentions légales</a>
+    <p><span id="current_year"></span> Tous droits réservés. Conception par <a href="https://huitquatre.fr">huitquatre</a></p>
+  </div>
+</footer>
+
+<style>
+  @reference "../styles/global.css";
+
+  footer {
+    background-color: var(--color-noir);
+    color: var(--color-blanc);
+    @apply px-5 lg:px-10 py-(--space-xl) justify-center md:justify-between;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: var(--space-m);
+  }
+  .texte {
+    font-family: font-family: "Halyard";
+  }
+</style>

@@ -102,6 +102,10 @@ form *:not(.button span) {
   margin-block-end: 4rem;
 } */
 
+footer p a {
+  color: var(--color-blanc);
+}
+
 p a {
   text-decoration: underline;
   color: var(--color-noir);
@@ -133,7 +137,7 @@ p a {
   display: inline-block;
   transform-origin: bottom left;
   transform: rotate(349deg);
-  left: calc(-1 * var(--longueur) * 1%);
+  left: calc(-1 * var(--longueur) * 0.5%);
   top: -3rem;
 }
 

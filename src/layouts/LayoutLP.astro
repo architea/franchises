@@ -1,0 +1,34 @@
+---
+import Head from "./Head.astro"
+import Colors from "../styles/colors.astro"
+import FooterLP from "../storyblok/FooterLP.astro"
+import "../../node_modules/aos/dist/aos.css"
+import "../styles/global.css"
+import "../styles/fonts.css"
+import "swiper/css"
+import Analytics from "@vercel/analytics/astro"
+import SpeedInsights from "@vercel/speed-insights/astro"
+
+const { seo } = Astro.props
+---
+
+<html lang="fr" prefix="og: http://ogp.me/ns#">
+  <Analytics />
+  <Head seo={seo} />
+  <Colors />
+  <SpeedInsights />
+  <body>
+    <div id="app">
+      <div class="app-content" data-scroll-root>
+        <div id="scroll" data-scroll-target></div>
+        <slot />
+        <FooterLP />
+      </div>
+    </div>
+  </body><script>
+    import AOS from "aos"
+    import "../utils/rotationSizing"
+    import "../utils/fixAnchor"
+    AOS.init()
+  </script>
+</html>

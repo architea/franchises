@@ -1,0 +1,118 @@
+---
+import RichText from "./utils/RichText.astro"
+import { storyblokEditable } from "@storyblok/astro"
+import Button from "./Button.astro"
+import { Image } from "astro:assets"
+
+const { blok } = Astro.props
+---
+
+<section class="projets relative my-(--space-m)" {...storyblokEditable(blok)}>
+  {
+    blok.intro && (
+      <div class="my-(--space-l) texte">
+        <RichText content={blok.intro} />
+      </div>
+    )
+  }
+  <div class="max-w-[2000px] mx-auto">
+    <ul class="types">
+      {
+        blok.projets.map((item: any) => (
+          <li>
+            <div class="bg-img relative">
+              <Image
+                src={item.image.filename}
+                alt={item.image.alt || " "}
+                sizes="(min-width: 850px) 33vw, (min-width: 650px) 50vw, 100vw"
+                layout="full-width"
+                inferSize
+                class="w-full h-full object-cover"
+              />
+              <span class={`button ${item.color} size-l`}>
+                <span>{item.title}</span>
+              </span>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+  <div class="mt-10 flex justify-end gap-10">
+    {
+      blok.buttons.length > 0 &&
+        blok.buttons.map((button) => <Button blok={button} />)
+    }
+  </div>
+</section>
+
+<style>
+  @reference "../styles/global.css";
+
+  .projets {
+    @apply px-5 lg:px-10;
+  }
+
+  .bg-img {
+    height: calc(150px + 100 * (100vw - 320px) / 1080);
+  }
+
+  .types {
+    display: flex;
+    padding-top: 25px;
+    margin: -10px;
+    row-gap: 2rem;
+    justify-content: center;
+    align-items: center;
+    @apply flex-col md:flex-row;
+  }
+
+  @media min-width(768px) {
+    .types > * {
+      width: 33.33%;
+      max-width: 33.33%;
+      flex-basis: 33.33%;
+      padding: 10px;
+    }
+    .button {
+      padding-inline: 1.5rem;
+      padding-block: 0.6rem 0.9rem;
+      font-size: var(--step-2);
+      line-height: 1.5rem;
+    }
+  }
+
+  .types > * {
+    width: 100%;
+    max-width: 100%;
+    flex-basis: 100%;
+    padding: 10px;
+  }
+
+  .button {
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    display: inline-flex;
+    align-items: center;
+    vertical-align: middle;
+    border-radius: 5px;
+    margin-block: var(--space-2xs);
+    transition-property: background-color;
+    transition-duration: 0.3s;
+    transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding-inline: 1.2rem;
+    padding-block: 0.4rem 0.7rem;
+    font-size: var(--step-1);
+    line-height: 1.5rem;
+
+    & span {
+      z-index: 1;
+      transition: 0.3s ease-in;
+    }
+  }
+</style>
