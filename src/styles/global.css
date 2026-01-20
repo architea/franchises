@@ -82,11 +82,14 @@ p {
   margin-block-start: var(--space-m);
 }
 .texte ul {
-  list-style: disc inside;
+  list-style: disc outside;
+  margin-block-start: var(--space-xs);
+  margin-inline-start: var(--space-xs);
 }
 .texte ol {
   list-style: decimal inside;
 }
+
 
 form *:not(.button span) {
   color: var(--color-noir);

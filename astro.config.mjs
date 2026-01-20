@@ -38,7 +38,8 @@ export default defineConfig({
         videoGallery: "storyblok/VideoGallery",
         allActus: "storyblok/AllActus",
         actupreview: "storyblok/ActuPreview",
-        projets: "storyblok/Projects"
+        projets: "storyblok/Projects",
+        contactlp: "storyblok/ContactLP"
       }
     }),
     sitemap(),

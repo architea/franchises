@@ -1,0 +1,280 @@
+---
+import { Image } from "astro:assets"
+import RichText from "./utils/RichText.astro"
+import { storyblokEditable } from "@storyblok/astro"
+import Youtube from "./utils/Youtube.astro"
+
+let { blok } = Astro.props
+console.log(blok)
+let list_types = blok.typestravaux_list.replace(/\s+/g, "").split(",")
+console.log(list_types)
+---
+
+<section class="contact my-(--space-m)" {...storyblokEditable(blok)}>
+  <div class="layout">
+    <div class="text text-justify">
+      <div class="texte">
+        <RichText content={blok.text} />
+      </div>
+    </div>
+    <div class="form">
+      <form
+        id="contact-form"
+        name={Astro.url.pathname}
+        method="POST"
+        data-success={blok.success}
+        class="flex flex-col justify-evenly text-(--color-noir)"
+        autocomplete="off">
+        <p class="form-title">{blok.title}</p>
+        <div class="">
+          <input
+            type="hidden"
+            value=`${import.meta.env.WEB3FORMS_ACCESS_KEY}`
+            name="access_key"
+          />
+          <input
+            type="hidden"
+            name="subject"
+            value="Vous avez un nouveau contact !"
+          />
+
+          <div class="grid gap-5 lg:gap-10">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 lg:gap-10">
+              <input
+                required
+                type="text"
+                name="nom"
+                id="nom"
+                class="input bg-(--color-blanc) py-2.5 sm:py-3 px-4 block w-full sm:text-sm focus:border-(--color-orange) focus:ring-(--color-orange) disabled:opacity-50 disabled:pointer-events-none"
+                placeholder={blok.nom || "Nom*"}
+              />
+              <input
+                required
+                type="text"
+                name="prenom"
+                id="prenom"
+                class="input bg-(--color-blanc) py-2.5 sm:py-3 px-4 block w-full sm:text-sm focus:border-(--color-orange) focus:ring-(--color-orange) disabled:opacity-50 disabled:pointer-events-none"
+                placeholder={blok.prenom || "Prénom*"}
+              />
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 lg:gap-10">
+              <input
+                required
+                type="text"
+                pattern="[0-9]{5}"
+                maxlength="5"
+                name="codepostal"
+                id="codepostal"
+                class="input bg-(--color-blanc) py-2.5 sm:py-3 px-4 block w-full sm:text-sm focus:border-(--color-orange) focus:ring-(--color-orange) disabled:opacity-50 disabled:pointer-events-none"
+                placeholder={blok.codepostal || "Code postal*"}
+              />
+              <input
+                required
+                type="text"
+                name="ville"
+                id="ville"
+                class="input bg-(--color-blanc) py-2.5 sm:py-3 px-4 block w-full sm:text-sm focus:border-(--color-orange) focus:ring-(--color-orange) disabled:opacity-50 disabled:pointer-events-none"
+                placeholder={blok.ville || "Ville*"}
+              />
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 lg:gap-10">
+              <input
+                required
+                type="text"
+                name="email"
+                id="email"
+                autocomplete="email"
+                class="input bg-(--color-blanc) py-2.5 sm:py-3 px-4 block w-full sm:text-sm focus:border-(--color-orange) focus:ring-(--color-orange) disabled:opacity-50 disabled:pointer-events-none"
+                placeholder={blok.email || "Email*"}
+              />
+
+              <input
+                required
+                type="text"
+                name="telephone"
+                id="telephone"
+                autocomplete="mobile"
+                class="input bg-(--color-blanc) py-2.5 sm:py-3 px-4 block w-full sm:text-sm focus:border-(--color-orange) focus:ring-(--color-orange) disabled:opacity-50 disabled:pointer-events-none"
+                placeholder={blok.telephone || "Telephone*"}
+              />
+            </div>
+
+            <select
+              name="types_de_travaux"
+              id="types_de_travaux"
+              class="select text-(--color-noir) bg-(--color-blanc) py-2.5 sm:py-3 px-4 block w-full sm:text-sm focus:border-(--color-orange) focus:ring-(--color-orange) disabled:opacity-50 disabled:pointer-events-none">
+              <option disabled selected>
+                {blok.typestravaux || "Type de travaux"}
+              </option>
+              {list_types.map((type: any) => <option>{type}</option>)}
+            </select>
+
+            <textarea
+              required
+              id="message"
+              name="message"
+              rows="4"
+              class="textarea bg-(--color-blanc) py-2.5 sm:py-3 px-4 block w-full sm:text-sm focus:border-(--color-orange) focus:ring-(--color-orange) disabled:opacity-50 disabled:pointer-events-none"
+              placeholder={blok.message || "Message*"}></textarea>
+          </div>
+
+          <input
+            type="checkbox"
+            name="botcheck"
+            class="hidden"
+            style="display: none;"
+          />
+
+          <div class="mt-5 grid">
+            <button
+              type="submit"
+              title={blok.envoyer || "Envoyer"}
+              class={`button noir size-xl`}
+              aria-label={blok.envoyer || "Envoyer"}
+              ><span class="text-(--color-blanc)"
+                >{blok.envoyer || "Envoyer"}</span
+              ></button
+            >
+          </div>
+        </div>
+
+        <div id="result" class="mt-3 text-center"></div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<script>
+  const form = document.getElementById("contact-form")
+  const result = document.getElementById("result")
+  const success = form?.dataset.success
+
+  if (form) {
+    form.addEventListener("submit", function (e) {
+      e.preventDefault()
+      const formData = new FormData(form)
+      const object = Object.fromEntries(formData)
+      const json = JSON.stringify(object)
+      result.innerHTML = "En cours d'envoi..."
+
+      fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        },
+        body: json
+      })
+        .then(async (response) => {
+          let json = await response.json()
+          if (response.status == 200) {
+            result.innerHTML = success
+          } else {
+            console.log(response)
+            result.innerHTML = json.message
+          }
+        })
+        .catch((error) => {
+          console.log(error)
+          result.innerHTML = "Une erreur est survenue."
+        })
+        .then(function () {
+          form.reset()
+          setTimeout(() => {
+            result.style.display = "Aucune réponse."
+          }, 3000)
+        })
+    })
+  }
+</script>
+
+<style>
+  @reference "../styles/global.css";
+
+  .layout {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-m);
+    @apply mt-(--space-3xl) lg:mt-0 items-center flex-col-reverse lg:flex-row lg:items-stretch;
+  }
+  .layout > div {
+    flex-grow: 1;
+    flex-shrink: 1;
+    @apply basis-full lg:basis-[40%];
+  }
+  .text {
+    @apply px-5 lg:px-10 min-w-0 xl:min-w-xl max-w-3xl;
+  }
+  .form {
+    @apply px-5 lg:px-10 min-h-full max-w-3xl min-w-0 xl:min-w-xl pt-5;
+  }
+  .form form {
+    background-color: var(--color-khaki);
+    border-radius: var(--space-3xs);
+    padding: var(--space-m);
+    color: var(--color-khaki-content);
+    height: 100%;
+    width: 100%;
+  }
+  .form-title {
+    line-height: 1;
+    font-size: var(--step-4);
+    font-weight: 600;
+    text-wrap-style: pretty;
+    margin-block-end: var(--space-m);
+  }
+  input::placeholder,
+  textarea::placeholder,
+  select::placeholder {
+    color: var(--color-noir);
+  }
+  :autofill {
+    background-color: var(--color-noir) !important;
+  }
+
+  .button {
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    display: inline-flex;
+    justify-content: center;
+    width: fit-content;
+    margin-inline: auto;
+    align-items: center;
+    vertical-align: middle;
+    border-radius: 5px;
+    margin-block: var(--space-2xs);
+    & span {
+      text-align: center;
+      z-index: 1;
+      transition: 0.3s ease-in;
+    }
+    &.size-xl {
+      padding-inline: 1.5rem;
+      padding-block: 0.6rem 0.9rem;
+      font-size: var(--step-2);
+      line-height: 1.5rem;
+    }
+  }
+  .button:before {
+    transform: skewX(-25deg);
+    transition: 0.6s ease-out;
+    background: var(--color-noir);
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -25px;
+    width: 0;
+    height: 100%;
+    z-index: 0;
+  }
+  .button:hover span {
+    color: var(--color-blanc);
+  }
+  .button:hover:before {
+    width: calc(100% + 50px);
+    transform: skewX(-15deg);
+  }
+</style>
