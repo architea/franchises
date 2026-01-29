@@ -15,29 +15,42 @@ const { data } = await storyblokApi.get(`cdn/stories/global`, {
 })
 
 let socials = data.story.content.rs
+let logo = data.story.content.logonav
 
 const { blok } = Astro.props
 ---
 
-<section class="slider" {...storyblokEditable(blok)}>
+<section class="slider relative" {...storyblokEditable(blok)}>
+  {
+    blok.logo && (
+      <Image
+        src={logo.filename}
+        alt={logo.alt || " "}
+        layout="full-width"
+        inferSize
+        class={`z-10 absolute top-4 left-4 object-contain max-h-screen`}
+      />
+    )
+  }
   <div class="rs gap-5">
     {
-      socials.map((reseau: any) => (
-        <a
-          href={reseau.url.url}
-          class={`icones-social-12 ${reseau.name}`}
-          rel="external noopener noreferrer"
-          title={`Voir notre page ${reseau.name} Architéa`}
-          target="_blank"
-          aria-label={`lien vers ${reseau.name}`}>
-          {reseau.icon.filename && (
-            <InlineSvg
-              src={reseau.icon.filename}
-              class={`rs-icon fill-${reseau.color}`}
-            />
-          )}
-        </a>
-      ))
+      !blok.rs &&
+        socials.map((reseau: any) => (
+          <a
+            href={reseau.url.url}
+            class={`icones-social-12 ${reseau.name}`}
+            rel="external noopener noreferrer"
+            title={`Voir notre page ${reseau.name} Architéa`}
+            target="_blank"
+            aria-label={`lien vers ${reseau.name}`}>
+            {reseau.icon.filename && (
+              <InlineSvg
+                src={reseau.icon.filename}
+                class={`rs-icon fill-${reseau.color}`}
+              />
+            )}
+          </a>
+        ))
     }
   </div>
   <div class="ct p-(--space-m) lg:p-(--space-3xl) max-w-[100ch]">

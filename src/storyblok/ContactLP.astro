@@ -5,9 +5,7 @@ import { storyblokEditable } from "@storyblok/astro"
 import Youtube from "./utils/Youtube.astro"
 
 let { blok } = Astro.props
-console.log(blok)
-let list_types = blok.typestravaux_list.replace(/\s+/g, "").split(",")
-console.log(list_types)
+let list_types = blok.typestravaux_list.split(",").map((s: string) => s.trim())
 ---
 
 <section class="contact my-(--space-m)" {...storyblokEditable(blok)}>
@@ -17,7 +15,7 @@ console.log(list_types)
         <RichText content={blok.text} />
       </div>
     </div>
-    <div class="form">
+    <div class="form" id="contact">
       <form
         id="contact-form"
         name={Astro.url.pathname}
@@ -102,22 +100,22 @@ console.log(list_types)
             </div>
 
             <select
+              required
               name="types_de_travaux"
               id="types_de_travaux"
               class="select text-(--color-noir) bg-(--color-blanc) py-2.5 sm:py-3 px-4 block w-full sm:text-sm focus:border-(--color-orange) focus:ring-(--color-orange) disabled:opacity-50 disabled:pointer-events-none">
-              <option disabled selected>
-                {blok.typestravaux || "Type de travaux"}
+              <option disabled selected value="">
+                {blok.typestravaux || "Type de travaux*"}
               </option>
               {list_types.map((type: any) => <option>{type}</option>)}
             </select>
 
             <textarea
-              required
               id="message"
               name="message"
               rows="4"
               class="textarea bg-(--color-blanc) py-2.5 sm:py-3 px-4 block w-full sm:text-sm focus:border-(--color-orange) focus:ring-(--color-orange) disabled:opacity-50 disabled:pointer-events-none"
-              placeholder={blok.message || "Message*"}></textarea>
+              placeholder={blok.message || "Message"}></textarea>
           </div>
 
           <input
@@ -193,6 +191,10 @@ console.log(list_types)
 <style>
   @reference "../styles/global.css";
 
+  .contact {
+    margin-block-start: var(--space-m);
+  }
+
   .layout {
     display: flex;
     justify-content: center;
@@ -208,7 +210,7 @@ console.log(list_types)
     @apply px-5 lg:px-10 min-w-0 xl:min-w-xl max-w-3xl;
   }
   .form {
-    @apply px-5 lg:px-10 min-h-full max-w-3xl min-w-0 xl:min-w-xl pt-5;
+    @apply px-5 lg:px-10 min-h-full max-w-3xl min-w-0 xl:min-w-xl;
   }
   .form form {
     background-color: var(--color-khaki);
