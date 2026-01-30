@@ -25,7 +25,7 @@ const response = await storyblokFetch(query, {
   resolve_links: "url"
 })
 
-const story = response.data.story
+const story = response?.data?.story
 if (!story) return Astro.redirect("/404")
 
 const seo = {
